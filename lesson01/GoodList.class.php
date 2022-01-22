@@ -2,20 +2,14 @@
 require_once "Good.class.php";
 require_once "Catalog.class.php";
 
-class GoodList
+class GoodList Extends Good
 {
     protected $goodList = [];
-    protected $goodCount;
-    protected $title = "";
 
-
-    function __construct($title)
+    function __construct()
     {
-//        parent::__construct($id, $title, $description, $image, $color, $size, $price, $discount);
-//
-//        $this->createList();
-//
-        $this->title = $title;
+        parent::__construct($this->goodList);
+
     }
 
     public function createList()
@@ -24,31 +18,33 @@ class GoodList
 
         for ($i = 0; $i < count($catalog->catalog); $i++) {
 
-            $good = new Good($catalog->catalog[$i]['id'],
-                             $catalog->catalog[$i]['title'],
-                             $catalog->catalog[$i]['description'],
-                             $catalog->catalog[$i]['image'],
-                             $catalog->catalog[$i]['color'],
-                             $catalog->catalog[$i]['size'],
-                             $catalog->catalog[$i]['price'],
-                             $catalog->catalog[$i]['discount']);
+            $catalogGood = ['id' => $catalog->catalog[$i]['id'],
+                            'title' => $catalog->catalog[$i]['title'],
+                            'description' => $catalog->catalog[$i]['description'],
+                            'image' => $catalog->catalog[$i]['image'],
+                            'color' => $catalog->catalog[$i]['color'],
+                            'size' => $catalog->catalog[$i]['size'],
+                            'price' => $catalog->catalog[$i]['price'],
+                            'discount' => $catalog->catalog[$i]['discount']];
+
+            $good = new Good($catalogGood);
 
             $this->goodList[$i] = $good->getGood();
 
         }
     }
 
-    public function setCount($count)
+    public function getCount():int
     {
-        $this->goodCount = $count;
+        return count($this->goodList);
     }
 
-    public function add($good)
+    public function add(array $good):void
     {
         $this->goodList[] = $good;
     }
 
-    public function remove($id)
+    public function remove(int $id):void
     {
         $goods = [];
 
@@ -61,7 +57,7 @@ class GoodList
         $this->goodList = $goods;
     }
 
-    public function get($id)
+    public function get(int $id):array
     {
         $answ = [];
 
@@ -74,14 +70,14 @@ class GoodList
         return $answ;
     }
 
-    public function getAll()
+    public function getAll():array
     {
 
         return $this->goodList;
     }
 
 
-    public function getSumGoodsList()
+    public function getSumGoodsList():float
     {
         $sum = 0;
 
@@ -93,7 +89,7 @@ class GoodList
 
     }
 
-    public function showList()
+    public function showList():void
     {
 
         foreach ($this->goodList as $good) {

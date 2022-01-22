@@ -12,25 +12,27 @@ class Good
     private $size;
     private $price;
     private $discount;
+    private $good;
 
-    function __construct($id, $title, $description, $image, $color, $size, $price, $discount)
+    function __construct(array $good)
     {
 
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->image = $image;
-        $this->color = $color;
-        $this->size = $size;
-        $this->price = $price;
-        $this->discount = $discount;
+        $this->id = $good['id'];
+        $this->title = $good['title'];
+        $this->description = $good['description'];
+        $this->image = $good['image'];
+        $this->color = $good['color'];
+        $this->size = $good['size'];
+        $this->price = $good['price'];
+        $this->discount = $good['discount'];
 
+        $this->good = $good;
     }
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -38,7 +40,7 @@ class Good
     /**
      * @return mixed
      */
-    public function getTitle()
+    public function getTitle():string
     {
         return $this->title;
     }
@@ -46,7 +48,7 @@ class Good
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getDescription():string
     {
         return $this->description;
     }
@@ -54,7 +56,7 @@ class Good
     /**
      * @return mixed
      */
-    public function getImage()
+    public function getImage():string
     {
         return $this->image;
     }
@@ -62,7 +64,7 @@ class Good
     /**
      * @return mixed
      */
-    public function getPrice()
+    public function getPrice():float
     {
         return $this->price;
     }
@@ -70,7 +72,7 @@ class Good
     /**
      * @param mixed $size
      */
-    public function getSize()
+    public function getSize():string
     {
         return $this->size;
     }
@@ -78,7 +80,7 @@ class Good
     /**
      * @param mixed $color
      */
-    public function getColor()
+    public function getColor():string
     {
         return $this->color;
     }
@@ -86,12 +88,12 @@ class Good
     /**
      * @return mixed
      */
-    public function getDiscount()
+    public function getDiscount():float
     {
         return $this->discount;
     }
 
-    public function showGood()
+    public function showGood():void
     {
         echo   " id: ". $this->id .
                " title: " . $this->title .
@@ -103,15 +105,8 @@ class Good
                " discount: " . $this->discount . "<br><hr><br>";
     }
 
-    public function getGood()
+    public function getGood():array
     {
-        return  ['id' => $this->id,
-                 'title' => $this->title,
-                 'description' => $this->description,
-                 'image' => $this->image,
-                 'color' => $this->color,
-                 'size' => $this->size,
-                 'price' => $this->price,
-                 'discount' => $this->discount];
+        return $this->good;
     }
 }

@@ -8,8 +8,7 @@ class Controller
 
     public function load()
     {
-
-        $goods = new GoodList("name");
+        $goods = new GoodList();
 
         $goods->createList();
 
@@ -18,6 +17,8 @@ class Controller
         echo "remove good id : 4<br>";
 
         $goods->remove(4);
+
+        echo "getCount: " . $goods->getCount() . "<br>";
 
         echo "add good<br>";
 
@@ -40,5 +41,19 @@ class Controller
 
         echo "Sum of goods list is {$goods->getSumGoodsList()}<br>";
 
+        $cart = new Cart;
+
+        for ($i = 0; $i < $goods->getCount(); $i++) {
+            $ind = rand(0, $goods->getCount());
+            if (!empty($goods->get($ind))) {
+                $cart->add2Cart($goods->get($ind));
+            }
+        }
+
+        echo "count: {$cart->getCount()} <br>";
+
+        echo "<pre>";
+        print_r($cart->getCart());
+        echo "</pre>";
     }
 }

@@ -3,47 +3,58 @@ require_once "GoodList.class.php";
 
 class Cart extends GoodList
 {
+    private $cart = [];
 
-    function __construct($id, $title, $description, $image, $price, $size, $color, $discount)
+    function __construct()
     {
-        parent::__construct($id, $title, $description, $image, $price, $size, $color, $discount);
-
+        parent::__construct();
     }
 
-    public function add($good)
+    public function getCart():array
     {
-        foreach ($this->goodList as $goods) {
-            if ($goods['id'] == $good['id']) {
-                $goods['count']++;
-            } else {
-                $this->goodList[] = $good;
+        return $this->cart;
+    }
+
+    public function add2cart(array $good):void
+    {
+        $findIndex = 0;
+
+        for($i = 0; $i < count($this->cart); $i++) {
+            if($this->cart[$i]['id'] == $good['id']) {
+                $findIndex = $i;
             }
         }
 
-        return $this->goodList;
+        if ($this->cart[$findIndex]['id'] == $good['id']){
+            $this->cart[$findIndex]['count']++;
+        } else {
+            $good['count'] = 1;
+            $this->cart[] = $good;
+        }
     }
 
-    public function decrease($id)
+    public function decrease(int $id):array
     {
         $goods = [];
 
-        foreach ($this->goodList as $good) {
-            if ($goods['id'] != $id) {
-                $goods[] = $good;
+        for($i = 0; $i < count($this->cart); $i++) {
+            if($this->cart[$i]['id'] != $id) {
+                $goods[] = $this->cart[$i];
             }
         }
 
         return $goods;
     }
 
-    public function getCount()
+    public function getCount():int
     {
         $count = 0;
 
-        foreach ($this->goodList as $goods) {
-           $count += $goods['count'];
+        if (count($this->cart)) {
+            foreach ($this->cart as $goods) {
+                $count += $goods['count'];
+            }
         }
-
         return $count;
     }
 }
