@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="content">
+        <h1 class="header__h1">{{ title }}</h1>
+    </div>
+    <div class="content">
+        <img src="pics/big/{{ pics[0].photo | escape }}" alt=""><br>
+        <span>Количество просмотров:  {{ pics[0].count | escape }}</span><br>
+        <a href="index.php">Вернуться оборатно</a>
+    </div>
+</body>
+</html>
