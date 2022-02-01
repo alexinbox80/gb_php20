@@ -25,7 +25,8 @@ class BD {
             // формируем SELECT запрос
             // в результате каждая строка таблицы будет объектом
 
-            $sql = "SELECT * FROM images LIMIT $listBegin, $listCount";
+            //$sql = "SELECT * FROM images LIMIT $listBegin, $listCount";
+            $sql = "SELECT * FROM images WHERE id > $listBegin LIMIT $listCount";
 
             $sth = $dbh->query($sql);
             while ($row = $sth->fetchObject()) {
