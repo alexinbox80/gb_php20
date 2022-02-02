@@ -8,12 +8,8 @@
 </head>
 
 <body>
-<header id>
-    <h1> {{ title | lower | capitalize }} </h1>
-    <p>
-        The array has {{ words | length }} elements
-    </p>
-    INCLUDE: {{ include('temp.tmpl') }}
+<header class="header">
+    {{ include('login.tmpl') }}
 </header>
 
 <ul>

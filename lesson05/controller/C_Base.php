@@ -26,7 +26,7 @@ class C_Base extends C_Controller {
             'words' => ['sky', 'mountain', 'falcon', 'forest', 'rock', 'blue']
         );
         //$page = $this->Template('view/v_main.php', $vars);
-        $page = $this->Template('twig.tmpl', $vars);
+        $page = $this->Template('index.tmpl', $vars);
         echo $page;
     }
 }
