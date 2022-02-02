@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+<header id>
+    <h1> {{ title | lower | capitalize }} </h1>
+    <p>
+        The array has {{ words | length }} elements
+    </p>
+    INCLUDE: {{ include('temp.tmpl') }}
+</header>
+
+<ul>
+    {% for word in words %}
+        <li>{{ word }}</li>
+    {% endfor %}
+</ul>
+<p>
+    Joined array elements: {{ words | join(',') }}
+</p>
+
+<p>
+    {{ sentence | title }}
+</p>
+{% if flag == true %}
+    {{ include('temp.tmpl') }}
+{% endif %}
+
+<footer id="">
+    <p> footer </p>
+    INCLUDE: {{ include('temp.tmpl') }}
+</footer>
+</body>
+
+</html>
+
+
