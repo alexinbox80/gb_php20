@@ -39,6 +39,15 @@
     color: black;
 }
 
+.menu__ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding-inline-start: 0;
+}
+
 .login__form {
     padding-top: 25px;
     text-align: right;

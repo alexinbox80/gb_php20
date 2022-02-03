@@ -30,6 +30,12 @@ abstract class C_Controller
         return $_SERVER['REQUEST_METHOD'] == 'POST';
     }
 
+    public function getSiteSession(string $name):array
+    {
+
+        return $_SESSION[$name];
+    }
+
 //    protected function Template(string $filename, $vars = array())
 //    {
 //        foreach ($vars as $key => $value) {

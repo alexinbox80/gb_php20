@@ -6,9 +6,11 @@ class M_DB
     static $obj;
     static $connect;
     const HOST = 'localhost';
-    const DBNAME = 'mydbname';
-    const USERNAME = 'world';
-    const PASSWD = 'guessme';
+    const DBNAME = 'eshop';
+    const USERNAME = 'eshop';
+    const PASSWD = 'eshop';
+
+    private $dbh = '';
 
     public static function getObject(): object
     {
@@ -21,18 +23,18 @@ class M_DB
 
     private function __construct()
     {
-        $dbh ='';
+        //$dbh ='';
 
         self::$connect = 'mysql:host=' . self::HOST . ';dbname=' . self::DBNAME;
 
         try {
-            $dbh = new PDO(self::$connect, self::USERNAME, self::PASSWD);
+            $this->dbh = new PDO(self::$connect, self::USERNAME, self::PASSWD);
         } catch (PDOException $e) {
             echo "Error: Could not connect. " . $e->getMessage();
         }
 
 // установка error режима
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     }
 
@@ -40,20 +42,24 @@ class M_DB
     {
     }
 
-    public function select($dbh, $sql): array
+    public function select(string $sql): array
     {
         $data = [];
 
         try {
 
-            $sth = $dbh->query($sql);
+            echo "$sql <br>\n";
 
-            while ($row = $sth->fetchObject()) {
+            $sth = $this->dbh->prepare($sql);
+
+            $sth->execute();
+
+            while ($row = $sth->fetch()) {
                 $data[] = $row;
             }
 
             // закрываем соединение
-            unset($dbh);
+            unset($this->dbh);
 
         } catch (Exception $e) {
 

@@ -8,16 +8,37 @@ ini_set('display_startup_errors', 1);
 
 class C_User extends C_Controller
 {
-
     protected function before()
     {
         $this->title = 'Auth user';
         $this->content = '';
         $this->keywords = 'keywords';
+
+        //$this->page = '';
+
+        $this->vars = [
+            'login' => [
+                'title' => 'Login page',
+                'loginPage' => 'login.tmpl'
+            ]
+        ];
     }
 
     public function render()
     {
+
+//        $vars = array(
+//            'title' => 'Login page',
+//            'loginPage' => 'login.tmpl'
+//        );
+//
+//        $page = $this->Template('index.tmpl', $vars);
+
+        var_dump($this->vars['login']);
+
+        $page = $this->Template('index.tmpl', $this->vars['login']);
+
+        echo $page;
     }
 
     public function action_login()
@@ -33,37 +54,45 @@ class C_User extends C_Controller
         return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
-    private function makePasswdMd5($login, $passwd) {
+    private function makePasswdMd5($login, $passwd)
+    {
         $salt = "zyjdfhm";
         return strrev(md5($salt) . $passwd . md5($login));
     }
 
     public function action_auth()
     {
-        //USE SESSION
-        //PDO:: use prepare method!!!
         $user = new M_User();
         if ($this->IsPost()) {
             $login = $_POST['login'] ? strip_tags($_POST['login']) : "";
             $passwd = $_POST['passwd'] ? strip_tags($_POST['passwd']) : "";
 
             if ($this->isValidMd5($passwd)) {
-
                 $passwdMd5 = $this->makePasswdMd5($login, $passwd);
-
             } else {
-
                 $passwdMd5 = $this->makePasswdMd5($login, md5($passwd));
-
             }
 
             if ($user->auth($login, $passwdMd5)) {
+
+                $_SESSION['loginSuccess'] = true;
+                $_SESSION['errorMessage'] = '';
+
                 //header("Location: index.php");
+
+//                $arr = array(
+//                    'title' => 'Login page',
+//                    'login' => 'login.tmpl'
+//                );
+
+               // $this->page = 'login';
+                ///$this->render();
+
             } else {
-                echo "Wrong login or password!";
+                $this->vars['login'] += ['loginError' => 'Wrong login or password!'];
             }
         } else {
-            //$this->content = $this->Template('view/v_auth.ph');
+            //$this->content = $this->Template('index.tmpl', []);
         }
     }
 

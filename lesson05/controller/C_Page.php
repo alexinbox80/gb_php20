@@ -17,10 +17,10 @@ class C_Page extends C_Base
     public function action_index()
     {
         $this->title .= ' Index Title';
-        $model = new Model();
-        $text = $model->text_get();
+        //$model = new Model();
+        //$text = $model->text_get();
 
-        $this->content .= ' ' . $text;
+        //$this->content .= ' ' . $text;
         //$this->content = $this->Template('view/v_index.php', array('text' => $text));
         //$this->content = $this->show(['text' => $text]);
     }

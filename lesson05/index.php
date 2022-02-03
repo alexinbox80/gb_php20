@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
@@ -34,6 +35,12 @@ echo $action . ' - ' . $c . "<br>\n";
 switch ($c) {
     case 'user':
         $controller = new C_User();
+        break;
+    case 'reg':
+        $controller = new C_Reg();
+        break;
+    case 'cabinet':
+        $controller = new C_Cabinet();
         break;
     default:
         $controller = new C_Page();
