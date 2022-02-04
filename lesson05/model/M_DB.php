@@ -40,16 +40,13 @@ class M_DB
 
     public function select(string $sql): array
     {
-        $data = [];
 
         try {
             $sth = $this->dbh->prepare($sql);
 
             $sth->execute();
 
-            while ($row = $sth->fetch()) {
-                $data[] = $row;
-            }
+            $data = $sth->fetchAll();
 
         } catch (Exception $e) {
 
@@ -59,25 +56,22 @@ class M_DB
         return $data;
     }
 
-    public function insert(string $sql): array
+    public function insert(string $sql): int
     {
-        $a = [];
 
         try {
             $sth = $this->dbh->prepare($sql);
 
             $sth->execute();
 
-            while ($row = $sth->fetch()) {
-                $data[] = $row;
-            }
+            $index = $this->dbh->lastInsertId();
 
         } catch (Exception $e) {
 
             die ('ERROR: ' . $e->getMessage());
         }
 
-        return $a;
+        return $index;
     }
 
     public function update(): array

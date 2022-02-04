@@ -8,7 +8,7 @@
         <li class="menu__li">
             {% if login %}
                 <a class="menu__a" href="index.php?c=user&act=logout">
-                    <span class="menu__item">Logout</span>
+                    <span class="menu__item">logout</span>
                 </a>
             {% else %}
                 <a class="menu__a" href="index.php?c=user&act=auth">
@@ -16,11 +16,13 @@
                 </a>
             {% endif %}
         </li>
-        <li class="menu__li">
-            <a class="menu__a" href="index.php?c=reg&act=reg">
-                <span class="menu__item">registration</span>
-            </a>
-        </li>
+        {% if not login %}
+            <li class="menu__li">
+                <a class="menu__a" href="index.php?c=reg&act=reg">
+                    <span class="menu__item">registration</span>
+                </a>
+            </li>
+        {% endif %}
         <li class="menu__li">
             <a class="menu__a" href="index.php?c=cabinet&act=show">
                 <span class="menu__item">cabinet</span>

@@ -9,31 +9,12 @@ ini_set('display_startup_errors', 1);
 // c - controller
 // act - action
 
-spl_autoload_register(function ($name) {
-    $dirs = ['controller', 'model', 'view'];
-    $file = $name . ".php";
-    foreach ($dirs as $dir) {
-        if (is_file($dir . '/' . $file)) {
-            include_once($dir . '/' . $file);
-        }
-    }
-});
+require_once 'autoload.php';
 
 $action = 'action_';
 $action .= (isset($_GET['act'])) ? $_GET['act'] : 'index';
 
 $c = (isset($_GET['c'])) ? $_GET['c'] : '';
-
-if (isset($_POST['enter'])) {
-    $c = 'user';
-    $action = 'action_auth';
-}
-
-if (isset($_POST['registration'])) {
-    echo "POST REG<br>\n";
-    $c = 'reg';
-    $action = 'action_reg';
-}
 
 switch ($c) {
     case 'user':

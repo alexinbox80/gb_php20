@@ -21,6 +21,7 @@ class C_Reg extends C_Controller
 
     public function action_reg()
     {
+
         $flag = true;
         $user = new M_User();
 
@@ -45,6 +46,7 @@ class C_Reg extends C_Controller
             if (($userReg['name'] == '') || ($userReg['email'] == '') ||
                 ($userReg['login'] == '') || ($userReg['passwd'] == '')) {
                 $this->vars['reg']['regError'] .= 'These fields are empty! : ';
+                $flag = false;
             }
 
             if($userReg['name'] == '') {
@@ -67,10 +69,12 @@ class C_Reg extends C_Controller
                 $flag = false;
             }
 
-            if ($flag && $user->reg($userReg)) {
-                $this->vars['reg']['regError'] = 'User has been successfully registered!';
-            } else {
-                $this->vars['reg']['regError'] = 'User already exist!';
+            if ($flag) {
+                if ($user->reg($userReg)) {
+                    $this->vars['reg']['regError'] = 'User has been successfully registered!';
+                } else {
+                    $this->vars['reg']['regError'] = 'User already exist!';
+                }
             }
         }
     }

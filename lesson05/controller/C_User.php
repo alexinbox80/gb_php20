@@ -51,7 +51,7 @@ class C_User extends C_Controller
 
     public function action_logout()
     {
-        $_SESSION = array();
+        $_SESSION['user'] = array();
         header("Location: index.php");
     }
 
@@ -60,7 +60,7 @@ class C_User extends C_Controller
         return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
-    public function action_auth():void
+    public function action_auth(): void
     {
         $user = new M_User();
         if ($this->IsPost()) {

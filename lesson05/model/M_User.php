@@ -2,7 +2,7 @@
 
 class M_User
 {
-    private object $db;
+    private $db;
 
     function __construct()
     {
@@ -42,8 +42,6 @@ class M_User
     {
         $result = false;
 
-//        $sql = "SELECT id, userId, roleId FROM users WHERE login = '$login' AND passwd = '$passwdMd5'";
-
         $sql = "SELECT users.userId, users.roleId, roles.role
                 FROM user_role
                 INNER JOIN users ON user_role.userId = users.userId
@@ -80,25 +78,17 @@ class M_User
 
         $data = $this->db->select($sql);
 
-        if (count($data)) {
-            //echo "exists<br>\n";
-
-        } else {
-            $sql1 = "INSERT INTO users (userId, roleId, lastName, login, passwd, email, status, dateCreate) 
+        if (!count($data)) {
+            $sql = "INSERT INTO users (userId, roleId, lastName, login, passwd, email, status, dateCreate) 
                     VALUES ( '" . $userId . "', '$roleId' ,'" . $user['name'] ."', '" . $user['login'] . "',
                      '" . $user['passwdMd5'] . "', '" . $user['email'] . "', '1'," . time() . " )";
 
-            echo $sql1 . "<br\n>";
+            $this->db->insert($sql);
 
-            $sql2 = "INSERT INTO user_role(userId, roleId)
+            $sql = "INSERT INTO user_role(userId, roleId)
                      VALUES ('$userId', '$roleId')";
 
-            echo $sql2 . "<br\n>";
-
-            $this->db->insert($sql1);
-            $this->db->insert($sql2);
-
-            echo "NO exist<br>\n";
+            $this->db->insert($sql);
 
             $result = true;
         }
