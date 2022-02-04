@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="content">
+        <h1 class="header__h1">{{ title }}</h1>
+    </div>
+    <div class="content">
+        <ul class="gallery">
+            {% for pic in pics %}
+                <li class="gallery__item">
+                    <a href="index.php?photo_id={{ pic.id | escape }}">
+                        <img class="gallery__pic" src="pics/small/{{ pic.photo | escape }}" alt="">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <!--<form class="form__upload" action="controller/upload.php" method="post" enctype="multipart/form-data">-->
+        <input id="form__input" class="form__input" type="file" name="pics" accept="image/*">
+        <input class="form__button" type="submit" value="Загрузить">
+        <!--</form>-->
+    </div>
+</body>
+</html>
