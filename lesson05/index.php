@@ -19,7 +19,6 @@ spl_autoload_register(function ($name) {
     }
 });
 
-
 $action = 'action_';
 $action .= (isset($_GET['act'])) ? $_GET['act'] : 'index';
 
@@ -30,7 +29,11 @@ if (isset($_POST['enter'])) {
     $action = 'action_auth';
 }
 
-echo $action . ' - ' . $c . "<br>\n";
+if (isset($_POST['registration'])) {
+    echo "POST REG<br>\n";
+    $c = 'reg';
+    $action = 'action_reg';
+}
 
 switch ($c) {
     case 'user':

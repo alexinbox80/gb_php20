@@ -69,6 +69,23 @@
     color: red;
 }
 
+.login__warn {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: blue;
+}
+
+.cabinet__err {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: red;
+}
+.cabinet__warn {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: blue;
+}
+
 .reg__err {
     color: red;
     margin-bottom: 14px;
@@ -220,4 +237,23 @@
 .cart__tp {
     text-align: right;
     padding-right: 75px;
+}
+
+.item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item__good {
+    width: calc(100% / 6);
+    margin-bottom: 16px;
+}
+
+.item__content {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.history__item {
+    list-style-type: none;
 }

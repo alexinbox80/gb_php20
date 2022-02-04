@@ -18,12 +18,29 @@
             <p>CONTENT</p>
             {% if loginPage %}
                 {{ include(loginPage) }}
-            {% endif %}
-            {% if regPage %}
+            {% elseif regPage %}
                 {{ include(regPage) }}
-            {% endif %}
-            {% if cabinetPage %}
+            {% elseif cabinetPage %}
                 {{ include(cabinetPage) }}
+            {% else %}
+                <p>CONTENT CONTENT</p>
+                <div class="item">
+                    {% for good in goods %}
+                        <div class="item__good">
+                            <div class="item__pics">
+                                <img src="public/img/{{ good.photo }}" alt="">
+                            </div>
+                            <div class="item__content">
+                                <div class="iten__title">
+                                    {{ good.title }}
+                                </div>
+                                <div class="item__price">
+                                    price: ${{ good.price }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
     </section>
@@ -34,5 +51,3 @@
     </footer>
 </body>
 </html>
-
-

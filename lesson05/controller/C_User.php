@@ -3,19 +3,10 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-//include_once('C_Controller.php');
-//include_once('model/M_User.php');
-
 class C_User extends C_Controller
 {
     protected function before()
     {
-        $this->title = 'Auth user';
-        $this->content = '';
-        $this->keywords = 'keywords';
-
-        //$this->page = '';
-
         $this->vars = [
             'login' => [
                 'title' => 'Login page',
@@ -26,15 +17,28 @@ class C_User extends C_Controller
 
     public function render()
     {
+        if ($this->getSiteSession('user')) {
+            $user = $this->getSiteSession('user');
 
-//        $vars = array(
-//            'title' => 'Login page',
-//            'loginPage' => 'login.tmpl'
-//        );
-//
-//        $page = $this->Template('index.tmpl', $vars);
+            array_push($user['history'], ['page' => 'Login page']);
 
-        var_dump($this->vars['login']);
+            $this->setSiteSession('user', $user);
+
+            $this->vars['login'] += ['login' => $user['role']];
+            $this->vars['login'] +=['loginWarning' => "You are already logged in!"];
+
+            if ($user['role'] == 'User') {
+                $this->vars['login']['loginWarning'] .= " You are user!";
+
+            } else {
+                $this->vars['login']['loginWarning'] .= " You are admin!";
+
+            }
+            header("Location: index.php");
+        } else {
+            $this->vars['login'] +=['loginError' => "You are not authorized!"];
+
+        }
 
         $page = $this->Template('index.tmpl', $this->vars['login']);
 
@@ -47,6 +51,8 @@ class C_User extends C_Controller
 
     public function action_logout()
     {
+        $_SESSION = array();
+        header("Location: index.php");
     }
 
     private function isValidMd5($md5 = '')
@@ -54,13 +60,7 @@ class C_User extends C_Controller
         return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
-    private function makePasswdMd5($login, $passwd)
-    {
-        $salt = "zyjdfhm";
-        return strrev(md5($salt) . $passwd . md5($login));
-    }
-
-    public function action_auth()
+    public function action_auth():void
     {
         $user = new M_User();
         if ($this->IsPost()) {
@@ -80,14 +80,6 @@ class C_User extends C_Controller
 
                 //header("Location: index.php");
 
-//                $arr = array(
-//                    'title' => 'Login page',
-//                    'login' => 'login.tmpl'
-//                );
-
-               // $this->page = 'login';
-                ///$this->render();
-
             } else {
                 $this->vars['login'] += ['loginError' => 'Wrong login or password!'];
             }
@@ -96,7 +88,7 @@ class C_User extends C_Controller
         }
     }
 
-    public function action_regisration()
+    public function action_registration()
     {
     }
 

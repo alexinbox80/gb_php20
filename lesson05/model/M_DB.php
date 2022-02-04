@@ -2,7 +2,6 @@
 
 class M_DB
 {
-
     static $obj;
     static $connect;
     const HOST = 'localhost';
@@ -23,8 +22,6 @@ class M_DB
 
     private function __construct()
     {
-        //$dbh ='';
-
         self::$connect = 'mysql:host=' . self::HOST . ';dbname=' . self::DBNAME;
 
         try {
@@ -32,7 +29,6 @@ class M_DB
         } catch (PDOException $e) {
             echo "Error: Could not connect. " . $e->getMessage();
         }
-
 // установка error режима
         $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -47,9 +43,6 @@ class M_DB
         $data = [];
 
         try {
-
-            echo "$sql <br>\n";
-
             $sth = $this->dbh->prepare($sql);
 
             $sth->execute();
@@ -57,9 +50,6 @@ class M_DB
             while ($row = $sth->fetch()) {
                 $data[] = $row;
             }
-
-            // закрываем соединение
-            unset($this->dbh);
 
         } catch (Exception $e) {
 
@@ -69,9 +59,24 @@ class M_DB
         return $data;
     }
 
-    public function insert(): array
+    public function insert(string $sql): array
     {
         $a = [];
+
+        try {
+            $sth = $this->dbh->prepare($sql);
+
+            $sth->execute();
+
+            while ($row = $sth->fetch()) {
+                $data[] = $row;
+            }
+
+        } catch (Exception $e) {
+
+            die ('ERROR: ' . $e->getMessage());
+        }
+
         return $a;
     }
 

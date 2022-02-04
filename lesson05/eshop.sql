@@ -191,7 +191,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `userId`, `roleId`, `lastName`, `firstName`, `address`, `email`, `phone`, `sex`, `login`, `passwd`, `status`, `dateCreate`, `lastActive`) VALUES
 (1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'f0ea0e5f-a835-46e7-89c3-545a0a62c355',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	1641233642,	NULL),
 (2,	'c08b32be-1677-443c-bf00-877291354c93',	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'Petrov',	'Petr',	'address',	'mail@mail.ru',	'+79211234590',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	1641233710,	NULL),
-(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	1641325585,	NULL);
+(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	1641325585,	NULL),
+(8,	'012c2d05-9fe9-5a05-c0a4-5c0ff30edd97',	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'qwe',	NULL,	NULL,	'qwe',	NULL,	NULL,	'qwe',	'644abf9ff0f45d5a919cf11642208d67644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	1643974870,	NULL);
 
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
@@ -204,6 +205,7 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` (`id`, `userId`, `roleId`) VALUES
 (1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'f0ea0e5f-a835-46e7-89c3-545a0a62c355'),
 (2,	'c08b32be-1677-443c-bf00-877291354c93',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
-(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
+(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
+(7,	'012c2d05-9fe9-5a05-c0a4-5c0ff30edd97',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
 
--- 2022-02-03 14:52:48
+-- 2022-02-04 11:42:11

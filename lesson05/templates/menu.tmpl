@@ -6,9 +6,15 @@
             </a>
         </li>
         <li class="menu__li">
-            <a class="menu__a" href="index.php?c=user&act=auth">
-                <span class="menu__item">login</span>
-            </a>
+            {% if login %}
+                <a class="menu__a" href="index.php?c=user&act=logout">
+                    <span class="menu__item">Logout</span>
+                </a>
+            {% else %}
+                <a class="menu__a" href="index.php?c=user&act=auth">
+                    <span class="menu__item">login</span>
+                </a>
+            {% endif %}
         </li>
         <li class="menu__li">
             <a class="menu__a" href="index.php?c=reg&act=reg">

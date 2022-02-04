@@ -1,6 +1,7 @@
 <div class="content">
     <h1>{{ title }}</h1>
-    <form class="form__registration" action="registration.php" method="post">
+    <div id="reg__err" class="reg__err">{{ regError }}</div>
+    <form class="form__registration" action="" method="post">
         <input class="form__reg-input" type="text" placeholder="Введите имя" name="name" value="">
         <br>
         <input class="form__reg-input" type="text" placeholder="Введите имаил" name="email"
@@ -14,7 +15,7 @@
         <br>
         <div class="reg__but">
             <input class="form__reg-submit" type="submit" name="registration" value="Зарегистрироваться">
-            <input class="form__reg-submit" type="button" value="Отмена" onclick="location.href='index.php'">
+            <input class="form__reg-submit" type="button" value="Cancel" onclick="location.href='index.php'">
         </div>
     </form>
 </div>

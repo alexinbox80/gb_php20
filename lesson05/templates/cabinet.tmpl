@@ -1,3 +1,15 @@
 <div class="content">
     <h1>{{ title }}</h1>
+    <div id="cabinet__err" class="cabinet__err">{{ cError }}</div>
+    <div id="cabinet__warn" class="cabinet__warn">{{ cWarning }}</div>
+    <p>
+        {% if login %}
+            <span> Have you recently viewed: </span>
+        <ul class="history__item">
+            {% for item in history | reverse | slice(0, 5) | reverse %}
+            <li>{{ loop.index }} : {{ item.page }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </p>
 </div>
