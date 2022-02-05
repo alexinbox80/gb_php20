@@ -1,5 +1,5 @@
 <?php
-class C_Reg extends C_Controller
+class C_Reg extends C_Base
 {
     protected function before()
     {
@@ -23,7 +23,7 @@ class C_Reg extends C_Controller
     {
 
         $flag = true;
-        $user = new M_User();
+        //$user = new M_User();
 
         if ($this->IsPost()) {
             $name = $_POST['name'] ? strip_tags($_POST['name']) : "";
@@ -70,7 +70,7 @@ class C_Reg extends C_Controller
             }
 
             if ($flag) {
-                if ($user->reg($userReg)) {
+                if ($this->user->reg($userReg)) {
                     $this->vars['reg']['regError'] = 'User has been successfully registered!';
                 } else {
                     $this->vars['reg']['regError'] = 'User already exist!';

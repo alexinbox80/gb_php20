@@ -8,6 +8,12 @@ class C_Base extends C_Controller {
     protected $content;
     protected $keywords;
 
+    protected object $user;
+
+    function __construct() {
+        $this->user = new M_User();
+    }
+
     protected function before()
     {
         $this->vars = [

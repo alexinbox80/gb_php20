@@ -3,7 +3,7 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-class C_User extends C_Controller
+class C_User extends C_Base
 {
     protected function before()
     {
@@ -62,7 +62,6 @@ class C_User extends C_Controller
 
     public function action_auth(): void
     {
-        $user = new M_User();
         if ($this->IsPost()) {
             $login = $_POST['login'] ? strip_tags($_POST['login']) : "";
             $passwd = $_POST['passwd'] ? strip_tags($_POST['passwd']) : "";
@@ -73,7 +72,7 @@ class C_User extends C_Controller
                 $passwdMd5 = $this->makePasswdMd5($login, md5($passwd));
             }
 
-            if ($user->auth($login, $passwdMd5)) {
+            if ($this->user->auth($login, $passwdMd5)) {
 
                 $_SESSION['loginSuccess'] = true;
                 $_SESSION['errorMessage'] = '';

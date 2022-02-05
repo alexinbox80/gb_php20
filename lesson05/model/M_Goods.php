@@ -2,7 +2,7 @@
 
 class M_Goods
 {
-    private $db;
+    private object $db;
 
     function __construct()
     {
@@ -11,7 +11,7 @@ class M_Goods
 
     public function getGoods(): array
     {
-        $sql = "SELECT * FROM images LIMIT 18";
+        $sql = "SELECT * FROM images WHERE id>0 LIMIT 18";
 
         $data = $this->db->select($sql);
 

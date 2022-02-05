@@ -3,10 +3,6 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-require 'vendor/autoload.php';
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
 abstract class C_Controller
 {
     protected abstract function render();
@@ -55,8 +51,8 @@ abstract class C_Controller
 
     public function Template(string $filename, array $content): string
     {
-        $loader = new FilesystemLoader('templates');
-        $twig = new Environment($loader);
+        $loader = new Twig\Loader\FilesystemLoader('templates');
+        $twig = new Twig\Environment($loader);
         return $twig->render($filename, $content);
     }
 

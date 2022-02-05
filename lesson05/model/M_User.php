@@ -2,12 +2,13 @@
 
 class M_User
 {
-    private $db;
+    private object $db;
 
     function __construct()
     {
         $this->db = M_DB::getObject();
     }
+
     private function getGUID()
     {
         if (function_exists('com_create_guid')) {

@@ -1,5 +1,5 @@
 <?php
-class C_Cabinet extends C_Controller
+class C_Cabinet extends C_Base
 {
     protected function before()
     {
