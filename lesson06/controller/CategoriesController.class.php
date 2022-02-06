@@ -8,13 +8,14 @@ class CategoriesController extends Controller
     {
         $categories = Category::getCategories(isset($data['id']) ? $data['id'] : 0);
         $goods = Good::getGoods(isset($data['id']) ? $data['id'] : 0);
+
         return ['subcategories' => $categories, 'goods' => $goods];
     }
 
     public function goods($data){
         if($data['id'] > 0){
             $good = new Good([
-                "id_good" => $data['id']
+                "good_id" => $data['id']
             ]);
 
             return $good->getGoodInfo()[0];

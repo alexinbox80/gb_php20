@@ -1,6 +1,7 @@
 <?php
 
-abstract class Model {
+abstract class Model
+{
 
     protected static $table;
     protected static $properties = [
@@ -10,18 +11,22 @@ abstract class Model {
             'readonly' => true,
             'unsigned' => true
         ],
-        'created_at' => [
-            'type' => 'datetime',
-            'readonly' => true,
-        ],
-        'updated_at' => [
-            'type' => 'datetime',
-            'readonly' => true,
+        'category_id' => [
+            'type' => 'varchar',
+            'size' => 36
         ],
         'status' => [
             'type' => 'int',
             'size' => 2,
             'unsigned' => true
+        ],
+        'dateCreate' => [
+            'type' => 'datetime',
+            'show' => false
+        ],
+        'dateUpdate' => [
+            'type' => 'datetime',
+            'show' => false
         ]
     ];
 
@@ -30,7 +35,9 @@ abstract class Model {
         static::setProperties();
 
         foreach ($values as $key => $value) {
-            $this->$key = $value;
+            if ( !isset(self::$properties[$key]['show']) || self::$properties[$key]['show'] ) {
+                $this->$key = $value;
+            }
         }
     }
 
@@ -54,15 +61,15 @@ abstract class Model {
             $query .= ' `' . $property . '`';
 
             $query .= ' ' . $params['type'];
-            if ( isset($params['size'])) {
-                $query .= '(' .$params['size'] .')';
+            if (isset($params['size'])) {
+                $query .= '(' . $params['size'] . ')';
             }
 
-            if( isset ($params['unsigned']) && $params['unsigned']) {
+            if (isset ($params['unsigned']) && $params['unsigned']) {
                 $query .= ' UNSIGNED';
             }
 
-            if( isset ($params['autoincrement']) && $params['autoincrement']) {
+            if (isset ($params['autoincrement']) && $params['autoincrement']) {
                 $query .= ' AUTO_INCREMENT';
             }
             $query .= ',' . "\n";
@@ -78,20 +85,20 @@ abstract class Model {
         $this->checkProperty($name);
         $return = null;
 
-        switch(static::$property['type']) {
+        switch (static::$property['type']) {
             case 'int':
                 return (int)$this->$name;
-                // break;
+            // break;
             default:
                 return (string)$this->$name;
-                // break;
+            // break;
         }
     }
 
     public function __set($name, $value)
     {
         $this->checkProperty($name);
-        switch(static::$properties[$name]['type']) {
+        switch (static::$properties[$name]['type']) {
             case 'int':
                 $this->$name = (int)$value;
                 break;

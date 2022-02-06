@@ -21,6 +21,15 @@ class IndexController extends Controller
         return 'indexClessTest';
     }
 
+    function goods(){
+
+        $categoryId = 'ef720659-d7c1-4405-9fb1-ac1b36c00444';
+
+        $goods = Good::getGoods($categoryId);
+
+        return $goods;
+    }
+
 
 }
 

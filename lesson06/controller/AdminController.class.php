@@ -69,12 +69,25 @@ class AdminController extends Controller
         $fields = db::getInstance()->Select('desc ' . $data['id']);
         $_items = db::getInstance()->Select('select * from ' . $data['id']);
         $items = [];
+
         foreach ($_items as $item) {
             $tmp = new $this->controls[$data['id']]($item);
             $items[] = (array)$tmp;
         }
 
-        return ['name' => $data['id'],'fields' => $fields, 'items' => $items];
+        $headerField = [];
+
+        foreach ($fields as $key => $field) {
+
+            $property = Category::getProperties()[$field['Field']];
+
+            if ( !isset($property['show']) || $property['show'] ) {
+                $headerField[] = $field;
+            }
+        }
+
+        //return ['name' => $data['id'],'fields' => $fields, 'items' => $items];
+        return ['name' => $data['id'],'fields' => $headerField, 'items' => $items];
     }
 
     protected function getActionId($data)

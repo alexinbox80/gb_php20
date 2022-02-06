@@ -1,0 +1,104 @@
+
+
+Для реализации такого функционала необходимо создать следующую структуру базы данных:
+
+Каталог товаров; goods
+Каталог категорий товаров; categories
+Список заказов; orders
+Связка заказов и выбранных товаров (для корзины). carts
+
+Структура каталога товаров:
+Идентификатор;
+Дата создания;
+Дата обновления;
+Цена;
+Название;
+Описание;
+Статус (активен или неактивен; флаг, при котором товар доступен на сайте);
+----------------------
+goods(id, good_id, title, description, price, discount, category_id, status, dateCreate)
+
+Структура категорий:
+Идентификатор;
+Дата создания;
+Дата обновления;
+Название;
+Родительский элемент (идентификатор);
+Статус (активен, неактивен, больше не в продаже).
+----------------------
+categories(id, category_id, title, parent_id, dateCreate, dateUpdate, status)
+
+Структура заказа:
+Идентификатор;
+Телефон;
+Идентификатор клиента;
+Адрес доставки;
+Дата создания;
+Дата обновления;
+Статус (активен, неактивен, оплачен, доставлен).
+----------------------
+orders(id, order_id, user_id, amount, dateCreate, status)
+
+Структура корзины:
+Идентификатор;
+Идентификатор заказа;
+Идентификатор товара;
+Дата создания;
+Дата обновления;
+Количество товара;
+Статус (активен, неактивен, удален, подтвержден).
+----------------------
+carts(id, cart_id, order_id, user_id, price, quantity, dateCreate, dateUpdate, status)
+
+users(id, user_id, role_id, firstName, secondName, address, email, phone, sex, login, passwd, status, dateCreate, lastActive)
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+  `role_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+  `lastName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `firstName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `email` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `phone` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `sex` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `login` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `passwd` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `status` smallint(5) unsigned DEFAULT NULL,
+  `dateCreate` bigint(20) unsigned DEFAULT NULL,
+  `lastActive` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+roles(id, role_id, title)
+
+CREATE TABLE `roles` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `role_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+    `title` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+user_role(id, idUser, idRole)
+
+CREATE TABLE `user_role` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `user_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+    `role_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+create database eshopv20 default character set utf8;
+
+GRANT ALL PRIVILEGES ON eshopv20.* TO 'eshop'@'localhost';
+
+CREATE USER 'eshop'@'localhost' IDENTIFIED BY 'eshop';
+
+FLUSH PRIVILEGES;
+
+SELECT user_role.user_id, user_role.roleId, users.login, users.firstName, roles.role
+FROM user_role
+INNER JOIN users ON user_role.user_id = users.user_id
+INNER JOIN roles ON user_role.role_id = roles.role_id;

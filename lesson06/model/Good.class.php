@@ -5,11 +5,12 @@ class Good extends Model {
 
     protected static function setProperties()
     {
-        self::$properties['id_good'] = [
-            'type' => 'int'
+        self::$properties['good_id'] = [
+            'type' => 'varchar',
+            'size' => 36
         ];
 
-        self::$properties['name'] = [
+        self::$properties['title'] = [
             'type' => 'varchar',
             'size' => 512
         ];
@@ -18,32 +19,48 @@ class Good extends Model {
             'type' => 'float'
         ];
 
+        self::$properties['discount'] = [
+            'type' => 'float'
+        ];
+
         self::$properties['description'] = [
             'type' => 'text'
         ];
 
-        self::$properties['category'] = [
-            'type' => 'int'
+        self::$properties['category_id'] = [
+            'type' => 'varchar'
+        ];
+
+        self::$properties['image'] = [
+            'type' => 'varchar'
+        ];
+
+        self::$properties['color'] = [
+            'type' => 'varchar'
+        ];
+
+        self::$properties['size'] = [
+            'type' => 'varchar'
         ];
     }
 
     public static function getGoods($categoryId)
     {
         return db::getInstance()->Select(
-            'SELECT id_good, id_category, `name`, price FROM goods WHERE id_category = :category AND status=:status',
-            ['status' => Status::Active, 'category' => $categoryId]);
+            'SELECT good_id, category_id, `title`, price FROM goods WHERE category_id = :category_id AND status=:status',
+            ['status' => Status::Active, 'category_id' => $categoryId]);
     }
 
     public function getGoodInfo(){
         return db::getInstance()->Select(
-            'SELECT * FROM goods WHERE id_good = :id_good',
-            ['id_good' => (int)$this->id_good]);
+            'SELECT * FROM goods WHERE good_id = :good_id',
+            ['good_id' => (int)$this->good_id]);
     }
 
-    public static function getGoodPrice($id_good){
+    public static function getGoodPrice($good_id){
         $result = db::getInstance()->Select(
-            'SELECT price FROM goods WHERE id_good = :id_good',
-            ['id_good' => $id_good]);
+            'SELECT price FROM goods WHERE good_id = :good_id',
+            ['good_good' => $good_id]);
 
         return (isset($result[0]) ? $result[0]['price'] : null);
     }

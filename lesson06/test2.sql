@@ -143,3 +143,66 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+-- Adminer 4.8.1 MySQL 5.7.32 dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
+  `id_category` int(11) NOT NULL AUTO_INCREMENT,
+  `status` int(11) NOT NULL,
+  `name` varchar(222) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  PRIMARY KEY (`id_category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `categories` (`id_category`, `status`, `name`, `parent_id`) VALUES
+(1,	1,	'Category 1',	0),
+(2,	1,	'Category 2',	1),
+(3,	1,	'Category 3',	1),
+(4,	1,	'Category 4',	0),
+(5,	1,	'Category 5',	2),
+(6,	1,	'Category 6',	5);
+
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE `goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_good` int(11) NOT NULL,
+  `id_category` int(11) NOT NULL,
+  `name` varchar(111) NOT NULL,
+  `price` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `goods` (`id`, `id_good`, `id_category`, `name`, `price`, `category`, `status`) VALUES
+(1,	0,	0,	'Good 1',	100,	1,	1),
+(2,	0,	1,	'Good 2',	120,	2,	1),
+(3,	0,	0,	'Good 3',	48,	2,	1),
+(4,	0,	1,	'Good 4',	100500,	2,	1),
+(5,	0,	1,	'Good 5',	2001,	3,	4),
+(6,	0,	0,	'Good 6',	1020,	4,	1),
+(7,	0,	0,	'Good 7',	1,	4,	1),
+(8,	0,	0,	'Good 8',	800,	5,	1);
+
+DROP TABLE IF EXISTS `pages`;
+CREATE TABLE `pages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `pages` (`id`, `name`) VALUES
+(1,	'Главная'),
+(2,	'О Магазине'),
+(3,	'Каталог');
+
+-- 2022-02-06 10:56:07
+
+

@@ -11,14 +11,19 @@ class Category extends Model {
         ];
 
         self::$properties['parent_id'] = [
-            'type' => 'int',
+            'type' => 'varchar',
+            'size' => 36
         ];
+    }
+
+    public static function getProperties() {
+        return self::$properties;
     }
 
     public static function getCategories($parentId = 0)
     {
         return db::getInstance()->Select(
-            'SELECT id_category, name FROM categories WHERE status=:status AND parent_id = :parent_id',
+            'SELECT category_id, name FROM categories WHERE status=:status AND parent_id = :parent_id',
             ['status' => Status::Active, 'parent_id' => $parentId]);
     }
 }

@@ -47,12 +47,11 @@ class App
                 'categories' => Category::getCategories(0)
             ];
 
-            $view = $controller->view . '/' . $methodName . '.html';
+            $view = $controller->view . '/' . $methodName . '.html.twig';
             if (!isset($_GET['asAjax'])) {
                 $loader = new Twig_Loader_Filesystem(Config::get('path_templates'));
                 $twig = new Twig_Environment($loader);
                 $template = $twig->loadTemplate($view);
-
 
                 echo $template->render($data);
             } else {
@@ -61,12 +60,3 @@ class App
         }
     }
 }
-
-
-//http://localhost:8888/?page=index&action=test
-//http://localhost:8888/?page=index
-//http://localhost:8888/index.php?page=categories&action=index&id=4&asAjax=true
-//http://localhost:8888/admin/
-
-//http://localhost:8888/admin/control/pages/
-//http://localhost:8888/categories/
