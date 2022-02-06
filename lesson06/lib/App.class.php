@@ -61,3 +61,12 @@ class App
         }
     }
 }
+
+
+//http://localhost:8888/?page=index&action=test
+//http://localhost:8888/?page=index
+//http://localhost:8888/index.php?page=categories&action=index&id=4&asAjax=true
+//http://localhost:8888/admin/
+
+//http://localhost:8888/admin/control/pages/
+//http://localhost:8888/categories/
