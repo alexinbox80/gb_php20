@@ -54,7 +54,7 @@ class Good extends Model {
     public function getGoodInfo(){
         return db::getInstance()->Select(
             'SELECT * FROM goods WHERE good_id = :good_id',
-            ['good_id' => (int)$this->good_id]);
+            ['good_id' => $this->good_id]);
     }
 
     public static function getGoodPrice($good_id){
