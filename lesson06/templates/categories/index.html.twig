@@ -10,7 +10,7 @@
 <div id="goods-data">
     <ul>
         {% for good in content_data.goods %}
-        <li><a href="/categories/goods/{{ good.good_id }}/">{{ good.name }}</a></li>
+        <li><a href="/categories/goods/{{ good.good_id }}/">{{ good.title }}</a></li>
         {% endfor %}
     </ul>
 </div>
