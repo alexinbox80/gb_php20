@@ -1,0 +1,33 @@
+<div class="container">
+    <h1>Your are welcome!</h1>
+    {% if content_data.status == 'ok' %}
+        <form class="ajax" method="post" action="">
+            <input type="hidden" name="act" value="logout">
+            <div class="form-actions">
+                <button class="btn btn-large btn-primary" type="submit">Logout</button>
+            </div>
+        </form>
+    {% endif %}
+    <div class="main-error alert alert-error hide">
+        {% if content_data.status == 'error' %}
+            Error :&nbsp;{{ content_data.info }}
+        {% elseif content_data.status == 'ok' %}
+            OK:&nbsp;{{ content_data.info }}
+        {% endif %}
+    </div>
+    {% if not content_data.status %}
+        <form class="form-signin ajax" method="post" action="">
+            <h2 class="">Please sign in</h2>
+            <input name="login" type="text" class="" placeholder="login" autofocus>
+            <input name="passwd" type="password" class="" placeholder="password">
+            <label class="checkbox">
+                <input name="remember-me" type="checkbox" value="remember-me" checked> Remember me
+            </label>
+            <input type="hidden" name="act" value="login">
+            <button class="" type="submit">Sign in</button>
+            <div class="">
+                <p>Not have an account? <a href="#">Register it.</a>
+            </div>
+        </form>
+    {% endif %}
+</div>

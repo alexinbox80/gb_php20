@@ -1,0 +1,22 @@
+<div id=﻿"menu" class="main-menu">
+    <div class="nav-responsive">
+        <span>Меню</span>
+        <div class="expandable"><i class="fa fa-bars"></i></div>
+    </div>
+    <ul class="nav navbar-nav">
+        {% for category in menu %}
+            {% if not category.childs %}
+                <li class="top_level home"><a href="{{category.href}}">{{category.name}}</a></li>
+            {% else %}
+                <!--
+                <li class="top_level home"><a href="{{ category.href }}">{{ category.name }}</a></li>
+-->
+                <ul class="list-unstyled childs_1">
+                    {% for child in category.childs %}
+                        <li class="top_level home"><a href="{{ child.href }}">{{ child.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

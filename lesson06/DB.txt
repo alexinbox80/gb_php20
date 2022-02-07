@@ -102,3 +102,22 @@ SELECT user_role.user_id, user_role.roleId, users.login, users.firstName, roles.
 FROM user_role
 INNER JOIN users ON user_role.user_id = users.user_id
 INNER JOIN roles ON user_role.role_id = roles.role_id;
+
+
+SELECT empId, empName, empLoginTime, NOW(), FROM_UNIXTIME(UNIX_TIMESTAMP(empLoginTime), '%Y-%m-%d %H:%i:%s'), UNIX_TIMESTAMP(empLoginTime)
+FROM `employee`;
+
+DROP TABLE IF EXISTS `employee`;
+CREATE TABLE `employee` (
+  `empId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `empName` varchar(20) DEFAULT NULL,
+  `empLoginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`empId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `employee` (`empId`, `empName`, `empLoginTime`) VALUES
+(1,	'XXX',	'2020-12-31 21:00:01'),
+(2,	'YYY',	'2020-12-31 21:00:01'),
+(3,	'ZZZ',	'2020-12-31 21:00:01'),
+(4,	'XYZ',	'2020-12-31 21:00:01'),
+(5,	'BOB',	'2022-02-07 12:11:23');

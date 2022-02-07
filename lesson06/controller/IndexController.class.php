@@ -13,12 +13,44 @@ class IndexController extends Controller
 	
 	//метод, который отправляет в представление информацию в виде переменной content_data
 	function index($data){
-		 return 111 . 'ZHOPA';
+        $content = 111 . 'ZHOPA';
+
+        $auth = self::login($data);
+
+        $answer = [
+            'content' => $content,
+            'status' => $auth['status'],
+            'info' => $auth['info']
+        ];
+
+        return $answer;
+		 //return 111 . 'ZHOPA';
 	}
 
 	function test($id){
 
         return 'indexClessTest';
+    }
+
+    private function login($data)
+    {
+        $user = new Auth($data);
+        $flag = $user->auth();
+
+        if ($flag) {
+            $result = ['info' => 'User is registered in the system!',
+                       'status' => 'ok'];
+        }
+
+        if (($user->getError() != "") && ($_POST['act'] == 'login')) {
+            $result = ['info' => $user->getError(),
+                       'status' => 'error'];
+        } else if ($_POST['act'] == 'logout') {
+            $result = ['info' => $user->getError(),
+                'status' => 'ok'];
+        }
+
+        return $result;
     }
 
     function goods(){

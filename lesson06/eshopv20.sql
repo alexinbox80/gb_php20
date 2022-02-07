@@ -40,6 +40,27 @@ INSERT INTO `categories` (`id`, `category_id`, `name`, `parent_id`, `dateCreate`
 (5,	'2fb9d7ee-9ef1-401e-a30b-02040f28e3ee',	'Category 5',	'faa2805c-ee45-4180-9e9e-642d4abe235d',	1641325585,	1641325585,	1),
 (6,	'724a1e07-7dcb-4b7b-8540-2591d794fb1b',	'Category 6',	'faa2805c-ee45-4180-9e9e-642d4abe235d',	1641325585,	1641325585,	1);
 
+
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(222) COLLATE utf8_bin NOT NULL,
+  `parent_id` int(10) unsigned NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dateUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `menu` (`id`, `name`, `parent_id`, `dateCreate`, `dateUpdate`, `status`) VALUES
+(1,	'Category 1',	0, FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'), FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'),	1),
+(2,	'Category 2',	1, FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'), FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'),	1),
+(3,	'Category 3',	1, FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'), FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'),	1),
+(4,	'Category 4',	0, FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'), FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'),	1),
+(5,	'Category 5',	4, FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'), FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'),	1),
+(6, 'Category 6',	4, FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'), FROM_UNIXTIME(1641325585, '%Y-%m-%d %H:%i:%s'),	1);
+
+
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

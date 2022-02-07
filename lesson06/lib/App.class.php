@@ -44,7 +44,9 @@ class App
             $data = [
                 'content_data' => $controller->$methodName($_GET),
                 'title' => $controller->title,
-                'categories' => Category::getCategories(0)
+                'categories' => Category::getCategories(0),
+                'menu' => Category::getCategories(-1),
+                'uuid' => UUID::v4()
             ];
 
             $view = $controller->view . '/' . $methodName . '.html.twig';
