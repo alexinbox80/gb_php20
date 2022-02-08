@@ -1,0 +1,22 @@
+{% include 'header.html.twig' %}
+hello, people!
+
+{{content_data}}
+
+{%  for good in content_data %}
+
+    {{ good.title }} -- {{ good.price }} -- {{ good.good_id }} <br>
+
+{% endfor %}
+
+hello, people! <br>
+
+content : {{ content_data.content }}<br>
+
+<hr>
+menu here <br>
+{% include 'menu.html.twig' %}
+<hr>
+uuid here <br>
+{{ uuid }}
+{% include 'footer.html.twig' %}<br>

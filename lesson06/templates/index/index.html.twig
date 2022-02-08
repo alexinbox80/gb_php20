@@ -1,10 +1,18 @@
-{% include 'header.html.twig' %}
-hello, people! {{content_data}}
-{% include 'footer.html.twig' %}<br>
-<hr>
-menu here <br>
-{{ menu }}
-{% include 'menu.html.twig' %}
-<hr>
-uuid here <br>
-{{ uuid }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html.twig' %}
+</head>
+<body>
+    <div class="wrapper">
+        <div class="top">
+            {% include 'header.html.twig' %}
+            {% include 'index/promo.html.twig' %}
+            {% include 'index/sale.html.twig' %}
+            {% include 'index/products.html.twig' %}
+        </div>
+        {% include 'footer.html.twig' %}
+    </div>
+    {% include 'script.html.twig' %}
+</body>
+</html>

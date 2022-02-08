@@ -8,12 +8,12 @@ class IndexController extends Controller
     function __construct()
     {
         parent::__construct();
-        $this->title .= ' | Главная';
+        $this->title .= ' | Main';
     }
 	
 	//метод, который отправляет в представление информацию в виде переменной content_data
 	function index($data){
-        $content = 111 . 'ZHOPA';
+        $content = '';
 
         $auth = self::login($data);
 
@@ -26,11 +26,6 @@ class IndexController extends Controller
         return $answer;
 		 //return 111 . 'ZHOPA';
 	}
-
-	function test($id){
-
-        return 'indexClessTest';
-    }
 
     private function login($data)
     {

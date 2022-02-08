@@ -15,6 +15,11 @@ class Category extends Model
             'type' => 'varchar',
             'size' => 36
         ];
+
+        self::$properties['url'] = [
+            'type' => 'varchar',
+            'size' => 256
+        ];
     }
 
     public static function getProperties()
@@ -22,98 +27,64 @@ class Category extends Model
         return self::$properties;
     }
 
-    private static function getMenuTree($dataset)
+    private static function createMenuTree(array $elements, $parentId = 0): array
     {
         $tree = array();
 
-        $ind = 0;
+        foreach ($elements as $element) {
+            if ($element['parent_id'] == $parentId) {
 
-        foreach ($dataset as $id => &$node) {
+                $children = self::createMenuTree($elements, $element['id']);
 
-            echo "id = " . $id . "<br>";
-            print_r($node);
+                if ($children) {
+                    //$element[$element['menu_nl']] = $children;
+                    $element['children'] = $children;
+                }
 
-            //Если нет вложений
-            if (!$node['parent_id']) {
-                $tree[$id] = &$node;
-                //$tree[$id]['ind'] = $ind;
-                //$tree[$node['category_id']] = &$node;
-            } else {
-                //Если есть потомки то перебераем массив
-                $dataset[$node['parent_id']]['childs'][$id] = &$node;
-                // $dataset[$node['parent_id']]['childs'][$id]['ind'] = $ind;
+                $tree[] = $element;
             }
-            //$ind++;
         }
+
         return $tree;
     }
 
-    private static function getMenu($parentId, $menu): array
+    private static function createMenuTreeUUID(array $elements, $parentId = 'root'): array
     {
-        //$arr = self::getMenuTree($menu);
+        $tree = array();
+        foreach ($elements as $element) {
 
-        $arr = [];
-        $ind = 0;
+            if ($element['parent_id'] == $parentId) {
 
-        foreach ($menu as $item) {
-            $arr[] = [
-                'category_id' => $item['category_id'],
-                'name' => $item['name'],
-                'parent_id' => $item['parent_id'],
-                'ind' => $ind
-            ];
-            //$arr[]['ind'] = $ind;
-            $ind++;
+                $children = self::createMenuTreeUUID($elements, $element['category_id']);
+
+                if ($children) {
+                    //$element[$element['menu_nl']] = $children;
+                    $element['children'] = $children;
+                }
+
+                $tree[] = $element;
+            }
         }
 
-        echo "HERE";
-        $return = array();
-        foreach ($menu as $value) { //Обходим массив
-            $return[$value['parent_id']][] = $value;
-
-            echo " : " . $value['parent_id'] . "<pre>";
-            print_r($return[$value->parent_id]);
-            echo "</pre>";
-        }
-
-
-        echo "<pre>";
-        print_r($return);
-        echo "</pre>";
-
-
-        echo "<pre>";
-        print_r($arr);
-        echo "</pre>";
-
-        $arr = self::getMenuTree($arr);
-
-        echo "<pre>";
-        print_r($arr);
-        echo "</pre>";
-
-        return $arr;
+        return $tree;
     }
 
     public static function getCategories($parentId = 0)
     {
-        $result = db::getInstance()->Select(
-            'SELECT category_id, name FROM categories WHERE status=:status AND parent_id = :parent_id',
-            ['status' => Status::Active, 'parent_id' => $parentId]);
-
-        if ($parentId <> 0) {
+        if ($parentId == -1) {
             $result = db::getInstance()->Select(
-                'SELECT category_id, name, parent_id FROM categories WHERE status=:status',
+                'SELECT category_id, name, url, parent_id FROM categories WHERE status=:status',
                 ['status' => Status::Active]);
-            $result = self::getMenu($parentId, $result);
 
+            $result = self::createMenuTreeUUID($result, 'root');
+            //$result = self::createMenuTree($result, 0);;
 
-            //$this->_category_arr = $this->_getCategory();
-//
-//            $result = db::getInstance()->Select(
-//                'SELECT id, name, parent FROM menu WHERE status=:status',
-//                ['status' => Status::Active]);
-//            $result = self::getMenu1($parentId, $result);
+        } elseif ($parentId == 0) {
+
+            $result = db::getInstance()->Select(
+                'SELECT category_id, name FROM categories WHERE status=:status AND parent_id = :parent_id',
+                ['status' => Status::Active, 'parent_id' => $parentId]);
+
         }
 
         return $result;

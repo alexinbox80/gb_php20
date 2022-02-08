@@ -46,7 +46,8 @@ class App
                 'title' => $controller->title,
                 'categories' => Category::getCategories(0),
                 'menu' => Category::getCategories(-1),
-                'uuid' => UUID::v4()
+                'uuid' => UUID::v4(),
+                'date_y' => date(Y)
             ];
 
             $view = $controller->view . '/' . $methodName . '.html.twig';
