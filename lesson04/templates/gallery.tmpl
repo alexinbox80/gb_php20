@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="content">
+        <h1 class="header__h1">{{ title }}</h1>
+    </div>
+    <div class="content">
+        <ul class="gallery">
+            {% for pic in pics %}
+                <li class="gallery__item">
+                    <div class="gallery__id">
+                        {{ pic.id }}
+                    </div>
+                    <div class="gallery__image">
+                        <img class="gallery__pic" src="pics/{{ pic.photo }}" alt="">
+                    </div>
+                    <div class="gallery__text">
+                        <span class="gallery__title">Title: {{ pic.title }}</span>
+                        <span class="gallery__price">Price: ${{ pic.price }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="note" class="note"></div>
+        <div class="gallery__control">
+            <input id="listCount" class="form__count" type="number" name="listCount" value="10" min="5" max="30">
+            <button id="buttonMore" class="form__button" type="submit">Еще</button>
+        </div>
+    </div>
+    <script type="module" defer src="js/jquery-3.6.0.min.js"></script>
+    <script type="module" defer src="js/main.js" ></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+.form__input {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 14px;
+}
+
+.form__upload {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__button {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0.02em;
+    color: #FFF;
+    text-transform: uppercase;
+    background: #00CDFF;
+    border-radius: 1px 1px 1px 2px;
+    border: 1px solid #00CDFF;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.form__count {
+    border: 1px solid #00CDFF;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding: 1px 0px 1px 16px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.content {
+    padding: 0 calc(50% - 621px);
+}
+
+.gallery {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.gallery__id {
+    margin-right: 32px;
+}
+
+.gallery__item {
+    margin-bottom: 32px;
+    display: flex;
+    border: 1px solid rgb(225, 225, 225);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 0 16px rgb(0 0 0 / 16%);
+}
+
+.gallery__text {
+    margin-left: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery__title {
+    margin-bottom: 32px;
+}
+
+.gallery__pic {
+    width: 100%;
+}
+
+.gallery__control {
+    display: flex;
+    margin-bottom: 32px;
+}
+
+.header__h1 {
+    text-align: center;
+}
+
+.note {
+    height: 32px;
+}
+
+.err {
+    color: red;
+}
