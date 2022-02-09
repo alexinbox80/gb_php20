@@ -18,7 +18,7 @@ export default class CartView {
                                            min="1" max="27" value="${this._data.quantity}">
                                 </div>
                             </div>
-                             <div class="cart__cross-close" id="card-${this._data.goodId}">
+                             <div class="cart__cross-close" id="card-${this._data.good_id}">
                                 <!--<a class="cart__cross-link" href="#">-->
                                     <svg class="cart__cross-pic" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +36,7 @@ export default class CartView {
 
         if (this._addHandler) {
 
-            const addBtn = container.querySelector(`#card-${this._data.goodId}`);
+            const addBtn = container.querySelector(`#card-${this._data.good_id}`);
             //const addBtn = container.getAttribute('data-id');
 
             //console.log('addBtn : ' + addBtn + ' cont : ' + container);
@@ -46,7 +46,7 @@ export default class CartView {
     }
 
     _addHandler() {
-        this._addHandlerCb(this._data.goodId);
+        this._addHandlerCb(this._data.good_id);
     }
 
     setAddHandler(callback) {

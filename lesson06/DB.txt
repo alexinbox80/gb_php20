@@ -104,6 +104,12 @@ INNER JOIN users ON user_role.user_id = users.user_id
 INNER JOIN roles ON user_role.role_id = roles.role_id;
 
 
+SELECT carts.cart_id, carts.user_id, carts.good_id, carts.quantity, goods.title, goods.description, goods.image, goods.color, goods.size, goods.price, goods.discount
+FROM carts
+INNER JOIN goods ON carts.good_id = goods.good_id
+WHERE carts.status = 1 AND goods.status = 1;
+
+
 SELECT empId, empName, empLoginTime, NOW(), FROM_UNIXTIME(UNIX_TIMESTAMP(empLoginTime), '%Y-%m-%d %H:%i:%s'), UNIX_TIMESTAMP(empLoginTime)
 FROM `employee`;
 

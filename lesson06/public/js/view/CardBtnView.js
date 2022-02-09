@@ -5,7 +5,15 @@ export default class CardBtnView {
     }
 
     getHtml() {
-        return `<span class="header__cart-count">${this._data}</span>`;
+        let countContent;
+
+        if (parseInt(this._data) === 0) {
+            countContent = `<span class=""></span>`;
+        } else {
+            countContent = `<span class="header__cart-count">${this._data}</span>`;
+        }
+
+        return countContent;
     }
 
     render($container, target = 'afterbegin') {

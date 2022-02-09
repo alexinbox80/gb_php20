@@ -12,7 +12,7 @@ export default class Cart extends GoodList {
     }
 
     save(cart) {
-        //let saveGood = {userId: 'this user Id', goodId: good.goodId, quantity: good.quantity, timeCreate: Date.now()};
+        //let saveGood = {userId: 'this user Id', good_id: good.good_id, quantity: good.quantity, timeCreate: Date.now()};
 
         //console.log('save cart item arr count : ' + cart.length + ' save cart : ' + JSON.stringify(cart));
 
@@ -26,7 +26,7 @@ export default class Cart extends GoodList {
 
     add(good) {
 
-        const findGood = this._goodList.find(item => item.goodId === good.goodId);
+        const findGood = this._goodList.find(item => item.good_id === good.good_id);
 
         if (findGood) {
 
@@ -39,14 +39,14 @@ export default class Cart extends GoodList {
         }
         //console.log('goodCount : ' + this.getCount() + ' goodList : ' + JSON.stringify(this._goodList));
 
-        this._eventEmmiter.emit('added', good.goodId);
+        this._eventEmmiter.emit('added', good.good_id);
 
         // добавить в базу вместо this._save()???
     }
 
     decrease(id) {
         console.log('decrease : ' + id);
-        const findGood = this._goodList.filter(item => item.goodId === id);
+        const findGood = this._goodList.filter(item => item.good_id === id);
 
         if(findGood.quantity > 1) {
             findGood.remove();
@@ -60,6 +60,8 @@ export default class Cart extends GoodList {
     }
 
     getCount() {
+
+        console.log('getCount goodList : ' + JSON.stringify(this._goodList));
         return this._goodList.reduce((acc, good) => acc + good.quantity, 0);
     }
 }

@@ -20,9 +20,22 @@ http://localhost:8888/categories/
 //site/index.php?path=index/test/5
 //                     page/action/id
 
+http://localhost:8888/index.php?page=index&action=goods&asAjax=true
+http://localhost:8888/index.php?page=index&action=cart&asAjax=true
+http://localhost:8888/index.php?page=index&action=goods&lbgn=10&lcnt=9
+http://localhost:8888/index.php?page=index&action=goods&lbgn=0&lcnt=6&asAjax=true
+lbgn - начало списка
+lcnt - количество
 
 //admin
 http://localhost:8888/?path=admin&action=control&id=pages
 http://localhost:8888/?path=admin&action=control&id=goods
 http://localhost:8888/?path=admin&action=control&id=categories
 http://localhost:8888/?path=admin&action=control&id=orders
+
+http://localhost:8888/?path=user
+http://localhost:8888/user/
+
+$.ajax({url: '/index.php?page=index&action=goods&asAjax=true', method: 'GET', dataType: 'json', success: function(response){console.log('response:', response)}})
+$.ajax({url: 'index.php?page=index&action=goods&lbgn=0&lcnt=6&asAjax=true', method: 'GET', dataType: 'json', success: function(response){console.log('response:', response)}})
+

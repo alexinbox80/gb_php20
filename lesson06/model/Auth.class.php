@@ -72,7 +72,7 @@ class Auth extends User
             }
 
             switch ($action) {
-                case 'login':
+                case 'action-login':
                     if (($login == "") || ($passwd == "")) {
                         $this->error = "Empty login or password!";
                         $this->is_authorized = false;
@@ -86,16 +86,9 @@ class Auth extends User
                                 INNER JOIN roles ON user_role.role_id = roles.role_id
                                 WHERE login = '$login' AND passwd = '$passwdMd5' LIMIT 1";
 
-                       // echo $sql . "<br>";
-
                         $authUser = db::getInstance()->Select(
                             $sql,
                             ['login' => $login, 'passwd' => $passwdMd5]);
-
-//                        print_r($authUser);
-//                        echo "<br> id : ";
-//                        print_r($authUser[0]['user_id']);
-//                        echo "<br>";
 
                         if (!$authUser[0]['user_id']) {
                             $this->is_authorized = false;
@@ -108,7 +101,7 @@ class Auth extends User
 
                     }
                     break;
-                case 'logout':
+                case 'action-logout':
                         $this->error = "Site logout success!";
                         $this->logout();
                     break;

@@ -22,7 +22,11 @@
         {% include 'menu.html.twig' %}
         <div class="header__links">
             <div class="header__regs">
-                {% include 'login.html.twig' %}
+                {% if not content_data.status == 'ok' %}
+                    {% include 'login.html.twig' %}
+                {% else %}
+                    {% include 'logout.html.twig' %}
+                {% endif %}
             </div>
             <a id="header__cart" class="header__cart header__icons" href="index.php?path=cart">
                 <svg class="header__icons" width="32" height="29" viewBox="0 0 32 29" fill="none"

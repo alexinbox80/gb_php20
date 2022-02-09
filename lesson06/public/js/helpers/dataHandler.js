@@ -1,25 +1,25 @@
 export default {
-    _url: '/lesson08/task/api/v1/',
+    _url: 'index.php',
 
-    // getCatalog(errorCallBack) {
-    //     return fetch(`${this._url}catalogData.json`)
-    //         .then((response) => {
-    //             if (response.ok) {
-    //                 //return response.data;
-    //
-    //                 return response.json();
-    //             } else {
-    //                 return errorCallBack(response.status);
-    //             }
-    //         })
-    //         .then((data) => data)
-    //         .catch((error) => {
-    //             return errorCallBack(error);
-    //         })
-    // },
+    getShowcase(errorCallBack) {
+        return fetch(`${this._url}?page=index&action=goods&lbgn=0&lcnt=6&asAjax=true`)
+            .then((response) => {
+                if (response.ok) {
+                    //return response.data;
+
+                    return response.json();
+                } else {
+                    return errorCallBack(response.status);
+                }
+            })
+            .then((data) => data)
+            .catch((error) => {
+                return errorCallBack(error);
+            })
+    },
 
     getCatalog(errorCallBack) {
-        return fetch(`${this._url}jsonServer.php`, {
+        return fetch(`${this._url}?page=index&action=goods&asAjax=true`, {
             method: 'POST',
             //mode: "cors",
             headers: {
@@ -42,7 +42,7 @@ export default {
     },
     getCart(errorCallBack) {
         //return fetch(`${this._url}getCart.json`)
-        return fetch(`${this._url}jsonServer.php`, {
+        return fetch(`${this._url}?page=index&action=cart&asAjax=true`, {
             method: 'POST',
             //mode: "cors",
             headers: {

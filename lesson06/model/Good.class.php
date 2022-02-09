@@ -1,10 +1,12 @@
 <?php
 
-class Good extends Model {
+class Good extends Model
+{
     protected static $table = 'goods';
 
     protected static function setProperties()
     {
+
         self::$properties['good_id'] = [
             'type' => 'varchar',
             'size' => 36
@@ -44,20 +46,42 @@ class Good extends Model {
         ];
     }
 
+    public static function getGoodsPage($categoryId, $begin = 0, $offset)
+    {
+        $sql = "SELECT * 
+                FROM  " . self::$table . "
+                WHERE category_id = :category_id AND status = :status AND id > :begin
+                AND id <= :offset ";
+                //LIMIT :offset; ";
+
+        return db::getInstance()->Select(
+            $sql,
+            [
+                'status' => Status::Active,
+                'category_id' => $categoryId,
+                'begin' => (int)$begin,
+                'offset' => (int)$offset
+            ]);
+    }
+
     public static function getGoods($categoryId)
     {
+        //$sql = "SELECT good_id, category_id, `title`, price FROM goods WHERE category_id = :category_id AND status=:status";
+        $sql = "SELECT * FROM goods WHERE category_id = :category_id AND status = :status";
         return db::getInstance()->Select(
-            'SELECT good_id, category_id, `title`, price FROM goods WHERE category_id = :category_id AND status=:status',
+            $sql,
             ['status' => Status::Active, 'category_id' => $categoryId]);
     }
 
-    public function getGoodInfo(){
+    public function getGoodInfo()
+    {
         return db::getInstance()->Select(
             'SELECT * FROM goods WHERE good_id = :good_id',
             ['good_id' => $this->good_id]);
     }
 
-    public static function getGoodPrice($good_id){
+    public static function getGoodPrice($good_id)
+    {
         $result = db::getInstance()->Select(
             'SELECT price FROM goods WHERE good_id = :good_id',
             ['good_good' => $good_id]);

@@ -43,12 +43,12 @@ export default class GoodList {
     }
 
     remove(id) {
-        this._goodList =  this._goodList.filter(good => good.goodId !== id);
+        this._goodList =  this._goodList.filter(good => good.good_id !== id);
         return this._goodList;
     }
 
     get(id) {
-        return this._goodList.find(good => good.id == id);
+        return this._goodList.find(good => good.good_id == id);
     }
 
     getAll() {
@@ -56,12 +56,12 @@ export default class GoodList {
     }
 
     getById(id) {
-        return this._goodList.find(good => good.id === id);
+        return this._goodList.find(good => good.good_id === id);
     }
 
     getSumGoodsList() {
 
-        const sumGoodsList = this.goods.reduce((acc, num) => acc + num.price, 0);
+        const sumGoodsList = this._goodList.reduce((acc, num) => acc + num.price, 0);
 
         return sumGoodsList;
     }

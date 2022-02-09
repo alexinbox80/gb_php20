@@ -11,7 +11,8 @@ CREATE TABLE `carts` (
   `cart_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
   `order_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
   `user_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `price` float unsigned DEFAULT NULL,
+  `good_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+  `price` float unsigned NOT NULL,
   `quantity` int(11) NOT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `dateUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -19,6 +20,9 @@ CREATE TABLE `carts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `carts` (`id`, `cart_id`, `order_id`, `user_id`, `good_id`, `price`, `quantity`, `dateCreate`, `dateUpdate`, `status`) VALUES
+(1,	'851cc264-1acd-41e7-b52f-bdd939dcfe7d',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81245312-a273-0c97-04e8-f99b5b199795',	0,	6,	'2022-02-09 21:04:10',	'2022-02-09 21:04:10',	1),
+(2,	'b75b02de-10d9-48ff-a7f8-17a2b7d710f9',	'5a0bf80d-00e7-43f0-8581-aae7126d8e63',	'c08b32be-1677-443c-bf00-877291354c93',	'7d8b08dd-c403-2c1d-7a22-ff1d671341bc',	0,	8,	'2022-02-09 22:16:25',	'2022-02-09 22:16:25',	1);
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
@@ -79,13 +83,13 @@ INSERT INTO `goods` (`id`, `good_id`, `category_id`, `title`, `description`, `im
 (5,	'7e606fd5-678c-7669-b972-fe3fa3179867',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-5.jpg',	'black',	'XM',	35,	5,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
 (6,	'7d8b04dd-c403-2c1d-7a22-ff1d671341be',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-4.jpg',	'green',	'XXXL',	52,	18,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
 (7,	'7d8b08dd-c403-2c1d-7a22-ff1d671341bc',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY MO CAPSULE ZHOPA',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-3.jpg',	'green',	'XXXL',	45,	10,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(8,	'81245312-a273-0c97-04e8-f99b5b199795',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY X MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-1.jpg',	'black',	'XL',	45,	15,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(9,	'81207332-a273-0c57-04e8-f99b5b199796',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY X MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-2.jpg',	'black',	'XL',	45,	23,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(10,	'81296312-a273-0c97-04e8-f99b5b199797',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY X MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian<br> arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-3.jpg',	'black',	'XXL',	65,	15,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(11,	'b53e01e9-baf4-6fe2-09e4-5cd132d59a78',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian\r\narbiter of cool Kym Ellery teams up with Operandi',	'prod-item-6.jpg',	'red',	'XXX',	75,	15,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(12,	'7e606fd5-678c-7669-b972-fe3fa3179869',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-5.jpg',	'black',	'XM',	35,	5,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(13,	'7d8b04dd-c403-2c1d-7a22-ff1d671341ba',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-4.jpg',	'green',	'XXXL',	52,	18,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1),
-(14,	'7d8b08dd-c403-2c1d-7a22-ff1d671341bb',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY MO CAPSULE ZHOPA',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-3.jpg',	'green',	'XXXL',	45,	10,	'2022-01-04 19:46:25',	'2022-02-07 16:56:34',	1);
+(8,	'81245312-a273-1c87-04e8-f99b5b199795',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY X MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-1.jpg',	'black',	'XL',	45,	15,	'2022-02-09 21:13:40',	'2022-02-09 21:13:40',	1),
+(9,	'81207332-a273-0c57-04e7-f99b5b199796',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY X MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-2.jpg',	'black',	'XL',	45,	23,	'2022-02-09 21:13:48',	'2022-02-09 21:13:48',	1),
+(10,	'81296312-a373-0c97-04e8-f99b5b199797',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY X MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian<br> arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-3.jpg',	'black',	'XXL',	65,	15,	'2022-02-09 21:13:56',	'2022-02-09 21:13:56',	1),
+(11,	'b53e11e9-baf4-6fe2-09e4-5cd132d59a78',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian\r\narbiter of cool Kym Ellery teams up with Operandi',	'prod-item-6.jpg',	'red',	'XXX',	75,	15,	'2022-02-09 21:14:07',	'2022-02-09 21:14:07',	1),
+(12,	'7e606fd5-678c-7869-b972-fe3fa3179869',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-5.jpg',	'black',	'XM',	35,	5,	'2022-02-09 21:14:18',	'2022-02-09 21:14:18',	1),
+(13,	'7d8b04dd-c403-2c1d-7a22-ff4d671341ba',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY MO CAPSULE',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-4.jpg',	'green',	'XXXL',	52,	18,	'2022-02-09 21:14:26',	'2022-02-09 21:14:26',	1),
+(14,	'7d8b08dd-c403-2c1d-7b22-ff1d671341bb',	'ef720659-d7c1-4405-9fb1-ac1b36c00444',	'NEW ELLERY MO CAPSULE ZHOPA',	'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Operandi',	'prod-item-3.jpg',	'green',	'XXXL',	45,	10,	'2022-02-09 21:14:36',	'2022-02-09 21:14:36',	1);
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
@@ -161,4 +165,4 @@ INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
 (2,	'c08b32be-1677-443c-bf00-877291354c93',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
 (3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
 
--- 2022-02-08 21:09:18
+-- 2022-02-09 22:17:32

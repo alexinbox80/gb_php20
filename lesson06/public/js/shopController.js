@@ -43,7 +43,7 @@ export default {
         //         console.log(good);
         //         saveCart.push({
         //             userId: '81245312-a273-0c97-04e8-f99b5b199795',
-        //             goodId: good.goodId,
+        //             good_id: good.good_id,
         //             quantity: good.quantity,
         //             timeCreate: Date.now()
         //         });
@@ -53,7 +53,7 @@ export default {
         // saveCart = this._cartModel._goodList.map(function(item) {
         //     return ({
         //         userId: '81245312-a273-0c97-04e8-f99b5b199795',
-        //         goodId: item.goodId,
+        //         good_id: item.good_id,
         //         quantity: item.quantity,
         //         timeCreate: Date.now()
         //     });
@@ -61,8 +61,8 @@ export default {
 
         saveCart = this._cartModel._goodList.map(good => {
             return {
-                userId: '81245000-a273-0c97-04e8-f99b5b199795',
-                goodId: good.goodId,
+                user_id: '81245000-a273-0c97-04e8-f99b5b199795',
+                good_id: good.good_id,
                 quantity: good.quantity,
                 timeCreate: Date.now()
             }
@@ -83,8 +83,9 @@ export default {
 
      //save state in BD????
 
-     ///?????????????????
-        //this._renderPageCart();
+
+        //remove item cart from cart page
+        this._renderPageCart();
         //this._renderCart();
     },
 
@@ -117,7 +118,7 @@ export default {
                     //console.log(good);
                     const cart = new CartView(good);
                     cart.render(cartList, 'afterbegin');
-                    cart.setAddHandler(this._removeFromCart.bind(this, good.goodId));
+                    cart.setAddHandler(this._removeFromCart.bind(this, good.good_id));
                 }
             );
         }
@@ -129,7 +130,7 @@ export default {
         if (product) {
             product.textContent = '';
 
-            this._showcaseModel.getAll().slice(0, 6).forEach(
+            this._showcaseModel.getAll().forEach(
                 good => {
                         const card = new CardView(good);
                         card.render(product, 'beforeend');

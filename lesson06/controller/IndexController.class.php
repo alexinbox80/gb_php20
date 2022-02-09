@@ -8,7 +8,7 @@ class IndexController extends Controller
     function __construct()
     {
         parent::__construct();
-        $this->title .= ' | Main';
+        $this->title .= ' | Showcase';
     }
 	
 	//метод, который отправляет в представление информацию в виде переменной content_data
@@ -24,7 +24,6 @@ class IndexController extends Controller
         ];
 
         return $answer;
-		 //return 111 . 'ZHOPA';
 	}
 
     private function login($data)
@@ -48,16 +47,30 @@ class IndexController extends Controller
         return $result;
     }
 
-    function goods(){
+    function goods($data){
 
         $categoryId = 'ef720659-d7c1-4405-9fb1-ac1b36c00444';
 
-        $goods = Good::getGoods($categoryId);
+        $lbgn = $_GET['lbgn'] ? strip_tags($_GET['lbgn']) : "";
+        $lcnt = $_GET['lcnt'] ? strip_tags($_GET['lcnt']) : "";
+
+        if (($lbgn >= 0 ) || ($lbgn > 0)) {
+            $goods = Good::getGoodsPage($categoryId, $lbgn, $lcnt);
+        } else {
+            $goods = Good::getGoods($categoryId);
+        }
 
         return $goods;
     }
 
+    function cart($data)
+    {
+        $userId = 'c08b32be-1677-443c-bf00-877291354c93';
 
+        $cart = Cart::getCart($userId);
+
+        return $cart;
+    }
 }
 
 //site/index.php?path=index/test/5

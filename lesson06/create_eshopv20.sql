@@ -188,6 +188,14 @@ CREATE TABLE `carts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+
+
+INSERT INTO `carts` (`id`, `cart_id`, `order_id`, `user_id`, `price`, `quantity`, `dateCreate`, `dateUpdate`, `status`) VALUES
+(1,	'851cc264-1acd-41e7-b52f-bdd939dcfe7d',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626', 'c08b32be-1677-443c-bf00-877291354c93',	115.48,	6, NOW(), NOW(), 1),
+(2,	'b75b02de-10d9-48ff-a7f8-17a2b7d710f9', '5a0bf80d-00e7-43f0-8581-aae7126d8e63',	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	145.78,	8, NOW(), NOW(), 1);
+
+
+
 -- 2022-02-03 14:52:48
 
 
