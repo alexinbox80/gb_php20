@@ -33,6 +33,7 @@ export default {
         let saveCart = [];
 
         const good = new PurchasedGood(this._showcaseModel.get(id));
+        //const good = new PurchasedGood(this._showcaseModel.get(id), this._showcaseModel.getById(id).quantity);
 
         this._cartModel.add(good);
 
@@ -121,6 +122,15 @@ export default {
                     cart.setAddHandler(this._removeFromCart.bind(this, good.good_id));
                 }
             );
+        }
+
+        const totalPriceSpan = document.querySelector('.cart__account-tprice');
+        if (totalPriceSpan) {
+
+            totalPriceSpan.textContent = '';
+            const totalSum = this._cartModel.getSumGoodsList();
+            totalPriceSpan.insertAdjacentHTML('beforeend', '$' + totalSum);
+
         }
     },
 

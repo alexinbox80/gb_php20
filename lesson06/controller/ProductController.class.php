@@ -11,7 +11,6 @@ class ProductController extends Controller
     }
 
     function index($data){
-
-        return[];
+        return $this->checkAuth($data);
     }
 }

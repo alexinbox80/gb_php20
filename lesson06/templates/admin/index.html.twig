@@ -7,12 +7,22 @@
     <div class="wrapper">
         <div class="top">
             {% include 'header.html.twig' %}
-            <h1>Control</h1>
-            <ul>
-                {% for key,control in content_data.controls %}
-                    <li><a href="/?path=admin&action=control&id={{ key }}">{{ control }}</a></li>
-                {% endfor %}
-            </ul>
+            <div class="delim"></div>
+            {% if content_data.status == "ok" %}
+                <div class="center">
+                    <h1>Control</h1>
+                    <ul>
+                        {% for key,control in content_data.controls %}
+                            <li><a href="/?path=admin&action=control&id={{ key }}">{{ control }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if content_data.status == "error" %}
+                <div class="content__warning">
+                    {{ content_data.info }}
+                </div>
+            {% endif %}
         </div>
         {% include 'footer.html.twig' %}
     </div>

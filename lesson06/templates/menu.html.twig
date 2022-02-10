@@ -37,6 +37,14 @@
         </svg>
     </label>
     <h3 class="nav__h3">MENU</h3>
+    {% if (content_data.role == "Administrator") %}
+        <ul>
+            <li>
+                <a class="nav__item" href="index.php?path=admin">Admin page</a>
+            </li>
+        </ul>
+    {% else %}
+    {% endif %}
     {% import _self as tree %}
     {{ tree.list(menu) }}
 </nav>

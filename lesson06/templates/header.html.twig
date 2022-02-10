@@ -22,10 +22,11 @@
         {% include 'menu.html.twig' %}
         <div class="header__links">
             <div class="header__regs">
-                {% if not content_data.status == 'ok' %}
-                    {% include 'login.html.twig' %}
-                {% else %}
+                {% if content_data.status == 'ok' %}
                     {% include 'logout.html.twig' %}
+                {% endif %}
+                {% if (content_data.status == '') or (content_data.status == 'error') %}
+                    {% include 'login.html.twig' %}
                 {% endif %}
             </div>
             <a id="header__cart" class="header__cart header__icons" href="index.php?path=cart">

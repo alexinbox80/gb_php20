@@ -10,8 +10,8 @@ class CatalogController extends Controller
         $this->title .= ' | Catalog';
     }
 
-    function index($data){
-
-        return[];
+    public function index($data)
+    {
+        return $this->checkAuth($data);
     }
 }

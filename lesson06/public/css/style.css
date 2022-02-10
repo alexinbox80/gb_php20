@@ -809,7 +809,7 @@ summary {
   cursor: pointer;
 }
 
-/*-------------------------begin product ------------------------------------*/
+/*------------------------- begin product ------------------------------------*/
 .products__promo {
   background: #F7F7F7;
   text-align: center;
@@ -913,8 +913,8 @@ summary {
   margin-bottom: 48px;
 }
 
-/*-------------------------end product ------------------------------------*/
-/*-------------------------begin cart ------------------------------------*/
+/*------------------------- end product ------------------------------------*/
+/*------------------------- begin cart ------------------------------------*/
 .header__cart {
   position: relative;
 }
@@ -923,7 +923,7 @@ summary {
   background: #F16D7F;
   border-radius: 50%;
   text-align: center;
-  right: -10px;
+  right: -15px;
   top: -10px;
   padding: 1px 7px;
   font-size: 12px;
@@ -1143,8 +1143,17 @@ summary {
   margin-bottom: 17px;
 }
 
-/*-------------------------end cart ------------------------------------*/
-/*-------------------------begin registration ------------------------------------*/
+.content__warning {
+  margin-top: 48px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #222222;
+  line-height: 30px;
+  text-align: center;
+}
+
+/*------------------------- end cart ------------------------------------*/
+/*------------------------- begin registration ------------------------------------*/
 .reg__body {
   margin-top: 64px;
   display: flex;
@@ -1250,7 +1259,8 @@ summary {
   list-style-image: url("../img/dal.svg");
 }
 
-/*-------------------------end registration ------------------------------------*/
+/*------------------------- end registration ------------------------------------*/
+/*------------------------- begin media ------------------------------------*/
 @media (max-width: 1023px) {
   .center {
     padding: 0 calc(50% - 368px);
@@ -1596,5 +1606,12 @@ summary {
     padding: 16px 10px;
   }
 }
+/*------------------------- end media ------------------------------------*/
+/*------------------------- begin admin ------------------------------------*/
+.delim {
+  margin-top: 32px;
+}
+
+/*------------------------- end admin ------------------------------------*/
 
 /*# sourceMappingURL=style.css.map */

@@ -61,7 +61,7 @@ export default class Cart extends GoodList {
 
     getCount() {
 
-        console.log('getCount goodList : ' + JSON.stringify(this._goodList));
+        //console.log('getCount goodList : ' + JSON.stringify(this._goodList));
         return this._goodList.reduce((acc, good) => acc + good.quantity, 0);
     }
 }

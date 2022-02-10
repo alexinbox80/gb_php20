@@ -10,8 +10,8 @@ class RegsController extends Controller
         $this->title .= ' | Registration';
     }
 
-    function index($data){
-
-       return[];
+    function index($data)
+    {
+        return $this->checkAuth($data);
     }
 }

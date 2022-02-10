@@ -1,6 +1,5 @@
 import eventEmmiter from '../helpers/eventEmmiter.js';
 
-
 export default class GoodList {
 
     constructor() {
@@ -12,12 +11,11 @@ export default class GoodList {
 
         callback().then(data => {
 
-            this._goodList = data.map(item => new  goodClass(item));
+            this._goodList = data.map(item => new  goodClass(item, parseInt(item.quantity)));
 
             this._eventEmmiter.emit('loaded');
 
         });
-
     }
 
     // save(callback, goodClass){
@@ -61,9 +59,6 @@ export default class GoodList {
 
     getSumGoodsList() {
 
-        const sumGoodsList = this._goodList.reduce((acc, num) => acc + num.price, 0);
-
-        return sumGoodsList;
+        return  this._goodList.reduce((acc, num) => acc + num.price, 0);
     }
-
 }

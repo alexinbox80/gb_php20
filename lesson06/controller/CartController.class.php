@@ -14,6 +14,33 @@ class CartController extends Controller
     //метод, который отправляет в представление информацию в виде переменной content_data
     function index($data)
     {
-        return [];
+        User::sessionStart();
+        if (Auth::isAuthorized()) {
+
+            $user_uuid = $_SESSION['user_id'];
+
+            $role = Auth::getGroupFromUUID($user_uuid);
+
+            $answer = [
+                'info' => 'User is registered in the system!',
+                'status' => 'ok',
+                'role' => $role
+            ];
+
+        } else {
+            Auth::login($data);
+
+            $user_uuid = $_SESSION['user_id'];
+
+            $role = Auth::getGroupFromUUID($user_uuid);
+
+            $answer = [
+                'info' => 'You are not logged in!',
+                'status' => 'error',
+                'role' => $role
+            ];
+            //header('Location: index.php?path=cart');
+        }
+        return $answer;
     }
 }

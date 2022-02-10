@@ -17,10 +17,15 @@ class IndexController extends Controller
 
         $auth = self::login($data);
 
+        $user_uuid = $_SESSION['user_id'];
+
+        $role = Auth::getGroupFromUUID($user_uuid);
+
         $answer = [
             'content' => $content,
             'status' => $auth['status'],
-            'info' => $auth['info']
+            'info' => $auth['info'],
+            'role' => $role
         ];
 
         return $answer;
@@ -28,26 +33,21 @@ class IndexController extends Controller
 
     private function login($data)
     {
-        $user = new Auth($data);
-        $flag = $user->auth();
-
-        if ($flag) {
-            $result = ['info' => 'User is registered in the system!',
-                       'status' => 'ok'];
-        }
-
-        if (($user->getError() != "") && ($_POST['act'] == 'login')) {
-            $result = ['info' => $user->getError(),
-                       'status' => 'error'];
-        } else if ($_POST['act'] == 'logout') {
-            $result = ['info' => $user->getError(),
-                'status' => 'ok'];
-        }
-
-        return $result;
+        return $this->checkAuth($data);
     }
 
-    function goods($data){
+    public function logout()
+    {
+        User::sessionStart();
+        if (Auth::isAuthorized()) {
+            Auth::logout();
+        }
+
+        header('Location: /');
+        return [];
+    }
+
+    public function goods($data){
 
         $categoryId = 'ef720659-d7c1-4405-9fb1-ac1b36c00444';
 
@@ -65,8 +65,8 @@ class IndexController extends Controller
 
     function cart($data)
     {
-        $userId = 'c08b32be-1677-443c-bf00-877291354c93';
 
+        $userId = 'c08b32be-1677-443c-bf00-877291354c93';
         $cart = Cart::getCart($userId);
 
         return $cart;

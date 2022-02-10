@@ -9,10 +9,6 @@ class Auth extends User
     function __construct($data)
     {
         parent::__construct($data);
-
-//        echo "Ses : <br>";
-//        print_r($_SESSION);
-//        echo "<br>";
     }
 
     public function getError()
@@ -26,7 +22,7 @@ class Auth extends User
         return strrev(md5($salt) . $passwd . md5($login));
     }
 
-    protected static function isAuthorized(): bool
+    public static function isAuthorized(): bool
     {
         if (!empty($_SESSION["user_id"])) {
             return (bool) $_SESSION["user_id"];
@@ -51,11 +47,32 @@ class Auth extends User
         }
     }
 
-    public function logout()
+    public static function logout()
     {
         if (!empty($_SESSION["user_id"])) {
             unset($_SESSION["user_id"]);
         }
+    }
+
+    public static function login($data): array
+    {
+        $user = new Auth($data);
+        $flag = $user->auth();
+        $result = [];
+
+        if ($flag) {
+            $result = ['info' => 'User is registered in the system!',
+                'status' => 'ok'];
+        }
+
+        if (($user->getError() != "") && ($_POST['act'] == 'login')) {
+            $result = ['info' => $user->getError(),
+                'status' => 'error'];
+        } else if ($_POST['act'] == 'logout') {
+            $result = ['info' => $user->getError(),
+                'status' => 'ok'];
+        }
+        return $result;
     }
 
     public function auth(): bool

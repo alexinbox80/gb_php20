@@ -50,9 +50,12 @@ class App
                     //'categories' => Category::getCategories(0),
                     'menu' => Category::getCategories(-1),
                 ];
+
             } else {
                 $data = $controller->$methodName($_GET);
             }
+            
+            //print_r($data);
 
             $view = $controller->view . '/' . $methodName . '.html.twig';
             if (!isset($_GET['asAjax'])) {
