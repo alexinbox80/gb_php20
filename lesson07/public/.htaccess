@@ -1,0 +1,18 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php index.html
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} -f [NC,OR]
+RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteRule .* - [L]
+
+RewriteRule ^(.*)/$ ?path=$1 [QSA,L]
+
+# http://localhost:8888/user/pics/pics01.jpg
+# Redirect pics
+#
+RewriteRule ^(.*)/\d{4}/((..).*\.(jpg|jpeg|png|gif|svg))$ $2/$1
+#RewriteRule ^(.*)/\d{4}/((..).*\.(css))$ $2/$1
+#RewriteRule ^(.*)/js/((..).*\.(js))$ js/$1
+
