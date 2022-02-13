@@ -44,7 +44,7 @@ class IndexController extends Controller
         }
 
         header('Location: /');
-        return [];
+        //return [];
     }
 
     public function goods($data)

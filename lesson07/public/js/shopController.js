@@ -1,6 +1,7 @@
 import eventEmmiter from './helpers/eventEmmiter.js';
 import Cart from './model/Cart.js';
 import Showcase from './model/Showcase.js';
+import Catalog from './model/Catalog.js';
 
 import PurchasedGood from './model/PurchasedGood.js';
 import CardView from './view/CardView.js';
@@ -8,23 +9,32 @@ import CardBtnView from "./view/CardBtnView.js";
 
 import CartView from "./view/CartView.js";
 
+import Routes from './model/Routes.js';
+import Auth from './model/Auth.js';
+
 export default {
     _eventEmmiter: eventEmmiter,
     _showcaseModel: new Showcase,
+    _catalogModel: new Catalog,
     _cartModel: new Cart,
+    _authModel: new Auth,
 
     init() {
+        this._routes();
 
         this._eventEmmiter.addListener('added', this._renderCart.bind(this));
         this._eventEmmiter.addListener('removed', this._renderCart.bind(this));
 
 
-        this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
-        this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
-        this._eventEmmiter.addListener('loaded', this._renderPageCart.bind(this));
+        //this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+        //this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
+        //this._eventEmmiter.addListener('loaded', this._renderPageCart.bind(this));
 
-        this._cartModel.load();
-        this._showcaseModel.load();
+        //this._cartModel.load();
+        //this._showcaseModel.load();
+////
+
+        this._loginBtnHandler();
 
     },
 
@@ -33,32 +43,8 @@ export default {
         let saveCart = [];
 
         const good = new PurchasedGood(this._showcaseModel.get(id));
-        //const good = new PurchasedGood(this._showcaseModel.get(id), this._showcaseModel.getById(id).quantity);
 
         this._cartModel.add(good);
-
-        //console.log('cartCount : ' + this._cartModel.getCount());
-
-        // this._cartModel._goodList.forEach(
-        //     good => {
-        //         console.log(good);
-        //         saveCart.push({
-        //             userId: '81245312-a273-0c97-04e8-f99b5b199795',
-        //             good_id: good.good_id,
-        //             quantity: good.quantity,
-        //             timeCreate: Date.now()
-        //         });
-        //     }
-        // );
-
-        // saveCart = this._cartModel._goodList.map(function(item) {
-        //     return ({
-        //         userId: '81245312-a273-0c97-04e8-f99b5b199795',
-        //         good_id: item.good_id,
-        //         quantity: item.quantity,
-        //         timeCreate: Date.now()
-        //     });
-        // });
 
         saveCart = this._cartModel._goodList.map(good => {
             return {
@@ -72,6 +58,32 @@ export default {
         this._cartModel.save(saveCart);
     },
 
+    _getCatalog() {
+
+        //let saveCart = [];
+
+        //const good = new PurchasedGood(this._showcaseModel.get(id));
+
+        //this._cartModel.add(good);
+
+        // saveCart = this._cartModel._goodList.map(good => {
+        //     return {
+        //         user_id: 'c08b32be-1677-443c-bf00-877291354c93',
+        //         good_id: good.good_id,
+        //         quantity: good.quantity,
+        //         timeCreate: Date.now()
+        //     }
+        // });
+
+        const list = {
+            begin: 0,
+            offset: 20
+        };
+
+        this._catalogModel.load(list);
+    },
+
+
     _removeFromCart(id) {
 
         console.log('remove : ' + id);
@@ -83,7 +95,6 @@ export default {
         console.log('_removeFromCart : ' +  JSON.stringify(this._eventEmmiter));
 
      //save state in BD????
-
 
         //remove item cart from cart page
         this._renderPageCart();
@@ -148,5 +159,87 @@ export default {
                     }
             );
         }
+    },
+
+    _renderCatalog() {
+        //console.log('renderCatalog');
+        const product = document.querySelector('.products__box');
+
+        if (product) {
+            product.textContent = '';
+
+            console.log('renderCatalog' + this._catalogModel.getAll());
+
+            this._catalogModel.getAll().forEach(
+                good => {
+                    const card = new CardView(good);
+                    card.render(product, 'beforeend');
+                    card.setAddHandler(this._getCatalog().bind(this));
+                }
+            );
+        }
+    },
+
+    _routes () {
+
+        let pathname = window.location.pathname + window.location.search.split('&')[0];
+        const node = new Routes().getNode(pathname);
+
+        //console.log('pathname = ' + pathname);
+
+        //console.log('node url : ' + node.url + ' node name : ' + node.page);
+
+        switch (node.page) {
+            case 'root':
+                console.log("root page : " + pathname + ' node : ' + node.page);
+                this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
+                this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+
+                this._showcaseModel.load();
+                this._cartModel.load();
+                break;
+            case 'cart':
+                console.log("about page : " + pathname + ' node : ' + node.page);
+                this._eventEmmiter.addListener('loaded', this._renderPageCart.bind(this));
+                this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+                this._cartModel.load();
+                break;
+            case 'product':
+                console.log("home page : " + pathname + ' node : ' + node.page);
+                this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
+                this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+
+                this._showcaseModel.load();
+                this._cartModel.load();
+                break;
+            case 'catalog':
+                console.log("home page : " + pathname + ' node : ' + node.page);
+                this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
+
+                //this._eventEmmiter.addListener('loaded', this._renderCatalog.bind(this));
+                this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+
+                this._showcaseModel.load();
+
+                // const list = {
+                //     begin: 0,
+                //     offset: 20
+                // };
+                //
+                // this._catalogModel.request(list);
+                this._cartModel.load();
+                break;
+            case 'admin':
+                console.log("home page : " + pathname + ' node : ' + node.page);
+                this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+                this._cartModel.load();
+                break;
+            default:
+                console.log("Unknown path : " + pathname);
+        }
+    },
+
+    _loginBtnHandler() {
+        this._authModel.loginForm();
     }
 }

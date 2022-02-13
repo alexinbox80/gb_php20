@@ -15,7 +15,9 @@
 //    }
 //}
 
-require_once __DIR__ . "/BaseTest.php";
+require_once  "../model/Model.class.php";
+require_once  "../model/Good.class.php";
+require_once  "../tests/BaseTest.php";
 
 class GoodTest extends BaseTest
 {

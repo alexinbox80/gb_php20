@@ -1,5 +1,9 @@
 <?php
 
+//namespace App\Controllers;
+
+//use App\Configuration as Config;
+
 class Controller
 {
     public $view = 'admin';
@@ -10,51 +14,68 @@ class Controller
         $this->title = Config::get('sitename');
     }
 
+    protected function adminCheckRights()
+    {
+        $answer = '';
+
+        $user_uuid = $_SESSION['user_id'];
+
+        $role = Auth::getGroupFromUUID($user_uuid);
+
+        if ($role == 'Administrator') {
+            $answer = [
+                'info' => 'User is registered in the system!',
+                'status' => 'ok',
+                'role' => $role
+            ];
+        }
+
+        if ($role == 'User') {
+            $answer = [
+                'info' => 'You dont have permission to access!',
+                'status' => 'error',
+                'role' => $role
+            ];
+        }
+
+        return $answer;
+    }
+
     protected function adminCheckAuth($data)
     {
         User::sessionStart();
         if (Auth::isAuthorized()) {
-            $user_uuid = $_SESSION['user_id'];
 
-            $role = Auth::getGroupFromUUID($user_uuid);
-
-            if ($role == 'Administrator') {
-                $answer = [
-                    'info' => 'User is registered in the system!',
-                    'status' => 'ok',
-                    'role' => $role
-                ];
-            }
-
-            if ($role == 'User') {
-                $answer = [
-                    'info' => 'You dont have permission to access!',
-                    'status' => 'error',
-                    'role' => $role
-                ];
-            }
+            $answer = $this->adminCheckRights();
 
         } else {
             Auth::login($data);
-            $user_uuid = $_SESSION['user_id'];
 
-            $role = Auth::getGroupFromUUID($user_uuid);
+            $answer = $this->adminCheckRights();
 
-            if ($role == 'Administrator') {
-                $answer = [
-                    'info' => 'User is registered in the system!',
-                    'status' => 'ok',
-                    'role' => $role
-                ];
-            }
+        }
 
-            if ($role == 'User') {
-                $answer = [
-                    'info' => 'You dont have permission to access!',
-                    'status' => 'error',
-                    'role' => $role
-                ];
-            }
+        return $answer;
+    }
+
+    protected function getRole($result)
+    {
+        $user_uuid = $_SESSION['user_id'];
+
+        $role = Auth::getGroupFromUUID($user_uuid);
+
+        if ($result === '') {
+            $answer = [
+                'info' => 'User is registered in the system!',
+                'status' => 'ok',
+                'role' => $role
+            ];
+        } else {
+            $answer = [
+                'info' => $result['info'],
+                'status' => $result['status'],
+                'role' => $role
+            ];
         }
         return $answer;
     }
@@ -63,28 +84,12 @@ class Controller
     {
         User::sessionStart();
         if (Auth::isAuthorized()) {
-            $user_uuid = $_SESSION['user_id'];
 
-            $role = Auth::getGroupFromUUID($user_uuid);
+            $answer = $this->getRole('');
 
-            $answer = [
-                'info' => 'User is registered in the system!',
-                'status' => 'ok',
-                'role' => $role
-            ];
         } else {
-            Auth::login($data);
-            $user_uuid = $_SESSION['user_id'];
-
-            $role = Auth::getGroupFromUUID($user_uuid);
-
             $result = Auth::login($data);
-
-            $answer = [
-                'info' => $result['info'],
-                'status' => $result['status'],
-                'role' => $role
-            ];
+            $answer = $this->getRole($result);
         }
         return $answer;
     }

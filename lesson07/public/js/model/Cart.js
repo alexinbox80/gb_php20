@@ -12,12 +12,8 @@ export default class Cart extends GoodList {
     }
 
     save(cart) {
-        //let saveGood = {userId: 'this user Id', good_id: good.good_id, quantity: good.quantity, timeCreate: Date.now()};
-
-        //console.log('save cart item arr count : ' + cart.length + ' save cart : ' + JSON.stringify(cart));
 
         //console.log('save good : ' + JSON.stringify(saveGood));
-        //console.log('dataHandler : ' + dataHandler.addToCart(dataHandler, cart));
         //super.save(dataHandler.addToCart.bind(dataHandler, cart), cart);
         dataHandler.addToCart(dataHandler, cart);
 

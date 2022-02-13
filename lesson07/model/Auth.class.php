@@ -57,6 +57,7 @@ class Auth extends User
     public static function login($data): array
     {
         $user = new Auth($data);
+
         $flag = $user->auth();
         $result = [];
 
@@ -79,9 +80,9 @@ class Auth extends User
     {
 
         if ($this->IsPost()) {
-            $login = $_POST['login'] ? strip_tags($_POST['login']) : "";
-            $passwd = $_POST['passwd'] ? strip_tags($_POST['passwd']) : "";
-            $rememberme = $_POST['remember-me'] ? strip_tags($_POST['remember-me']) : "";
+            $login = $_POST['authLogin'] ? strip_tags($_POST['authLogin']) : "";
+            $passwd = $_POST['authPasswd'] ? strip_tags($_POST['authPasswd']) : "";
+            $rememberme = $_POST['authRemember-me'] ? strip_tags($_POST['authRemember-me']) : "";
             $action = $_POST['act'] ? strip_tags($_POST['act']) : "";
 
             if (isset($rememberme)) {

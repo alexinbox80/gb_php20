@@ -54,18 +54,33 @@ class Cart extends Model
 
         $sql = "DELETE FROM " . self::$table . "
                 WHERE
-                    carts.order_id = '" . $orderId ."' AND
-                    carts.user_id = '" . $userId . "' AND
-                    carts.good_id = '" . $data['good_id'] . "'";
+                    carts.order_id = :order_id AND
+                    carts.user_id = :user_id AND
+                    carts.good_id = :good_id";
 
-        $result = 'ok';
-        db::getInstance()->Query(
-            $sql,
+        $params = [
             [
-                'user_id' => $userId,
-                'order_id' => $orderId,
-                'good_id' => $data['good_id']
-            ]);
+                'name' => ':order_id',
+                'data' => $orderId,
+                'type' => PDO::PARAM_STR
+            ],
+            [
+                'name' => ':user_id',
+                'data' => $userId,
+                'type' => PDO::PARAM_STR
+            ],
+            [
+                'name' => ':good_id',
+                'data' => $data['good_id'],
+                'type' => PDO::PARAM_STR
+            ]
+        ];
+
+        $result = db::getInstance()->QueryBindParam(
+            $sql,
+            $params);
+
+        $result = ['delete' => $result];
 
         return $result;
     }
@@ -98,46 +113,87 @@ class Cart extends Model
                               carts.user_id = :user_id AND
                               carts.good_id = :good_id";
 
-                $result = 'ok';
-                    db::getInstance()->Query(
-                    $sql,
+                $params = [
                     [
-                        'quantity' => $item['quantity'],
-                        'status' => Status::Active,
-                        'user_id' => $item['user_id'],
-                        'good_id' => $item['good_id']
-                    ]);
+                        'name' => ':quantity',
+                        'data' => $item['quantity'],
+                        'type' => PDO::PARAM_INT
+                    ],
+                    [
+                        'name' => ':status',
+                        'data' => Status::Active,
+                        'type' => PDO::PARAM_INT
+                    ],
+                    [
+                        'name' => ':user_id',
+                        'data' => $item['user_id'],
+                        'type' => PDO::PARAM_STR
+                    ],
+                    [
+                        'name' => ':good_id',
+                        'data' => $item['good_id'],
+                        'type' => PDO::PARAM_STR
+                    ]
+                ];
+
+                $result = db::getInstance()->QueryBindParam(
+                    $sql,
+                    $params);
+
+                $result = ['update' => $result];
             } else {
                 //  insert
-//                $sql = "INSERT INTO  " . self::$table . " (cart_id, order_id, user_id, good_id, price,
-//                                            quantity, dateCreate, dateUpdate, status)
-//                        VALUES (`:cart_id`, `:order_id`, `:user_id`, `:good_id`, 0, :quantity,
-//                                NOW(), NOW(), :status)";
-
                 $sql = "INSERT INTO  " . self::$table . " (cart_id, order_id, user_id, good_id, price,
                                             quantity, dateCreate, dateUpdate, status)
-                        VALUES ('" . $orderId . "',
-                                '" . $orderId . "',
-                                '" . $item['user_id'] . "',
-                                '" . $item['good_id'] . "',
-                                0,
-                                " . $item['quantity'] . ",
-                                NOW(), NOW(),
-                                1)";
+                        VALUES (:cart_id, :order_id, :user_id, :good_id, 0, :quantity,
+                                NOW(), NOW(), :status)";
 
-                $result = 'ok';
-                    db::getInstance()->Query(
-                    $sql,
+                $params = [
                     [
-                        'cart_id' => $orderId,
-                        'order_id' => $orderId,
-                        'user_id' => $item['user_id'],
-                        'good_id' => $item['good_id'],
-                        'quantity' => $item['quantity'],
-                        'status' => 1
-                    ]);
+                        'name' => ':cart_id',
+                        'data' => $orderId,
+                        'type' => PDO::PARAM_STR
+                    ],
+                    [
+                        'name' => ':order_id',
+                        'data' => $orderId,
+                        'type' => PDO::PARAM_STR
+                    ],
+                    [
+                        'name' => ':user_id',
+                        'data' => $item['user_id'],
+                        'type' => PDO::PARAM_STR
+                    ],
+                    [
+                        'name' => ':good_id',
+                        'data' => $item['good_id'],
+                        'type' => PDO::PARAM_STR
+                    ],
+//                    [
+//                        'name' => ':price',
+//                        'data' => (string)$item['price'],
+//                        'type' => PDO::PARAM_STR
+//                    ],
+                    [
+                        'name' => ':quantity',
+                        'data' => $item['quantity'],
+                        'type' => PDO::PARAM_INT
+                    ],
+                    [
+                        'name' => ':status',
+                        'data' => Status::Active,
+                        'type' => PDO::PARAM_INT
+                    ]
+                ];
+
+                $result = db::getInstance()->QueryBindParam(
+                    $sql,
+                    $params);
+
+                $result = ['insert' => 'id:'.$result];
             }
         }
+
         return $result;
     }
 

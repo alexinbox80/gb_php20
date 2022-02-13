@@ -37,9 +37,6 @@ export default class CartView {
         if (this._addHandler) {
 
             const addBtn = container.querySelector(`#card-${this._data.good_id}`);
-            //const addBtn = container.getAttribute('data-id');
-
-            //console.log('addBtn : ' + addBtn + ' cont : ' + container);
 
             addBtn.addEventListener('click', this._addHandler.bind(this));
         }

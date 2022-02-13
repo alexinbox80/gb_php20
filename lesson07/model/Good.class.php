@@ -50,18 +50,37 @@ class Good extends Model
     {
         $sql = "SELECT * 
                 FROM  " . self::$table . "
-                WHERE category_id = :category_id AND status = :status AND id > :begin
-                AND id <= :offset ";
-                //LIMIT :offset; ";
+                WHERE category_id = :category_id AND status = :status AND id > :begin 
+                LIMIT :offset";
 
-        return db::getInstance()->Select(
-            $sql,
+        $params = [
             [
-                'status' => Status::Active,
-                'category_id' => $categoryId,
-                'begin' => (int)$begin,
-                'offset' => (int)$offset
-            ]);
+                'name' => ':category_id',
+                'data' => $categoryId,
+                'type' => PDO::PARAM_STR
+            ],
+            [
+                'name' => ':status',
+                'data' => Status::Active,
+                'type' => PDO::PARAM_INT
+            ],
+            [
+                'name' => ':begin',
+                'data' => (int)$begin,
+                'type' => PDO::PARAM_INT
+            ],
+            [
+                'name' => ':offset',
+                'data' => (int)$offset,
+                'type' => PDO::PARAM_INT
+            ]
+        ];
+
+        $result = db::getInstance()->QueryBindParam($sql, $params);
+
+        //Logger::Write($result, false);
+
+        return $result;
     }
 
     public static function getGoods($categoryId)

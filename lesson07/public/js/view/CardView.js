@@ -6,7 +6,7 @@ export default class CardView {
 
     getHtml() {
         return `<div class="products__item">
-                    <a href="/?path=product">
+                    <a href="/index.php?path=product">
                         <img class="products__img" src="img/${this._data.image}" alt="product img">
                     </a>
                     <div class="products__content">

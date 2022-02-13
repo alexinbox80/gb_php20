@@ -49,6 +49,7 @@ class App
                     'title' => $controller->title,
                     //'categories' => Category::getCategories(0),
                     'menu' => Category::getCategories(-1),
+                    'date_y' => date('Y')
                 ];
 
             } else {

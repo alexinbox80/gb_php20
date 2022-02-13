@@ -1,4 +1,5 @@
 <?php
+
 class db
 {
     private static $_instance = null;
@@ -19,10 +20,21 @@ class db
     /*
      * Запрещаем копировать объект
      */
-    private function __construct() {}
-    private function __sleep() {}
-    private function __wakeup() {}
-    private function __clone() {}
+    private function __construct()
+    {
+    }
+
+    private function __sleep()
+    {
+    }
+
+    private function __wakeup()
+    {
+    }
+
+    private function __clone()
+    {
+    }
 
     /*
      * Выполняем соединение с базой данных
@@ -39,15 +51,63 @@ class db
         );
     }
 
+    public function QueryBindParam($query, $params = array(), $debug = false)
+    {
+        $res = '';
+
+        if ($debug) {
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        }
+
+        $result = $this->db->prepare($query);
+
+        foreach ($params as $param) {
+            $result->bindParam($param['name'], $param['data'], $param['type']);
+        }
+
+        $result->execute();
+
+        if ($result) {
+            $sqlAction = strtolower(trim(explode(' ', $query)[0], x20));
+
+            switch ($sqlAction) {
+                case 'select':
+                    $res = $result->fetchAll();
+                    break;
+                case 'insert':
+                    $res = $this->db->lastInsertId();
+                    break;
+                case 'update':
+                    $res = $result->rowCount();
+                    break;
+                case 'delete':
+                    $res = $result->rowCount();
+                    break;
+                default:
+                    $res = 'Wrong sql action!';
+            }
+        }
+
+        if ($debug) {
+            echo '<pre>';
+            print_r($result->debugDumpParams());
+            echo '</pre>';
+
+            $res = [];
+        }
+
+        return $res;
+    }
+
     /*
      * Выполнить запрос к БД
      */
     public function Query($query, $params = array())
     {
-        $res = $this->db->prepare($query);
-        $res->execute($params);
 
-        //$cnt = $res->rowCount();
+        $res = $this->db->prepare($query);
+
+        $res->execute($params);
 
         return $res;
     }

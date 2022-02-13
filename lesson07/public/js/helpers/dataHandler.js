@@ -1,7 +1,7 @@
 export default {
     _url: 'index.php',
     getShowcase(errorCallBack) {
-        return fetch(`${this._url}?page=index&action=goods&lbgn=0&lcnt=6&asAjax=true`)
+        return fetch(`${this._url}?path=index&action=goods&lbgn=0&lcnt=6&asAjax=true`)
             .then((response) => {
                 if (response.ok) {
                     //return response.data;
@@ -16,34 +16,25 @@ export default {
                 return errorCallBack(error);
             })
     },
-
-    getCatalog(errorCallBack) {
-        return fetch(`${this._url}?page=index&action=goods&asAjax=true`, {
+    getCatalog(errorCallBack, data) {
+        return fetch(`${this._url}?path=Ajax&action=router&asAjax=true`, {
             method: 'POST',
-            //mode: "cors",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({todo: 'getGoods'})
+            body: JSON.stringify({todo: 'getCatalog', list: data})
         })
             .then((response) => {
                 if (response.ok) {
-                    //return response.data;
-                    return response.json();
+                    return true;
                 } else {
                     return errorCallBack(response.status);
                 }
             })
-            .then((data) => data)
             .catch((error) => {
                 return errorCallBack(error);
             })
     },
     getCart(errorCallBack) {
-        //return fetch(`${this._url}getCart.json`)
-        return fetch(`${this._url}?page=index&action=cart&asAjax=true`, {
+        return fetch(`${this._url}?path=index&action=cart&asAjax=true`, {
             method: 'POST',
-            //mode: "cors",
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -61,9 +52,8 @@ export default {
                 return errorCallBack(error);
             })
     },
-
     addToCart(errorCallBack, data) {
-        return fetch(`${this._url}?page=index&action=changeCart&asAjax=true`, {
+        return fetch(`${this._url}?path=index&action=changeCart&asAjax=true`, {
             method: 'POST',
             body: JSON.stringify({todo: 'addToCart', cart: data})
         })
@@ -79,7 +69,7 @@ export default {
             })
     },
     delFromCart(errorCallBack, data) {
-        return fetch(`${this._url}?page=index&action=changeCart&asAjax=true`, {
+        return fetch(`${this._url}?path=index&action=changeCart&asAjax=true`, {
             method: 'POST',
             body: JSON.stringify({todo: 'delFromCart', cart: data})
         })
@@ -98,6 +88,22 @@ export default {
         return fetch(`${this._url}deleteFromCart`, {
             method: 'DELETE',
             body: {id: id}
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return true;
+                } else {
+                    return errorCallBack(response.status);
+                }
+            })
+            .catch((error) => {
+                return errorCallBack(error);
+            })
+    },
+    auth(errorCallBack, data) {
+        return fetch(`${this._url}?path=Ajax&action=router&asAjax=true`, {
+            method: 'POST',
+            body: JSON.stringify({todo: 'auth', form: data})
         })
             .then((response) => {
                 if (response.ok) {

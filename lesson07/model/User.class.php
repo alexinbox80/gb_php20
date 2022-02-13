@@ -10,6 +10,11 @@ abstract class User
         $this->sessionStart();
     }
 
+    public static function getData()
+    {
+        return self::$data;
+    }
+
     public static function sessionStart()
     {
         if (!empty($_COOKIE['sid'])) {
