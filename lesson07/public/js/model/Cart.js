@@ -19,7 +19,6 @@ export default class Cart extends GoodList {
 
     }
 
-
     add(good) {
 
         const findGood = this._goodList.find(item => item.good_id === good.good_id);

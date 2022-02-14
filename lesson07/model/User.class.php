@@ -40,4 +40,5 @@ abstract class User
     }
 
     abstract public function auth();
+    abstract public static function regs(array $user);
 }

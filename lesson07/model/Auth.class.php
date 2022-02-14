@@ -102,7 +102,7 @@ class Auth extends User
                                 FROM user_role
                                 INNER JOIN users ON user_role.user_id = users.user_id
                                 INNER JOIN roles ON user_role.role_id = roles.role_id
-                                WHERE login = '$login' AND passwd = '$passwdMd5' LIMIT 1";
+                                WHERE login = :login AND passwd = :passwd LIMIT 1";
 
                         $authUser = db::getInstance()->Select(
                             $sql,
@@ -129,6 +129,39 @@ class Auth extends User
         //echo "login = " . $login . " passwd = " . $passwd . " rememberme = " . $rememberme . " action = " . $action . "<br>\n";
 
         return $this->is_authorized;
+    }
+
+    /**
+     * website registration function
+     *
+     * @param array $user array of form field values,
+     * @return true on success
+     *
+     */
+    public static function regs(array $user):bool
+    {
+        $result = true;
+
+        $passwdMd5 = self::makePasswdMd5($user['login'], md5($user['passwd']));
+
+        $sql = "SELECT users.user_id, users.role_id, roles.role
+                                FROM user_role
+                                INNER JOIN users ON user_role.user_id = users.user_id
+                                INNER JOIN roles ON user_role.role_id = roles.role_id
+                                WHERE login = :login OR email = :email LIMIT 1";
+
+        $authUser = db::getInstance()->Select(
+            $sql,
+            ['login' => $user['login'], 'email' => $user['email']]);
+
+        if ($authUser[0]['user_id']) {
+            $result = false;
+        } else {
+            $result = true;
+            // writing to the database
+        }
+
+        return $result;
     }
 
     protected function IsGet()

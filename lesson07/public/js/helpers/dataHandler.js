@@ -4,8 +4,6 @@ export default {
         return fetch(`${this._url}?path=index&action=goods&lbgn=0&lcnt=6&asAjax=true`)
             .then((response) => {
                 if (response.ok) {
-                    //return response.data;
-
                     return response.json();
                 } else {
                     return errorCallBack(response.status);
@@ -23,7 +21,7 @@ export default {
         })
             .then((response) => {
                 if (response.ok) {
-                    return true;
+                    return response.json();
                 } else {
                     return errorCallBack(response.status);
                 }
@@ -107,7 +105,23 @@ export default {
         })
             .then((response) => {
                 if (response.ok) {
-                    return true;
+                    return response.json();
+                } else {
+                    return errorCallBack(response.status);
+                }
+            })
+            .catch((error) => {
+                return errorCallBack(error);
+            })
+    },
+    regs(errorCallBack, data) {
+        return fetch(`${this._url}?path=Ajax&action=router&asAjax=true`, {
+            method: 'POST',
+            body: JSON.stringify({todo: 'regs', form: data})
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
                 } else {
                     return errorCallBack(response.status);
                 }

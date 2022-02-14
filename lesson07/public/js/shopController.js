@@ -11,6 +11,7 @@ import CartView from "./view/CartView.js";
 
 import Routes from './model/Routes.js';
 import Auth from './model/Auth.js';
+import Regs from './model/Regs.js';
 
 export default {
     _eventEmmiter: eventEmmiter,
@@ -18,6 +19,7 @@ export default {
     _catalogModel: new Catalog,
     _cartModel: new Cart,
     _authModel: new Auth,
+    _regsModel: new Regs,
 
     init() {
         this._routes();
@@ -228,6 +230,12 @@ export default {
                 //
                 // this._catalogModel.request(list);
                 this._cartModel.load();
+                break;
+            case 'reg':
+                console.log("home page : " + pathname + ' node : ' + node.page);
+                this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+                this._cartModel.load();
+                this._regsModel.registrationForm();
                 break;
             case 'admin':
                 console.log("home page : " + pathname + ' node : ' + node.page);

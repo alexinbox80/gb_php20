@@ -22,7 +22,7 @@ export default class Auth {
         return formChecked;
     }
 
-    _handleClick() {
+    _handleLoginClick() {
         const formFields = {
             'authLogin' : Auth._getFormLogin(),
             'authPasswd' : Auth._getFormPasswd(),
@@ -37,7 +37,7 @@ export default class Auth {
         const button = document.getElementById('loginSubmit');
 
         if (button) {
-            button.addEventListener('click', this._handleClick);
+            button.addEventListener('click', this._handleLoginClick);
         }
     }
 }

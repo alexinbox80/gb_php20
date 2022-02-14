@@ -65,6 +65,61 @@ class AjaxController extends Controller
                     $data = $post['form'];
                     $result = $data;
                     break;
+                case 'regs':
+                    $data = $post['form'];
+                    $flag = true;
+                    $error = '';
+
+                    if ($data['firstName'] === '') {
+                        $error .= ' Empty first name field';
+                        $flag = false;
+                    }
+
+                    if ($data['secondName'] === '') {
+                        $error .= ' Empty second name field';
+                        $flag = false;
+                    }
+
+                    if ($data['email'] === '') {
+                        $error .= ' Empty e-mail field';
+                        $flag = false;
+                    } else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                        $error .= ' Wrong e-mail';
+                        $flag = false;
+                    }
+
+                    if ($data['login'] === '') {
+                        $error .= ' Empty login field';
+                        $flag = false;
+                    }
+
+                    if ($data['passwd'] === '') {
+                        $error .= ' Empty password field';
+                        $flag = false;
+                    }
+
+                    if ($flag) {
+                        $result = Auth::regs($data);
+                        if (!$result) {
+                            $result = [
+                                'status' => 'error',
+                                'message' => 'User already exist'
+                            ];
+                        }
+                        if ($result) {
+                            $result = [
+                                'status' => 'ok',
+                                'message' => 'User registered'
+                            ];
+                        }
+                    } else {
+                        $result = [
+                            'status' => 'error',
+                            'message' => $error
+                        ];
+                    }
+
+                    break;
                 case 'addToCart':
                     $result = Cart::updateCart($data);
                     break;
