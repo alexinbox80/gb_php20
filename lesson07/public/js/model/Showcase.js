@@ -7,7 +7,7 @@ export default class Showcase extends GoodList {
         super();
     }
 
-    load() {
-        return super.load(dataHandler.getShowcase.bind(dataHandler), Good);
+    load(list) {
+        return super.load(dataHandler.getShowcase.bind(dataHandler, list), Good);
     }
 }

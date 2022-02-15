@@ -25,7 +25,7 @@ class Auth extends User
     public static function isAuthorized(): bool
     {
         if (!empty($_SESSION["user_id"])) {
-            return (bool) $_SESSION["user_id"];
+            return (bool)$_SESSION["user_id"];
         }
         return false;
     }
@@ -66,13 +66,17 @@ class Auth extends User
                 'status' => 'ok'];
         }
 
-        if (($user->getError() != "") && ($_POST['act'] == 'login')) {
-            $result = ['info' => $user->getError(),
+        if (($user->getError() != "") && ($_POST['act'] == 'action-login')) {
+
+            $result = [
+                'info' => $user->getError(),
                 'status' => 'error'];
         } else if ($_POST['act'] == 'logout') {
-            $result = ['info' => $user->getError(),
+            $result = [
+                'info' => $user->getError(),
                 'status' => 'ok'];
         }
+
         return $result;
     }
 
@@ -98,7 +102,7 @@ class Auth extends User
 
                         $passwdMd5 = $this->makePasswdMd5($login, md5($passwd));
 
-                        $sql = "SELECT users.user_id, users.role_id, roles.role
+                        $sql = "SELECT users.user_id, user_role.role_id, roles.role
                                 FROM user_role
                                 INNER JOIN users ON user_role.user_id = users.user_id
                                 INNER JOIN roles ON user_role.role_id = roles.role_id
@@ -114,14 +118,20 @@ class Auth extends User
                         } else {
                             $this->is_authorized = true;
                             $this->user_id = $authUser[0]['user_id'];
+                            //last active
+                            $sql = "UPDATE users
+                                    SET lastActive = NOW()
+                                    WHERE login = :login AND passwd = :passwd";
+                            $res = db::getInstance()->Query($sql,
+                                ['login' => $login, 'passwd' => $passwdMd5]);
                             $this->saveSession($remember);
                         }
 
                     }
                     break;
                 case 'action-logout':
-                        $this->error = "Site logout success!";
-                        $this->logout();
+                    $this->error = "Site logout success!";
+                    $this->logout();
                     break;
             }
         }
@@ -138,17 +148,15 @@ class Auth extends User
      * @return true on success
      *
      */
-    public static function regs(array $user):bool
+    public static function regs(array $user): bool
     {
         $result = true;
 
-        $passwdMd5 = self::makePasswdMd5($user['login'], md5($user['passwd']));
-
-        $sql = "SELECT users.user_id, users.role_id, roles.role
-                                FROM user_role
-                                INNER JOIN users ON user_role.user_id = users.user_id
-                                INNER JOIN roles ON user_role.role_id = roles.role_id
-                                WHERE login = :login OR email = :email LIMIT 1";
+        $sql = "SELECT users.user_id, user_role.role_id, roles.role
+                FROM user_role
+                INNER JOIN users ON user_role.user_id = users.user_id
+                INNER JOIN roles ON user_role.role_id = roles.role_id
+                WHERE login = :login OR email = :email LIMIT 1";
 
         $authUser = db::getInstance()->Select(
             $sql,
@@ -159,6 +167,54 @@ class Auth extends User
         } else {
             $result = true;
             // writing to the database
+            try {
+
+                $passwdMd5 = self::makePasswdMd5($user['login'], md5($user['passwd']));
+
+
+                $sql = "SELECT * FROM roles WHERE role = 'user'";
+                $role_id = db::getInstance()->Select($sql,[])[0]['role_id'];
+
+                $user_id = UUID::v4();
+
+                if (db::getInstance()->beginTransaction()) {
+
+                    $sql = "INSERT INTO  users (user_id, lastName, firstName, address,
+                                            email, phone, gender, login, passwd, status, dateCreate, lastActive)
+                            VALUES (:user_id, :lastName, :firstName, NULL, :email, NULL, :gender,
+                                    :login, :passwd, :status, NOW(), NULL)";
+
+                    $res = db::getInstance()->Query(
+                        $sql,
+                        [
+                            'user_id' => $user_id,
+                            'lastName' => $user['secondName'],
+                            'firstName' => $user['firstName'],
+                            'email' => $user['email'],
+                            'gender' => $user['gender'],
+                            'login' => $user['login'],
+                            'passwd' => $passwdMd5,
+                            'status' => Status::Active
+                        ]);
+
+                    $sql = "INSERT INTO  user_role (user_id, role_id)
+                            VALUES (:user_id, :role_id)";
+                    $res = db::getInstance()->Query(
+                        $sql,
+                        [
+                            'user_id' => $user_id,
+                            'role_id' => $role_id
+                        ]);
+
+                    db::getInstance()->commit();
+
+                }
+            } catch (PDOException $e) {
+                if (db::getInstance()->inTransaction()) {
+                    db::getInstance()->rollBack();
+                    die($e->getMessage());
+                }
+            }
         }
 
         return $result;

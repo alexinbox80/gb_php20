@@ -26,10 +26,11 @@ abstract class User
 
     public static function getGroupFromUUID($uuid)
     {
-        $sql = "SELECT users.user_id, users.role_id, roles.role
-                FROM users
-                INNER JOIN roles ON users.role_id = roles.role_id
-                WHERE users.user_id = :uuid";
+        $sql = "SELECT users.user_id, user_role.role_id, roles.role
+                FROM user_role
+                INNER JOIN users ON user_role.user_id = users.user_id
+                INNER JOIN roles ON user_role.role_id = roles.role_id
+                WHERE users.user_id = :uuid LIMIT 1";
 
         $role = db::getInstance()->Select(
             $sql,

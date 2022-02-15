@@ -212,23 +212,19 @@ export default {
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
 
                 this._showcaseModel.load();
+                //this._catalogModel.request({ begin: 0, offset: 3 });
                 this._cartModel.load();
                 break;
             case 'catalog':
                 console.log("home page : " + pathname + ' node : ' + node.page);
-                this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
+                //this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
 
                 //this._eventEmmiter.addListener('loaded', this._renderCatalog.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
 
-                this._showcaseModel.load();
+                //this._showcaseModel.load();
 
-                // const list = {
-                //     begin: 0,
-                //     offset: 20
-                // };
-                //
-                // this._catalogModel.request(list);
+                this._catalogModel.request({ begin: 0, offset: 20 });
                 this._cartModel.load();
                 break;
             case 'reg':

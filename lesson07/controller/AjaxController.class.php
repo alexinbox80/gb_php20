@@ -24,13 +24,15 @@ class AjaxController extends Controller
      */
     //var $variable;
 
-
     /**
-     * AjaxController constructor.
+     * @var string
      */
 
     public $view = 'index';
 
+    /**
+     * AjaxController constructor.
+     */
     function __construct()
     {
         parent::__construct();
@@ -47,6 +49,14 @@ class AjaxController extends Controller
     {
         return [];
     }
+
+    /**
+     * Ajax router
+     *
+     * @param $data
+     *
+     * @return array()
+     */
 
     public function router($data)
     {
@@ -99,17 +109,15 @@ class AjaxController extends Controller
                     }
 
                     if ($flag) {
-                        $result = Auth::regs($data);
-                        if (!$result) {
+                        if (!Auth::regs($data)) {
                             $result = [
                                 'status' => 'error',
                                 'message' => 'User already exist'
                             ];
-                        }
-                        if ($result) {
+                        } else {
                             $result = [
                                 'status' => 'ok',
-                                'message' => 'User registered'
+                                'message' => 'User registered successfully'
                             ];
                         }
                     } else {
@@ -118,7 +126,6 @@ class AjaxController extends Controller
                             'message' => $error
                         ];
                     }
-
                     break;
                 case 'addToCart':
                     $result = Cart::updateCart($data);
@@ -136,5 +143,4 @@ class AjaxController extends Controller
 
         return $result;
     }
-
 }

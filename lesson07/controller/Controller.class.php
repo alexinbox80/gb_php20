@@ -20,9 +20,9 @@ class Controller
 
         $user_uuid = $_SESSION['user_id'];
 
-        $role = Auth::getGroupFromUUID($user_uuid);
+        $role = strtolower(Auth::getGroupFromUUID($user_uuid));
 
-        if ($role == 'Administrator') {
+        if ($role == 'administrator') {
             $answer = [
                 'info' => 'User is registered in the system!',
                 'status' => 'ok',
@@ -30,7 +30,7 @@ class Controller
             ];
         }
 
-        if ($role == 'User') {
+        if ($role == 'user') {
             $answer = [
                 'info' => 'You dont have permission to access!',
                 'status' => 'error',
@@ -62,7 +62,7 @@ class Controller
     {
         $user_uuid = $_SESSION['user_id'];
 
-        $role = Auth::getGroupFromUUID($user_uuid);
+        $role = strtolower(Auth::getGroupFromUUID($user_uuid));
 
         if ($result === '') {
             $answer = [
@@ -88,9 +88,12 @@ class Controller
             $answer = $this->getRole('');
 
         } else {
+
             $result = Auth::login($data);
             $answer = $this->getRole($result);
+
         }
+
         return $answer;
     }
 

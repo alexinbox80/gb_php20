@@ -14,6 +14,7 @@ export default class Catalog extends GoodList {
     request(list) {
 
         dataHandler.getCatalog(dataHandler, list);
+        //dataHandler.getShowcase(dataHandler,list);
     }
 
 }

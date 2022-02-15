@@ -68,7 +68,7 @@ class db
         $result->execute();
 
         if ($result) {
-            $sqlAction = strtolower(trim(explode(' ', $query)[0], x20));
+            $sqlAction = strtolower(trim(explode(' ', $query)[0], 0x20));
 
             switch ($sqlAction) {
                 case 'select':
@@ -122,5 +122,25 @@ class db
         if ($result) {
             return $result->fetchAll();
         }
+    }
+
+    public function beginTransaction():bool
+    {
+        return $this->db->beginTransaction();
+    }
+
+    public function commit():bool
+    {
+        return $this->db->commit();
+    }
+
+    public function rollBack():bool
+    {
+        return $this->db->rollBack();
+    }
+
+    public function inTransaction():bool
+    {
+        return $this->db->inTransaction();
     }
 }

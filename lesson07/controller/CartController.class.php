@@ -37,10 +37,12 @@ class CartController extends Controller
             $answer = [
                 'info' => 'You are not logged in!',
                 'status' => 'error',
-                'role' => $role
+                'role' => $role,
+                'page' => 'cart'
             ];
             //header('Location: index.php?path=cart');
         }
+
         return $answer;
     }
 }

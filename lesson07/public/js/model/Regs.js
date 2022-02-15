@@ -39,19 +39,37 @@ export default class Regs {
         return document.getElementsByName('regPasswd')[0].value;
     }
 
+    // _renderFormNote(note) {
+    //     return (note) => {
+    //         console.log('renderFormNote : ' + JSON.stringify(note));
+    //         if (note.status !== '') {
+    //             noteForm.textContent = '';
+    //             noteForm.insertAdjacentHTML(target, note.message);
+    //         }
+    //     }
+    // }
+
     _handleRegsClick() {
         const formFields = {
             'firstName': Regs._getFirstName(),
             'secondName': Regs._getSecondName(),
             'email': Regs._getEmail(),
-            'sex': Regs._getGender(),
+            'gender': Regs._getGender(),
             'login': Regs._getLogin(),
             'passwd': Regs._getPasswd()
         };
 
+        const noteForm = document.getElementById('regnote');
+
+        const target = 'beforeend';
+
         dataHandler.regs(dataHandler, formFields).then(item => {
             console.log('answ : ' + JSON.stringify(item));
-
+            if (item.status !== '') {
+                noteForm.textContent = '';
+                noteForm.insertAdjacentHTML(target, item.message);
+            }
+            //this._renderFormNote(item);
         });
     }
 

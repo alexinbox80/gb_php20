@@ -40,6 +40,17 @@ export default class CartView {
 
             addBtn.addEventListener('click', this._addHandler.bind(this));
         }
+
+        const clearCartBtn = document.querySelector(`#cart__bottom-clear`);
+        if (clearCartBtn) {
+            clearCartBtn.addEventListener('click', this._addHandlerClear.bind(this));
+        }
+    }
+
+    _addHandlerClear() {
+        console.log('addHandlerClear');
+        this._addHandlerCb(this._data.good_id);
+        document.location.href = '/index.php?path=catalog';
     }
 
     _addHandler() {
@@ -47,8 +58,6 @@ export default class CartView {
     }
 
     setAddHandler(callback) {
-
         this._addHandlerCb = callback;
-
     }
 }

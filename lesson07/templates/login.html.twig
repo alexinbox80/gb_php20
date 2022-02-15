@@ -1,4 +1,5 @@
-<input type="checkbox" id="switcherLogin">
+<input type="checkbox" id="switcherLogin"
+        {%  if (content_data.status == 'error') and not (content_data.page == 'cart') %} checked {% endif %}>
 <label class="header__icons" for="switcherLogin">
     <svg class="header__icons" width="29" height="29" viewBox="0 0 29 29" fill="none"
          xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +19,11 @@
         <ul>
             <li>
                 <input type="hidden" name="act" value="action-login">
-                <div id="note" class="form__note"></div>
+                <div id="note" class="form__note">
+                    {% if content_data.status %}
+                        {{ content_data.info }}
+                    {% endif %}
+                </div>
             </li>
             <li>
                 <label for="loginName" class="login__menu-label">Login</label>

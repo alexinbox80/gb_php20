@@ -21,9 +21,8 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `carts` (`id`, `cart_id`, `order_id`, `user_id`, `good_id`, `price`, `quantity`, `dateCreate`, `dateUpdate`, `status`) VALUES
-(1,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81245312-a273-0c97-04e8-f99b5b199795',	0,	6,	'2022-02-11 14:43:07',	'2022-02-11 14:43:07',	1),
-(3,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81207332-a273-0c57-04e8-f99b5b199795',	0,	3,	'2022-02-11 14:43:07',	'2022-02-11 14:43:07',	1),
-(4,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'b53e01e9-baf4-6fe2-09e4-5cd132d59a79',	0,	2,	'2022-02-11 14:43:07',	'2022-02-11 14:43:07',	1);
+(32,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81207332-a273-0c57-04e8-f99b5b199795',	0,	1,	'2022-02-15 19:56:51',	'2022-02-15 19:56:51',	1),
+(33,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81296312-a273-0c97-04e8-f99b5b199795',	0,	1,	'2022-02-15 19:56:51',	'2022-02-15 19:56:51',	1);
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
@@ -126,32 +125,33 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `roles` (`id`, `role_id`, `role`) VALUES
-(1,	'f0ea0e5f-a835-46e7-89c3-545a0a62c355',	'Administrator'),
-(2,	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'User');
+(1,	'f0ea0e5f-a835-46e7-89c3-545a0a62c355',	'administrator'),
+(2,	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'user');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `role_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
   `lastName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `firstName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `email` varchar(128) COLLATE utf8_bin DEFAULT NULL,
   `phone` varchar(128) COLLATE utf8_bin DEFAULT NULL,
-  `sex` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `gender` varchar(6) COLLATE utf8_bin DEFAULT NULL,
   `login` varchar(128) COLLATE utf8_bin DEFAULT NULL,
   `passwd` varchar(128) COLLATE utf8_bin DEFAULT NULL,
   `status` smallint(5) unsigned DEFAULT NULL,
-  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `lastActive` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dateCreate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `lastActive` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `users` (`id`, `user_id`, `role_id`, `lastName`, `firstName`, `address`, `email`, `phone`, `sex`, `login`, `passwd`, `status`, `dateCreate`, `lastActive`) VALUES
-(1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'f0ea0e5f-a835-46e7-89c3-545a0a62c355',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	'2022-01-03 18:14:02',	'2022-02-07 16:48:54'),
-(2,	'c08b32be-1677-443c-bf00-877291354c93',	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'Petrov',	'Petr',	'address',	'mail@mail.ru',	'+79211234590',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-01-03 18:15:10',	'2022-02-07 16:48:54'),
-(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-01-04 19:46:25',	'2022-02-07 16:48:54');
+INSERT INTO `users` (`id`, `user_id`, `lastName`, `firstName`, `address`, `email`, `phone`, `gender`, `login`, `passwd`, `status`, `dateCreate`, `lastActive`) VALUES
+(1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 21:15:41',	'2022-02-15 21:15:41'),
+(2,	'c08b32be-1677-443c-bf00-877291354c93',	'Petrov',	'Petr',	'address',	'mail@mail.ru',	'+79211234590',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 21:59:13',	'2022-02-15 21:59:13'),
+(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-01-04 13:46:25',	NULL),
+(4,	'445a2b73-49ad-4f73-a0e3-eb8c2d95a23f',	'qwe',	'qwe',	NULL,	'qwe@qwe.ru',	NULL,	'female',	'qwe',	'644abf9ff0f45d5a919cf11642208d67644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 20:09:49',	NULL),
+(5,	'388d51a4-fc94-47f8-83dc-3c617574097c',	'qwe',	'qwe',	NULL,	'qwe1@qwe.ru',	NULL,	'female',	'qwe1',	'05b461fd59894e2640a7c312b800c15a644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 20:12:28',	NULL);
 
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
@@ -164,6 +164,8 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
 (1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'f0ea0e5f-a835-46e7-89c3-545a0a62c355'),
 (2,	'c08b32be-1677-443c-bf00-877291354c93',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
-(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
+(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
+(4,	'445a2b73-49ad-4f73-a0e3-eb8c2d95a23f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
+(5,	'388d51a4-fc94-47f8-83dc-3c617574097c',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
 
--- 2022-02-11 14:43:28
+-- 2022-02-15 22:04:01
