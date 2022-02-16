@@ -1,7 +1,6 @@
 <?php
 class AdminController extends Controller
 {
-    
     protected $controls = [
         'pages' => 'Page',
         'orders' => 'Order',
@@ -13,11 +12,20 @@ class AdminController extends Controller
     
     public function index($data)
     {
-        return ['controls' => $this->controls];
+       $answer = $this->adminCheckAuth($data);
+
+        return [
+            'controls' => $this->controls,
+            'info' => $answer['info'],
+            'status' => $answer['status'],
+            'role' => $answer['role']
+        ];
     }
 
     public function control($data)
     {
+        $answer = $this->adminCheckAuth($data);
+
         // Сохранение
         $actionId = $this->getActionId($data);
         if ($actionId['action'] === 'save') {
@@ -69,12 +77,32 @@ class AdminController extends Controller
         $fields = db::getInstance()->Select('desc ' . $data['id']);
         $_items = db::getInstance()->Select('select * from ' . $data['id']);
         $items = [];
+
         foreach ($_items as $item) {
             $tmp = new $this->controls[$data['id']]($item);
             $items[] = (array)$tmp;
         }
 
-        return ['name' => $data['id'],'fields' => $fields, 'items' => $items];
+        $headerField = [];
+
+        foreach ($fields as $key => $field) {
+
+            $property = Category::getProperties()[$field['Field']];
+
+            if ( !isset($property['show']) || $property['show'] ) {
+                $headerField[] = $field;
+            }
+        }
+
+        //return ['name' => $data['id'],'fields' => $fields, 'items' => $items];
+        return [
+            'name' => $data['id'],
+            'fields' => $headerField,
+            'items' => $items,
+            'info' => $answer['info'],
+            'status' => $answer['status'],
+            'role' => $answer['role']
+        ];
     }
 
     protected function getActionId($data)

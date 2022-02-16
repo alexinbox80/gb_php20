@@ -1,4 +1,5 @@
 <?php
+
 class CategoriesController extends Controller
 {
 
@@ -8,18 +9,24 @@ class CategoriesController extends Controller
     {
         $categories = Category::getCategories(isset($data['id']) ? $data['id'] : 0);
         $goods = Good::getGoods(isset($data['id']) ? $data['id'] : 0);
+
+        //$categories = Category::getCategories(isset($data['id']) ? $data['id'] : null);
+        //$goods = Good::getGoods(isset($data['id']) ? $data['id'] : null);
+
         return ['subcategories' => $categories, 'goods' => $goods];
     }
 
-    public function goods($data){
-        if($data['id'] > 0){
+    public function goods($data)
+    {
+
+        if ( isset($data['id'] )) {
             $good = new Good([
-                "id_good" => $data['id']
+                "good_id" => $data['id']
             ]);
 
             return $good->getGoodInfo()[0];
-        }
-        else{
+
+        } else {
             header("Location: /categories/");
         }
 

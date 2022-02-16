@@ -17,7 +17,9 @@ class App
 
     protected static function web($url)
     {
+
         $url = explode("/", $url);
+
         if (!empty($url[0])) {
             $_GET['page'] = $url[0];//Часть имени класса контроллера
             if (isset($url[1])) {
@@ -41,18 +43,25 @@ class App
 
             //Ключи данного массива доступны в любой вьюшке
             //Массив data - это массив для использования в любой вьюшке
-            $data = [
-                'content_data' => $controller->$methodName($_GET),
-                'title' => $controller->title,
-                'categories' => Category::getCategories(0)
-            ];
+            if (!isset($_GET['asAjax'])) {
+                $data = [
+                    'content_data' => $controller->$methodName($_GET),
+                    'title' => $controller->title,
+                    //'categories' => Category::getCategories(0),
+                    'menu' => Category::getCategories(-1),
+                ];
 
-            $view = $controller->view . '/' . $methodName . '.html';
+            } else {
+                $data = $controller->$methodName($_GET);
+            }
+            
+            //print_r($data);
+
+            $view = $controller->view . '/' . $methodName . '.html.twig';
             if (!isset($_GET['asAjax'])) {
                 $loader = new Twig_Loader_Filesystem(Config::get('path_templates'));
                 $twig = new Twig_Environment($loader);
                 $template = $twig->loadTemplate($view);
-
 
                 echo $template->render($data);
             } else {

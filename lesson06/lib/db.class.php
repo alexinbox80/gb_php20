@@ -55,9 +55,9 @@ class db
     public function Select($query, $params = array())
     {
         $result = $this->Query($query, $params);
+
         if ($result) {
             return $result->fetchAll();
         }
     }
 }
-

@@ -1,0 +1,125 @@
+.nav
+  &__menu
+    position: absolute
+    top: $heightHeader
+    right: -232px
+    width: 232px
+    padding: 37px 34px 32px
+    background: #FFFFFF
+    box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.21)
+    box-sizing: border-box
+    transition: right .3s
+    z-index: 10
+
+  &__catalog
+    +fontProper(14px, 400, $colorSelect, 17px)
+    text-decoration: none
+    text-transform: uppercase
+
+  &__item
+    +fontProper(14px, 400, #222222, 17px)
+    text-decoration: none
+    margin: 11px 21px
+    display: block
+
+  &__h3
+    +fontProper(14px, 700, #222222, 16.8px)
+    margin-bottom: 24px
+
+  &__close
+    position: absolute
+    top: 16px
+    right: 16px
+    cursor: pointer
+
+    &:hover svg path
+      fill: $colorSelect
+
+#switcher
+  display: none
+
+  &:checked ~ .nav__menu
+    right: 0
+
+.login__menu
+  position: absolute
+  top: $loginFormX
+  left: calc(50% - #{$loginFormWidth / 2})
+  width: $loginFormWidth
+  padding: 37px 34px 32px
+  background: #FFFFFF
+  box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.21)
+  box-sizing: border-box
+  visibility: hidden
+  opacity: 0
+  transition: visibility 0.3s linear, opacity 0.3s linear
+  z-index: 10
+
+  &-label
+    display: block
+    margin-bottom: 20px
+    +fontProper(16px, 300, #222222, 16px)
+
+  &-input
+    display: block
+    padding: 13px 16px
+    margin-bottom: 20px
+    +fontProper(14px, 300, #222222, 16px)
+    border: 1px solid #B1B1B1
+    width: 100%
+    box-sizing: border-box
+
+  &-checkbox
+    cursor: pointer
+
+  &-li
+    display: flex
+    justify-content: space-between
+
+  &-button
+    background: transparent
+    padding: 15px 39px 14px 39px
+    border: 1px solid #F16D7F
+    cursor: pointer
+    box-sizing: border-box
+    transition: background .3s
+    +fontProper(16px, 400, #222222, 19px)
+    width: 100%
+    display: block
+    margin-bottom: 20px
+
+  &-button:hover
+    background: #F16D7F
+    border: 1px solid #F16D7F
+    color: #FFFFFF
+    cursor: pointer
+
+  &-registration
+    background: transparent
+    padding: 15px 39px 14px 39px
+    border: 1px solid #F16D7F
+    cursor: pointer
+    box-sizing: border-box
+    transition: background .3s
+    +fontProper(16px, 400, #222222, 19px)
+    width: 100%
+    display: block
+    text-align: center
+
+  &-registration:hover
+    background: #F16D7F
+    border: 1px solid #F16D7F
+    color: #FFFFFF
+    cursor: pointer
+
+#switcherLogin
+  display: none
+
+  &:checked ~ .login__menu
+    visibility: visible
+    opacity: 1
+
+.form__note
+  height: 16px
+  margin-bottom: 10px
+  +fontProper(16px, 400, #F16D7F, 19px)
