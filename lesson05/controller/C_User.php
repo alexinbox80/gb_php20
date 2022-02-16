@@ -3,41 +3,95 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-//include_once('C_Controller.php');
-//include_once('model/M_User.php');
-
-class C_User extends C_Controller {
-
+class C_User extends C_Base
+{
     protected function before()
     {
-        $this->title = 'Auth user';
-        $this->content = '';
-        $this->keywords = 'keywords';
+        $this->vars = [
+            'login' => [
+                'title' => 'Login page',
+                'loginPage' => 'login.tmpl'
+            ]
+        ];
     }
 
     public function render()
     {
+        if ($this->getSiteSession('user')) {
+            $user = $this->getSiteSession('user');
 
+            array_push($user['history'], ['page' => 'Login page']);
+
+            $this->setSiteSession('user', $user);
+
+            $this->vars['login'] += ['login' => $user['role']];
+            $this->vars['login'] +=['loginWarning' => "You are already logged in!"];
+
+            if ($user['role'] == 'User') {
+                $this->vars['login']['loginWarning'] .= " You are user!";
+
+            } else {
+                $this->vars['login']['loginWarning'] .= " You are admin!";
+
+            }
+            header("Location: index.php");
+        } else {
+            $this->vars['login'] +=['loginError' => "You are not authorized!"];
+
+        }
+
+        $page = $this->Template('index.tmpl', $this->vars['login']);
+
+        echo $page;
     }
 
-    public function action_login() {}
+    public function action_login()
+    {
+    }
 
-    public function action_logout() {}
+    public function action_logout()
+    {
+        $_SESSION['user'] = array();
+        header("Location: index.php");
+    }
 
-    public function action_auth() {
-        //USE SESSION
-        //PDO:: use prepare method!!!
-        $user = new M_User();
+    private function isValidMd5($md5 = '')
+    {
+        return preg_match('/^[a-f0-9]{32}$/', $md5);
+    }
+
+    public function action_auth(): void
+    {
         if ($this->IsPost()) {
-            $login = $_POST['login'];
-            $user->auth('log', 'pass');
-            // header('Location');
+            $login = $_POST['login'] ? strip_tags($_POST['login']) : "";
+            $passwd = $_POST['passwd'] ? strip_tags($_POST['passwd']) : "";
+
+            if ($this->isValidMd5($passwd)) {
+                $passwdMd5 = $this->makePasswdMd5($login, $passwd);
+            } else {
+                $passwdMd5 = $this->makePasswdMd5($login, md5($passwd));
+            }
+
+            if ($this->user->auth($login, $passwdMd5)) {
+
+                $_SESSION['loginSuccess'] = true;
+                $_SESSION['errorMessage'] = '';
+
+                //header("Location: index.php");
+
+            } else {
+                $this->vars['login'] += ['loginError' => 'Wrong login or password!'];
+            }
         } else {
-            $this->content = $this->Template('view/v_auth.ph');
+            //$this->content = $this->Template('index.tmpl', []);
         }
     }
 
-    public function action_regisration() {}
+    public function action_registration()
+    {
+    }
 
-    public function action_parea() {}
+    public function action_parea()
+    {
+    }
 }

@@ -3,10 +3,6 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-require 'vendor/autoload.php';
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
 abstract class C_Controller
 {
     protected abstract function render();
@@ -20,6 +16,12 @@ abstract class C_Controller
         $this->render();
     }
 
+    protected function makePasswdMd5($login, $passwd)
+    {
+        $salt = "zyjdfhm";
+        return strrev(md5($salt) . $passwd . md5($login));
+    }
+
     protected function IsGet()
     {
         return $_SERVER['REQUEST_METHOD'] == 'GET';
@@ -30,20 +32,27 @@ abstract class C_Controller
         return $_SERVER['REQUEST_METHOD'] == 'POST';
     }
 
-//    protected function Template(string $filename, $vars = array())
-//    {
-//        foreach ($vars as $key => $value) {
-//            $$key = $value;
-//        }
-//        ob_start();
-//        include "$filename";
-//        return ob_get_clean();
-//    }
+    protected function setSiteSession(string $name, array $arr): bool
+    {
+        $_SESSION[$name] = $arr;
+
+        return true;
+    }
+
+    protected function getSiteSession(string $name)
+    {
+        if (isset($_SESSION[$name])){
+            $result = $_SESSION[$name];
+        } else {
+            $result = false;
+        }
+        return $result;
+    }
 
     public function Template(string $filename, array $content): string
     {
-        $loader = new FilesystemLoader('templates');
-        $twig = new Environment($loader);
+        $loader = new Twig\Loader\FilesystemLoader('templates');
+        $twig = new Twig\Environment($loader);
         return $twig->render($filename, $content);
     }
 

@@ -1,0 +1,17 @@
+<div class="content">
+    <h1>{{ title }}</h1>
+    <div id="login__err" class="login__err">{{ loginError }}</div>
+    <div id="login__warn" class="login__warn">{{ loginWarning }}</div>
+    <div class="login__form">
+        <div class="header__registration">
+            <a href="index.php?c=reg&act=reg">Регистрация</a>
+        </div>
+        <form action="" method="post">
+            <label for="form__login">Логин</label>
+            <input id="form__login" name="login" type="text" value="{{ login }}">
+            <label for="form__passwd">Пароль</label>
+            <input id="form__passwd" name="passwd" type="password" value="{{ passwd }}">
+            <input type="submit" value="Войти" name="enter">
+        </form>
+    </div>
+</div>

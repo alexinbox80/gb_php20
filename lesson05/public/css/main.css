@@ -1,0 +1,259 @@
+.content {
+    padding: 0 calc(50% - 321px);
+}
+
+.header {
+    position: relative;
+    height: 60px;
+}
+
+.header__h2 {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header__h2 a {
+    text-decoration: none;
+    color: black;
+}
+
+.header__h2 a:active {
+    color: black;
+}
+
+.header__h2 a:visited {
+    color: black;
+}
+
+.header__registration a {
+    text-decoration: none;
+    color: black;
+}
+
+.header__registration a:active {
+    color: black;
+}
+
+.header__registration a:visited {
+    color: black;
+}
+
+.menu__ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding-inline-start: 0;
+}
+
+.login__form {
+    padding-top: 25px;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+}
+
+.login__done {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 25px;
+    text-align: right;
+}
+
+.login__err {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: red;
+}
+
+.login__warn {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: blue;
+}
+
+.cabinet__err {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: red;
+}
+.cabinet__warn {
+    position: absolute;
+    right: calc(50% - 320px);
+    color: blue;
+}
+
+.reg__err {
+    color: red;
+    margin-bottom: 14px;
+}
+
+.reg__but {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form__reg-input {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.content__item {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.button__main {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.content__admin {
+    padding: 0 calc(50% - 512px);
+}
+
+.content__cart {
+    padding: 0 calc(50% - 512px);
+}
+
+.table {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin__table {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.id, .title, .price, .pics, .short_info, .full_info, .button {
+    width: 20%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.add {
+    margin: 30px auto;
+    display: block;
+}
+
+.admin__delete {
+    margin: 0 auto;
+    display: block;
+}
+
+
+.delete {
+    margin: 30px auto;
+    display: block;
+}
+
+.form__table {
+    display: flex;
+    height: 282px;
+}
+
+.content__goods {
+    padding: 0 calc(50% - 400px);
+}
+
+.header__goods {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.content__item {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.content__right {
+    padding-left: 36px;
+}
+
+.login__form-goods {
+    padding-top: 25px;
+    text-align: right;
+    display: block;
+}
+
+.button__goods {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.crumbs__goods {
+    display: block;
+    margin-top: 20px;
+}
+
+.crumbs__cart {
+    display: block;
+    margin-top: 20px;
+}
+
+.header__basket {
+    position: relative;
+}
+
+.cart__count {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    border: 1px solid black;
+    border-radius: 50%;
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+}
+
+.cart__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cart__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cart__tp {
+    text-align: right;
+    padding-right: 75px;
+}
+
+.item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item__good {
+    width: calc(100% / 6);
+    margin-bottom: 16px;
+}
+
+.item__content {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.history__item {
+    list-style-type: none;
+}

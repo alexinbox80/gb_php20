@@ -1,0 +1,32 @@
+<nav class="menu">
+    <ul class="menu__ul">
+        <li class="menu__li">
+            <a class="menu__a" href="/lesson05">
+                <span class="menu__item">home</span>
+            </a>
+        </li>
+        <li class="menu__li">
+            {% if login %}
+                <a class="menu__a" href="index.php?c=user&act=logout">
+                    <span class="menu__item">logout</span>
+                </a>
+            {% else %}
+                <a class="menu__a" href="index.php?c=user&act=auth">
+                    <span class="menu__item">login</span>
+                </a>
+            {% endif %}
+        </li>
+        {% if not login %}
+            <li class="menu__li">
+                <a class="menu__a" href="index.php?c=reg&act=reg">
+                    <span class="menu__item">registration</span>
+                </a>
+            </li>
+        {% endif %}
+        <li class="menu__li">
+            <a class="menu__a" href="index.php?c=cabinet&act=show">
+                <span class="menu__item">cabinet</span>
+            </a>
+        </li>
+    </ul>
+</nav>
