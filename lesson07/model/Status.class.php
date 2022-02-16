@@ -2,7 +2,11 @@
 
 class Status
 {
-    const Deleted = 0;
-    const Active = 1;
-    const Inactive = 2;
+    const DELETED = 0; //
+    const ACTIVE = 1;
+    const INACTIVE = 2;
+    const PAID = 3;
+    const DELIVERED = 4;
+    const NOSALE = 5;
+    const CONFIRMED = 6;
 }

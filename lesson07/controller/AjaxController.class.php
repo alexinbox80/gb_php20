@@ -1,5 +1,8 @@
 <?php
 
+//namespace App\Controllers;
+//use App\Controllers;
+
 /**
  * Class AjaxController
  *
@@ -7,9 +10,6 @@
  * @internal
  *
  */
-
-//namespace App\Controllers;
-//use App\Controllers;
 
 class AjaxController extends Controller
 {
@@ -73,7 +73,18 @@ class AjaxController extends Controller
             switch ($action) {
                 case 'auth':
                     $data = $post['form'];
-                    $result = $data;
+                    if (isset($data)) {
+                        $controllerName = ucfirst(isset($data['page']) ? strip_tags($data['page']) : 'index') . 'Controller';//IndexController
+                        $methodName = 'index';
+                        $controller = new $controllerName();
+
+                        $_POST['authLogin'] = $data['authLogin'] ? strip_tags($data['authLogin']) : "";
+                        $_POST['authPasswd'] = $data['authPasswd'] ? strip_tags($data['authPasswd']) : "";
+                        $_POST['authRemember-me'] = $data['authRemember-me'] ? strip_tags($data['authRemember-me']) : "";
+                        $_POST['act'] = $data['act'] ? strip_tags($data['act']) : "";
+
+                        $result = $controller->$methodName($_GET);
+                    }
                     break;
                 case 'regs':
                     $data = $post['form'];

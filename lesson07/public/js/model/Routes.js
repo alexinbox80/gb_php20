@@ -13,4 +13,7 @@ export default class Routes {
         return this._nodes.filter(item => item.url === pathname)[0];
     }
 
+    getPath(node) {
+        return this._nodes.filter(item => item.page === node)[0];
+    }
 }

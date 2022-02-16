@@ -74,7 +74,7 @@ class Category extends Model
         if ($parentId == -1) {
             $result = db::getInstance()->Select(
                 'SELECT category_id, name, url, parent_id FROM categories WHERE status=:status',
-                ['status' => Status::Active]);
+                ['status' => Status::ACTIVE]);
 
             $result = self::createMenuTreeUUID($result, 'root');
             //$result = self::createMenuTree($result, 0);;
@@ -83,7 +83,7 @@ class Category extends Model
 
             $result = db::getInstance()->Select(
                 'SELECT category_id, name FROM categories WHERE status=:status AND parent_id = :parent_id',
-                ['status' => Status::Active, 'parent_id' => $parentId]);
+                ['status' => Status::ACTIVE, 'parent_id' => $parentId]);
 
         }
 

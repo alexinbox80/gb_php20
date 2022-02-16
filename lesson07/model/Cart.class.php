@@ -87,7 +87,6 @@ class Cart extends Model
 
     public static function updateCart($data)
     {
-        $orderId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
 
         foreach ($data as $item) {
             $sql = "SELECT *
@@ -143,6 +142,10 @@ class Cart extends Model
                 $result = ['update' => $result];
             } else {
                 //  insert
+
+                $cartId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
+                $orderId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
+
                 $sql = "INSERT INTO  " . self::$table . " (cart_id, order_id, user_id, good_id, price,
                                             quantity, dateCreate, dateUpdate, status)
                         VALUES (:cart_id, :order_id, :user_id, :good_id, 0, :quantity,
@@ -151,7 +154,7 @@ class Cart extends Model
                 $params = [
                     [
                         'name' => ':cart_id',
-                        'data' => $orderId,
+                        'data' => $cartId,
                         'type' => PDO::PARAM_STR
                     ],
                     [
@@ -181,7 +184,7 @@ class Cart extends Model
                     ],
                     [
                         'name' => ':status',
-                        'data' => Status::Active,
+                        'data' => Status::ACTIVE,
                         'type' => PDO::PARAM_INT
                     ]
                 ];
@@ -190,7 +193,7 @@ class Cart extends Model
                     $sql,
                     $params);
 
-                $result = ['insert' => 'id:'.$result];
+                $result = ['insert' => 'id:' . $result];
             }
         }
 
@@ -208,7 +211,7 @@ class Cart extends Model
         return db::getInstance()->Select(
             $sql,
             [
-                'status' => Status::Active,
+                'status' => Status::ACTIVE,
                 'user_id' => $userId
             ]);
     }

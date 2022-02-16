@@ -61,7 +61,7 @@ class Good extends Model
             ],
             [
                 'name' => ':status',
-                'data' => Status::Active,
+                'data' => Status::ACTIVE,
                 'type' => PDO::PARAM_INT
             ],
             [
@@ -89,7 +89,7 @@ class Good extends Model
         $sql = "SELECT * FROM goods WHERE category_id = :category_id AND status = :status";
         return db::getInstance()->Select(
             $sql,
-            ['status' => Status::Active, 'category_id' => $categoryId]);
+            ['status' => Status::ACTIVE, 'category_id' => $categoryId]);
     }
 
     public function getGoodInfo()

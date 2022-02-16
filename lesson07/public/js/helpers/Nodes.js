@@ -1,6 +1,6 @@
 const nodes = [
     {
-        'page' : 'root',
+        'page' : 'index',
         'url' : '/'
     },
     {
@@ -24,7 +24,5 @@ const nodes = [
         'url' : '/index.php?path=admin'
     }
 ];
-
-
 
 export default () => nodes;

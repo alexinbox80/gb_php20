@@ -36,10 +36,17 @@ export default {
         //this._showcaseModel.load();
 ////
 
-        this._loginBtnHandler();
+        //this._loginBtnHandler();
 
     },
-
+    _getCookie(cookieName) {
+        let cookie = {};
+        document.cookie.split(';').forEach(function (el) {
+            let [key, value] = el.split('=');
+            cookie[key.trim()] = value;
+        });
+        return cookie[cookieName];
+    },
     _addToCart(id) {
 
         let saveCart = [];
@@ -50,7 +57,7 @@ export default {
 
         saveCart = this._cartModel._goodList.map(good => {
             return {
-                user_id: 'c08b32be-1677-443c-bf00-877291354c93',
+                user_id: this._getCookie('user_id'),
                 good_id: good.good_id,
                 quantity: good.quantity,
                 timeCreate: Date.now()
@@ -94,9 +101,9 @@ export default {
 
         this._cartModel.decrease(id);
 
-        console.log('_removeFromCart : ' +  JSON.stringify(this._eventEmmiter));
+        console.log('_removeFromCart : ' + JSON.stringify(this._eventEmmiter));
 
-     //save state in BD????
+        //save state in BD????
 
         //remove item cart from cart page
         this._renderPageCart();
@@ -155,10 +162,10 @@ export default {
 
             this._showcaseModel.getAll().forEach(
                 good => {
-                        const card = new CardView(good);
-                        card.render(product, 'beforeend');
-                        card.setAddHandler(this._addToCart.bind(this));
-                    }
+                    const card = new CardView(good);
+                    card.render(product, 'beforeend');
+                    card.setAddHandler(this._addToCart.bind(this));
+                }
             );
         }
     },
@@ -182,7 +189,7 @@ export default {
         }
     },
 
-    _routes () {
+    _routes() {
 
         let pathname = window.location.pathname + window.location.search.split('&')[0];
         const node = new Routes().getNode(pathname);
@@ -192,8 +199,11 @@ export default {
         //console.log('node url : ' + node.url + ' node name : ' + node.page);
 
         switch (node.page) {
-            case 'root':
+            case 'index':
                 console.log("root page : " + pathname + ' node : ' + node.page);
+
+                this._loginBtnHandler(node.page);
+
                 this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
 
@@ -202,12 +212,14 @@ export default {
                 break;
             case 'cart':
                 console.log("about page : " + pathname + ' node : ' + node.page);
+                this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderPageCart.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
                 this._cartModel.load();
                 break;
             case 'product':
                 console.log("home page : " + pathname + ' node : ' + node.page);
+                this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
 
@@ -217,6 +229,7 @@ export default {
                 break;
             case 'catalog':
                 console.log("home page : " + pathname + ' node : ' + node.page);
+                this._loginBtnHandler(node.page);
                 //this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
 
                 //this._eventEmmiter.addListener('loaded', this._renderCatalog.bind(this));
@@ -224,17 +237,19 @@ export default {
 
                 //this._showcaseModel.load();
 
-                this._catalogModel.request({ begin: 0, offset: 20 });
+                this._catalogModel.request({begin: 0, offset: 20});
                 this._cartModel.load();
                 break;
             case 'reg':
                 console.log("home page : " + pathname + ' node : ' + node.page);
+                this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
                 this._cartModel.load();
                 this._regsModel.registrationForm();
                 break;
             case 'admin':
                 console.log("home page : " + pathname + ' node : ' + node.page);
+                this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
                 this._cartModel.load();
                 break;
@@ -243,7 +258,7 @@ export default {
         }
     },
 
-    _loginBtnHandler() {
-        this._authModel.loginForm();
+    _loginBtnHandler(page) {
+        this._authModel.loginForm(page);
     }
 }

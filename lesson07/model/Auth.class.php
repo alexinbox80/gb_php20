@@ -5,6 +5,8 @@ class Auth extends User
     private $error = "";
     private $is_authorized = false;
     private $user_id = '';
+    //private $cart_id = '';
+    //private $order_id = '';
 
     function __construct($data)
     {
@@ -118,6 +120,10 @@ class Auth extends User
                         } else {
                             $this->is_authorized = true;
                             $this->user_id = $authUser[0]['user_id'];
+
+                            //$this->cart_id = '';
+                            //$this->order_id = '';
+
                             //last active
                             $sql = "UPDATE users
                                     SET lastActive = NOW()
@@ -175,7 +181,13 @@ class Auth extends User
                 $sql = "SELECT * FROM roles WHERE role = 'user'";
                 $role_id = db::getInstance()->Select($sql,[])[0]['role_id'];
 
-                $user_id = UUID::v4();
+                if (Auth::isAuthorized()) {
+                    $user_id = $_SESSION['user_id'];
+                } else {
+                    $user_id = $_COOKIE['user_id'];
+                }
+
+                //$user_id = UUID::v4();
 
                 if (db::getInstance()->beginTransaction()) {
 
@@ -194,7 +206,7 @@ class Auth extends User
                             'gender' => $user['gender'],
                             'login' => $user['login'],
                             'passwd' => $passwdMd5,
-                            'status' => Status::Active
+                            'status' => Status::ACTIVE
                         ]);
 
                     $sql = "INSERT INTO  user_role (user_id, role_id)

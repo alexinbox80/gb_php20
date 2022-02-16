@@ -92,7 +92,13 @@ class IndexController extends Controller
     public function cart($data)
     {
 
-        $userId = 'c08b32be-1677-443c-bf00-877291354c93';
+        //$userId = 'c08b32be-1677-443c-bf00-877291354c93';
+        if (Auth::isAuthorized()) {
+            $userId = $_SESSION['user_id'];
+        } else {
+            $userId = $_COOKIE['user_id'];
+        }
+
         $cart = Cart::getCart($userId);
 
         return $cart;

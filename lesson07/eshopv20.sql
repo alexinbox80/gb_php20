@@ -1,4 +1,4 @@
--- Adminer 4.8.1 MySQL 5.7.32 dump
+-- Adminer 4.8.1 MySQL 5.7.34 dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -21,8 +21,9 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `carts` (`id`, `cart_id`, `order_id`, `user_id`, `good_id`, `price`, `quantity`, `dateCreate`, `dateUpdate`, `status`) VALUES
-(32,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81207332-a273-0c57-04e8-f99b5b199795',	0,	1,	'2022-02-15 19:56:51',	'2022-02-15 19:56:51',	1),
-(33,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81296312-a273-0c97-04e8-f99b5b199795',	0,	1,	'2022-02-15 19:56:51',	'2022-02-15 19:56:51',	1);
+(32,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81207332-a273-0c57-04e8-f99b5b199795',	0,	1,	'2022-02-16 11:37:38',	'2022-02-16 11:37:38',	1),
+(33,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'81296312-a273-0c97-04e8-f99b5b199795',	0,	1,	'2022-02-16 11:37:38',	'2022-02-16 11:37:38',	1),
+(34,	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'3cb37309-7b6e-4a13-9472-dd7ad4c65626',	'c08b32be-1677-443c-bf00-877291354c93',	'7e606fd5-678c-7669-b972-fe3fa3179867',	0,	1,	'2022-02-16 11:37:38',	'2022-02-16 11:37:38',	1);
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
@@ -147,10 +148,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `users` (`id`, `user_id`, `lastName`, `firstName`, `address`, `email`, `phone`, `gender`, `login`, `passwd`, `status`, `dateCreate`, `lastActive`) VALUES
-(1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 21:15:41',	'2022-02-15 21:15:41'),
-(2,	'c08b32be-1677-443c-bf00-877291354c93',	'Petrov',	'Petr',	'address',	'mail@mail.ru',	'+79211234590',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 21:59:13',	'2022-02-15 21:59:13'),
-(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-01-04 13:46:25',	NULL),
-(4,	'445a2b73-49ad-4f73-a0e3-eb8c2d95a23f',	'qwe',	'qwe',	NULL,	'qwe@qwe.ru',	NULL,	'female',	'qwe',	'644abf9ff0f45d5a919cf11642208d67644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 20:09:49',	NULL),
+(1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-16 08:55:58',	'2022-02-16 08:55:58'),
+(2,	'c08b32be-1677-443c-bf00-877291354c93',	'Petrov',	'Petr',	'address',	'mail@mail.ru',	'+79211234590',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-16 12:26:57',	'2022-02-16 12:26:57'),
+(3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-16 08:32:49',	'2022-02-16 08:32:49'),
+(4,	'445a2b73-49ad-4f73-a0e3-eb8c2d95a23f',	'qwe',	'qwe',	NULL,	'qwe@qwe.ru',	NULL,	'female',	'qwe',	'644abf9ff0f45d5a919cf11642208d67644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-16 12:29:51',	'2022-02-16 12:29:51'),
 (5,	'388d51a4-fc94-47f8-83dc-3c617574097c',	'qwe',	'qwe',	NULL,	'qwe1@qwe.ru',	NULL,	'female',	'qwe1',	'05b461fd59894e2640a7c312b800c15a644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-15 20:12:28',	NULL);
 
 DROP TABLE IF EXISTS `user_role`;
@@ -168,4 +169,4 @@ INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
 (4,	'445a2b73-49ad-4f73-a0e3-eb8c2d95a23f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
 (5,	'388d51a4-fc94-47f8-83dc-3c617574097c',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
 
--- 2022-02-15 22:04:01
+-- 2022-02-16 14:49:51
