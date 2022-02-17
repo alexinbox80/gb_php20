@@ -49,8 +49,20 @@ class Cart extends Model
 
     public static function deleteCartItem($data)
     {
-        $orderId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
-        $userId = 'c08b32be-1677-443c-bf00-877291354c93';
+        $userId = $data['user_id'];
+
+        $sql = "SELECT order_id FROM " . self::$table .
+               " WHERE user_id = :user_id AND good_id = :good_id AND status = :status";
+
+        $row = db::getInstance()->Select(
+            $sql,
+            [
+                'status' => Status::ACTIVE,
+                'user_id' => $userId,
+                'good_id' => $data['good_id']
+            ]);
+
+        $orderId = $row[0]['order_id'];
 
         $sql = "DELETE FROM " . self::$table . "
                 WHERE
@@ -66,6 +78,7 @@ class Cart extends Model
             ],
             [
                 'name' => ':user_id',
+                //'data' => $data['user_id'],
                 'data' => $userId,
                 'type' => PDO::PARAM_STR
             ],
@@ -87,7 +100,6 @@ class Cart extends Model
 
     public static function updateCart($data)
     {
-
         foreach ($data as $item) {
             $sql = "SELECT *
                     FROM " . self::$table . "
@@ -98,7 +110,7 @@ class Cart extends Model
             $result = db::getInstance()->Select(
                 $sql,
                 [
-                    'status' => Status::Active,
+                    'status' => Status::ACTIVE,
                     'user_id' => $item['user_id'],
                     'good_id' => $item['good_id']
                 ]);
@@ -120,7 +132,7 @@ class Cart extends Model
                     ],
                     [
                         'name' => ':status',
-                        'data' => Status::Active,
+                        'data' => Status::ACTIVE,
                         'type' => PDO::PARAM_INT
                     ],
                     [
@@ -143,8 +155,30 @@ class Cart extends Model
             } else {
                 //  insert
 
-                $cartId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
-                $orderId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
+                //Auth::sessionStart();
+
+                if (Auth::isAuthorized()) {
+
+                    $sql = "SELECT user_id, cart_id, order_id FROM" . self::$table .
+                        "WHERE user_id = :user_id AND status = :status";
+
+                    $result = db::getInstance()->Select(
+                        $sql,
+                        [
+                            'status' => Status::ACTIVE,
+                            'user_id' => $item['user_id']
+                        ]);
+
+                    $cartId = $result['cart_id'];
+                    $orderId = $result['order_id'];
+
+                } else {
+                    $cartId = UUID::v4();
+                    $orderId = UUID::v4();
+                }
+
+                //$cartId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
+                //$orderId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
 
                 $sql = "INSERT INTO  " . self::$table . " (cart_id, order_id, user_id, good_id, price,
                                             quantity, dateCreate, dateUpdate, status)
