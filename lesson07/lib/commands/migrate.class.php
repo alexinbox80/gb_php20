@@ -38,5 +38,3 @@ class migrate extends Command
         return $migrations;
     }
 }
-
-?>

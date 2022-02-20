@@ -14,7 +14,6 @@ class App
 
     //http://site.ru/index.php?path=News/delete/5
 
-
     protected static function web($url)
     {
 

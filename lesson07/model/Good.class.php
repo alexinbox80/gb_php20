@@ -78,15 +78,13 @@ class Good extends Model
 
         $result = db::getInstance()->QueryBindParam($sql, $params);
 
-        //Logger::Write($result, false);
-
         return $result;
     }
 
     public static function getGoods($categoryId)
     {
-        //$sql = "SELECT good_id, category_id, `title`, price FROM goods WHERE category_id = :category_id AND status=:status";
         $sql = "SELECT * FROM goods WHERE category_id = :category_id AND status = :status";
+
         return db::getInstance()->Select(
             $sql,
             ['status' => Status::ACTIVE, 'category_id' => $categoryId]);

@@ -1079,7 +1079,7 @@ summary {
   color: #F16D7F;
   line-height: 19px;
 }
-.cart__shipping-city, .cart__shipping-state, .cart__shipping-zip {
+.cart__shipping-city, .cart__shipping-state, .cart__shipping-zip, .cart__shipping-phone {
   display: block;
   padding: 13px 16px;
   margin-bottom: 20px;

@@ -12,6 +12,8 @@ import CartView from "./view/CartView.js";
 import Routes from './model/Routes.js';
 import Auth from './model/Auth.js';
 import Regs from './model/Regs.js';
+import Order from './model/Order.js';
+import getUuid from "./utils/getUuid.js";
 
 export default {
     _eventEmmiter: eventEmmiter,
@@ -20,6 +22,7 @@ export default {
     _cartModel: new Cart,
     _authModel: new Auth,
     _regsModel: new Regs,
+    _orderModel: new Order,
 
     init() {
         this._routes();
@@ -39,14 +42,14 @@ export default {
         //this._loginBtnHandler();
 
     },
-    _getCookie(cookieName) {
-        let cookie = {};
-        document.cookie.split(';').forEach(function (el) {
-            let [key, value] = el.split('=');
-            cookie[key.trim()] = value;
-        });
-        return cookie[cookieName];
-    },
+    // _getCookie(cookieName) {
+    //     let cookie = {};
+    //     document.cookie.split(';').forEach(function (el) {
+    //         let [key, value] = el.split('=');
+    //         cookie[key.trim()] = value;
+    //     });
+    //     return cookie[cookieName];
+    // },
     _addToCart(id) {
 
         let saveCart = [];
@@ -57,7 +60,7 @@ export default {
 
         saveCart = this._cartModel._goodList.map(good => {
             return {
-                user_id: this._getCookie('user_id'),
+                user_id: getUuid.getCookie('user_id'),
                 good_id: good.good_id,
                 quantity: good.quantity,
                 timeCreate: Date.now()
@@ -215,7 +218,12 @@ export default {
                 this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderPageCart.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
+
                 this._cartModel.load();
+                //console.log(JSON.stringify(this._cartModel.getAll()));
+                console.log(this._cartModel.getAll());
+                this._shippingHandler();
+
                 break;
             case 'product':
                 console.log("home page : " + pathname + ' node : ' + node.page);
@@ -260,5 +268,9 @@ export default {
 
     _loginBtnHandler(page) {
         this._authModel.loginForm(page);
+    },
+    _shippingHandler(cart) {
+        console.log(JSON.stringify(cart));
+        this._orderModel.makeOrder();
     }
 }

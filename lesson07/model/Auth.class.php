@@ -5,8 +5,6 @@ class Auth extends User
     private $error = "";
     private $is_authorized = false;
     private $user_id = '';
-    //private $cart_id = '';
-    //private $order_id = '';
 
     function __construct($data)
     {
@@ -30,6 +28,20 @@ class Auth extends User
             return (bool)$_SESSION["user_id"];
         }
         return false;
+    }
+
+    public static function setSiteCookie(int $day, string $uuid, string $cookie_name): bool
+    {
+        $user_id = $uuid;
+        $expire = time() + $day * 24 * 3600;
+        $domain = ""; // default domain
+        $secure = false;
+        $path = "/";
+        $http_only = false;
+
+        $cookie = setcookie($cookie_name, $user_id, $expire, $path, $domain, $secure, $http_only);//}
+
+        return $cookie;
     }
 
     protected function saveSession($remember = false, $http_only = true, $days = 7)
@@ -64,19 +76,23 @@ class Auth extends User
         $result = [];
 
         if ($flag) {
-            $result = ['info' => 'User is registered in the system!',
-                'status' => 'ok'];
+            $result = [
+                'info' => 'User is registered in the system!',
+                'status' => 'ok'
+            ];
         }
 
         if (($user->getError() != "") && ($_POST['act'] == 'action-login')) {
 
             $result = [
                 'info' => $user->getError(),
-                'status' => 'error'];
+                'status' => 'error'
+            ];
         } else if ($_POST['act'] == 'logout') {
             $result = [
                 'info' => $user->getError(),
-                'status' => 'ok'];
+                'status' => 'ok'
+            ];
         }
 
         return $result;
@@ -121,8 +137,10 @@ class Auth extends User
                             $this->is_authorized = true;
                             $this->user_id = $authUser[0]['user_id'];
 
-                            //$this->cart_id = '';
-                            //$this->order_id = '';
+                            $user_id_old = $_COOKIE['user_id'];
+
+                            Auth::changeUserUUID($user_id_old, $this->user_id);
+                            Auth::setSiteCookie(1, $this->user_id, 'user_id');
 
                             //last active
                             $sql = "UPDATE users
@@ -141,9 +159,6 @@ class Auth extends User
                     break;
             }
         }
-
-        //echo "login = " . $login . " passwd = " . $passwd . " rememberme = " . $rememberme . " action = " . $action . "<br>\n";
-
         return $this->is_authorized;
     }
 
@@ -174,20 +189,26 @@ class Auth extends User
             $result = true;
             // writing to the database
             try {
-
                 $passwdMd5 = self::makePasswdMd5($user['login'], md5($user['passwd']));
 
-
                 $sql = "SELECT * FROM roles WHERE role = 'user'";
-                $role_id = db::getInstance()->Select($sql,[])[0]['role_id'];
+                $role_id = db::getInstance()->Select($sql, [])[0]['role_id'];
 
                 if (Auth::isAuthorized()) {
                     $user_id = $_SESSION['user_id'];
-                } else {
-                    $user_id = $_COOKIE['user_id'];
-                }
 
-                //$user_id = UUID::v4();
+                } else {
+                    // generate user_id ???
+                    $user_id = UUID::v4();
+                    $user_id_old = $_COOKIE['user_id'];
+
+                    // user_id BD update
+                    Auth::changeUserUUID($user_id_old, $user_id);
+
+                    // cookie update
+                    $cookie_name = 'user_id';
+                    Auth::setSiteCookie(1, $user_id, $cookie_name);
+                }
 
                 if (db::getInstance()->beginTransaction()) {
 
@@ -195,7 +216,6 @@ class Auth extends User
                                             email, phone, gender, login, passwd, status, dateCreate, lastActive)
                             VALUES (:user_id, :lastName, :firstName, NULL, :email, NULL, :gender,
                                     :login, :passwd, :status, NOW(), NULL)";
-
                     $res = db::getInstance()->Query(
                         $sql,
                         [

@@ -26,7 +26,4 @@ class cleantables extends Command
         Logger::write('Cleaning table ' . $table, true);
         db::getInstance()->query('TRUNCATE TABLE ' . $table);
     }
-
-
-
 }

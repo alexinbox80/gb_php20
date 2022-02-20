@@ -44,64 +44,6 @@ class IndexController extends Controller
         }
 
         header('Location: /');
-        //return [];
-    }
-
-    public function goods($data)
-    {
-
-        $categoryId = 'ef720659-d7c1-4405-9fb1-ac1b36c00444';
-
-        $lbgn = $_GET['lbgn'] ? strip_tags($_GET['lbgn']) : "";
-        $lcnt = $_GET['lcnt'] ? strip_tags($_GET['lcnt']) : "";
-
-        if (($lbgn >= 0 ) || ($lbgn > 0)) {
-            $goods = Good::getGoodsPage($categoryId, $lbgn, $lcnt);
-        } else {
-            $goods = Good::getGoods($categoryId);
-        }
-
-        return $goods;
-    }
-
-    public function changeCart($data)
-    {
-        if ($this->IsPost()) {
-
-            $post = file_get_contents('php://input');
-            $post = json_decode($post, true);
-
-            $action = $post['todo'];
-            $data = $post['cart'];
-
-            switch ($action) {
-                case 'addToCart':
-                    $result = Cart::updateCart($data);
-                    break;
-                case 'delFromCart':
-                    $result = Cart::deleteCartItem($data);
-                    break;
-                default:
-                    $result = 'Wrong operations!';
-            }
-        }
-
-        return $result;
-    }
-
-    public function cart($data)
-    {
-
-        //$userId = 'c08b32be-1677-443c-bf00-877291354c93';
-        if (Auth::isAuthorized()) {
-            $userId = $_SESSION['user_id'];
-        } else {
-            $userId = $_COOKIE['user_id'];
-        }
-
-        $cart = Cart::getCart($userId);
-
-        return $cart;
     }
 }
 

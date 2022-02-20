@@ -1,9 +1,5 @@
 <?php
 
-//namespace App\Controllers;
-
-//use App\Configuration as Config;
-
 class Controller
 {
     public $view = 'admin';

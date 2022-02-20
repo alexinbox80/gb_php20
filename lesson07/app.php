@@ -1,25 +1,26 @@
 <?php
+
+//ini_set('error_reporting', E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+
 require_once 'autoload.php';
 
-try{
+try {
+
     if (!isset($_COOKIE['user_id'])) {
 
         $user_id = UUID::v4();
-        $expire = time() + 1 * 24 * 3600;
-        $domain = ""; // default domain
-        $secure = false;
-        $path = "/";
-        $http_only = false;
+        $cookie_name = 'user_id';
+        Auth::setSiteCookie(1, $user_id, $cookie_name);
 
-        setcookie('user_id', $user_id, $expire, $path, $domain, $secure, $http_only);
     }
 
     App::init();
-}
-catch (PDOException $e){
-    echo "DB is not available";
+
+} catch (PDOException $e) {
+    echo "DB is not available<br>";
     var_dump($e->getTrace());
-}
-catch (Exception $e){
+} catch (Exception $e) {
     echo $e->getMessage();
 }

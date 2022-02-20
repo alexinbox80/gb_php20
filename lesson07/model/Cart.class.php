@@ -49,26 +49,24 @@ class Cart extends Model
 
     public static function deleteCartItem($data)
     {
-        $userId = $data['user_id'];
-
         $sql = "SELECT order_id FROM " . self::$table .
-               " WHERE user_id = :user_id AND good_id = :good_id AND status = :status";
+            " WHERE user_id = :user_id AND good_id = :good_id AND status = :status";
 
         $row = db::getInstance()->Select(
             $sql,
             [
                 'status' => Status::ACTIVE,
-                'user_id' => $userId,
+                'user_id' => $data['user_id'],
                 'good_id' => $data['good_id']
             ]);
-
-        $orderId = $row[0]['order_id'];
 
         $sql = "DELETE FROM " . self::$table . "
                 WHERE
                     carts.order_id = :order_id AND
                     carts.user_id = :user_id AND
                     carts.good_id = :good_id";
+
+        $orderId = $row[0]['order_id'];
 
         $params = [
             [
@@ -78,8 +76,7 @@ class Cart extends Model
             ],
             [
                 'name' => ':user_id',
-                //'data' => $data['user_id'],
-                'data' => $userId,
+                'data' => $data['user_id'],
                 'type' => PDO::PARAM_STR
             ],
             [
@@ -154,31 +151,23 @@ class Cart extends Model
                 $result = ['update' => $result];
             } else {
                 //  insert
+                $sql = "SELECT user_id, cart_id, order_id, good_id FROM " . self::$table .
+                    " WHERE user_id = :user_id AND status = :status";
 
-                //Auth::sessionStart();
+                $result = db::getInstance()->Select(
+                    $sql,
+                    [
+                        'status' => Status::ACTIVE,
+                        'user_id' => $item['user_id']
+                    ]);
 
-                if (Auth::isAuthorized()) {
-
-                    $sql = "SELECT user_id, cart_id, order_id FROM" . self::$table .
-                        "WHERE user_id = :user_id AND status = :status";
-
-                    $result = db::getInstance()->Select(
-                        $sql,
-                        [
-                            'status' => Status::ACTIVE,
-                            'user_id' => $item['user_id']
-                        ]);
-
-                    $cartId = $result['cart_id'];
-                    $orderId = $result['order_id'];
-
-                } else {
+                if (empty($result[0]['cart_id']) && empty($result[0]['order_id'])) {
                     $cartId = UUID::v4();
                     $orderId = UUID::v4();
+                } else {
+                    $cartId = $result[0]['cart_id'];
+                    $orderId = $result[0]['order_id'];
                 }
-
-                //$cartId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
-                //$orderId = '3cb37309-7b6e-4a13-9472-dd7ad4c65626';
 
                 $sql = "INSERT INTO  " . self::$table . " (cart_id, order_id, user_id, good_id, price,
                                             quantity, dateCreate, dateUpdate, status)
@@ -206,11 +195,6 @@ class Cart extends Model
                         'data' => $item['good_id'],
                         'type' => PDO::PARAM_STR
                     ],
-//                    [
-//                        'name' => ':price',
-//                        'data' => (string)$item['price'],
-//                        'type' => PDO::PARAM_STR
-//                    ],
                     [
                         'name' => ':quantity',
                         'data' => $item['quantity'],

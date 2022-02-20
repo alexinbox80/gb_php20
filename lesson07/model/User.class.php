@@ -6,7 +6,7 @@ abstract class User
 
     function __construct($data)
     {
-        $this->data = $data;
+        self::$data = $data;
         $this->sessionStart();
     }
 
@@ -38,6 +38,28 @@ abstract class User
         )[0]['role'];
 
         return $role;
+    }
+
+    public static function changeUserUUID(string $uuid_old, string $uuid):bool
+    {
+       $result = false;
+
+        $sql = "UPDATE carts 
+                SET user_id = :user_id
+                WHERE user_id = :user_id_old";
+
+        $update = db::getInstance()->Query(
+            $sql,
+            [
+                'user_id' => $uuid,
+                'user_id_old' => $uuid_old
+            ]);
+
+        if($update) {
+           $result = true;
+        }
+
+        return $result;
     }
 
     abstract public function auth();

@@ -16,9 +16,9 @@ export default class CardBtnView {
         return countContent;
     }
 
-    render($container, target = 'afterbegin') {
+    render(container, target = 'afterbegin') {
 
-        $container.insertAdjacentHTML(target, this.getHtml());
+        container.insertAdjacentHTML(target, this.getHtml());
 /*
         if (this._addHandler) {
 

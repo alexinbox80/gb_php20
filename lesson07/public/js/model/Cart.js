@@ -1,7 +1,7 @@
 import GoodList from './GoodList.js';
 import dataHandler from '../helpers/dataHandler.js'
 import PurchasedGood from './PurchasedGood.js';
-import shopController from "../shopController.js";
+import getUuid from "../utils/getUuid.js";
 
 export default class Cart extends GoodList {
     constructor() {
@@ -53,7 +53,7 @@ export default class Cart extends GoodList {
 
         // удалить из базы
 
-        dataHandler.delFromCart(dataHandler, {'good_id' : id, 'user_id' : shopController._getCookie('user_id')});
+        dataHandler.delFromCart(dataHandler, {'good_id' : id, 'user_id' : getUuid.getCookie('user_id')});
     }
 
     getCount() {

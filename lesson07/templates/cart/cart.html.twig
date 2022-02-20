@@ -16,20 +16,22 @@
         </div>
         <div class="cart__right">
             <div class="cart__shipping">
-                <h3 class="cart__shipping-title">SHIPPING ADRESS</h3>
-                <input class="cart__shipping-city" type="text" placeholder="Bangladesh">
-                <input class="cart__shipping-state" type="text" placeholder="State">
-                <input class="cart__shipping-zip" type="number" step="1" min="100000" max="999999"
+                <h3 class="cart__shipping-title">SHIPPING ADDRESS</h3>
+                <div id="ordernote" class="form__note"></div>
+                <input class="cart__shipping-city" type="text" name="shippingCity" placeholder="Bangladesh">
+                <input class="cart__shipping-state" type="text" name="shippingState" placeholder="State">
+                <input class="cart__shipping-zip" type="number" name="shippingZip" step="1" min="100000" max="999999"
                        placeholder="Postcode / Zip">
+                <input class="cart__shipping-phone" type="text" name="shippingPhone" placeholder="Phone number">
                 <button type="button" class="cart__shipping-sub">
-                    <span class="cart__shipping-subtext">GET A QUOTE</span>
+                    <span id="cart__shipping-subtext" class="cart__shipping-subtext">GET A QUOTE</span>
                 </button>
             </div>
             <div class="cart__account">
                 <h4 class="cart__account-h4">SUB TOTAL $750</h4>
                 <h3 class="cart__account-h3">GRAND TOTAL <span class="cart__account-tprice"></span></h3>
                 <hr class="cart__account-line">
-                <button type="button" class="cart__shipping-proceed">
+                <button id="cart__shipping-proceed" class="cart__shipping-proceed" type="button" >
                     <span class="cart__shipping-proceedtext">PROCEED TO CHECKOUT</span>
                 </button>
             </div>

@@ -48,7 +48,6 @@ export default class CartView {
     }
 
     _addHandlerClear() {
-        console.log('addHandlerClear');
         this._addHandlerCb(this._data.good_id);
         document.location.href = '/index.php?path=catalog';
     }

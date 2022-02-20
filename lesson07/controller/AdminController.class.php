@@ -1,4 +1,5 @@
 <?php
+
 class AdminController extends Controller
 {
     protected $controls = [
@@ -71,7 +72,7 @@ class AdminController extends Controller
                 db::getInstance()->Query($query, ['id' => $actionId['id']]);
                 break;
             case 'delete':
-                db::getInstance()->Query('UPDATE ' . $data['id'] . ' SET status=:status WHERE id = :id', ['id' => $actionId['id'], 'status' => Status::Deleted]);
+                db::getInstance()->Query('UPDATE ' . $data['id'] . ' SET status=:status WHERE id = :id', ['id' => $actionId['id'], 'status' => Status::DELETED]);
                 break;
         }
         $fields = db::getInstance()->Select('desc ' . $data['id']);
@@ -94,7 +95,6 @@ class AdminController extends Controller
             }
         }
 
-        //return ['name' => $data['id'],'fields' => $fields, 'items' => $items];
         return [
             'name' => $data['id'],
             'fields' => $headerField,
