@@ -21,9 +21,8 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `carts` (`id`, `cart_id`, `order_id`, `user_id`, `good_id`, `price`, `quantity`, `dateCreate`, `dateUpdate`, `status`) VALUES
-(63,	'b1b518ca-322c-48df-af58-bac0368e4170',	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	'81245312-a273-0c97-04e8-f99b5b199795',	0,	1,	'2022-02-20 22:36:43',	'2022-02-20 22:36:43',	1),
-(64,	'b1b518ca-322c-48df-af58-bac0368e4170',	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	'81207332-a273-0c57-04e8-f99b5b199795',	0,	2,	'2022-02-20 22:36:43',	'2022-02-20 22:36:43',	1),
-(67,	'b1b518ca-322c-48df-af58-bac0368e4170',	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	'7d8b04dd-c403-2c1d-7a22-ff1d671341be',	0,	1,	'2022-02-20 22:36:43',	'2022-02-20 22:36:43',	1);
+(63,	'b1b518ca-322c-48df-af58-bac0368e4170',	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	'81245312-a273-0c97-04e8-f99b5b199795',	0,	2,	'2022-02-21 20:08:42',	'2022-02-21 20:08:42',	1),
+(64,	'b1b518ca-322c-48df-af58-bac0368e4170',	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	'81207332-a273-0c57-04e8-f99b5b199795',	0,	2,	'2022-02-21 20:08:42',	'2022-02-21 20:08:42',	1);
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
@@ -106,7 +105,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `orders` (`id`, `order_id`, `user_id`, `amount`, `price`, `dateCreate`, `dateUpdate`, `status`) VALUES
-(11,	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	5,	25,	'2022-02-20 09:18:18',	'2022-02-20 22:36:56',	1);
+(11,	'bad302e6-125d-47c1-96b3-7502a0ca12a6',	'c08b32be-1677-443c-bf00-877291354c93',	5,	232,	'2022-02-20 09:18:18',	'2022-02-21 20:07:38',	1);
 
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
@@ -151,8 +150,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `users` (`id`, `user_id`, `lastName`, `firstName`, `address`, `email`, `phone`, `gender`, `login`, `passwd`, `status`, `dateCreate`, `lastActive`) VALUES
-(1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-20 07:56:50',	'2022-02-20 09:39:33'),
-(2,	'c08b32be-1677-443c-bf00-877291354c93',	'Petrov',	'Petr',	'12 12 21',	'mail@mail.ru',	'12',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-20 08:25:59',	'2022-02-20 22:36:28'),
+(1,	'05fbfc3d-4e9e-48c2-89d2-1e9091fc34fa',	'Ivanov',	'Ivan',	NULL,	'email@mail.ru',	'+79211234567',	'male',	'admin',	'3cf108a4e0a498347a5a75a792f232123cf108a4e0a498347a5a75a792f232122f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-20 07:56:50',	'2022-02-21 20:08:11'),
+(2,	'c08b32be-1677-443c-bf00-877291354c93',	'Petrov',	'Petr',	'Street State 123456',	'mail@mail.ru',	'79211234567',	'male',	'user',	'ee32c060ac0caa70b04e25091bbc11eeee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-20 08:25:59',	'2022-02-21 20:08:42'),
 (3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'Lenina',	'Lena',	'address2',	'mail.mail@mail.ru',	'+79211234576',	'femail',	'user1',	'd9f1eeb7e757b522c74cfa25e51e9c42ee32c060ac0caa70b04e25091bbc11ee2f41e93663bfd5016bd453da04bc100d',	1,	'2022-01-04 13:46:25',	NULL),
 (7,	'7adca00d-dda2-4b83-bd07-6a7305a90c8c',	'qwe',	'qwe',	NULL,	'qwe@mail.ru',	NULL,	'female',	'qwe',	'644abf9ff0f45d5a919cf11642208d67644abf9ff0f45d5a919cf11642208d672f41e93663bfd5016bd453da04bc100d',	1,	'2022-02-20 08:02:07',	'2022-02-20 08:02:07');
 
@@ -170,4 +169,4 @@ INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
 (3,	'499ea281-2b04-4124-adc3-6e5ccf59d39f',	'7d303e73-f1e2-4b02-a0c5-813f3892e172'),
 (7,	'7adca00d-dda2-4b83-bd07-6a7305a90c8c',	'7d303e73-f1e2-4b02-a0c5-813f3892e172');
 
--- 2022-02-20 22:37:38
+-- 2022-02-21 20:35:51
