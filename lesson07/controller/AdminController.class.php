@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class AdminController
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class AdminController extends Controller
 {
     protected $controls = [

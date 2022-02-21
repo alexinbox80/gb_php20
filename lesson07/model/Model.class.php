@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Model
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 abstract class Model
 {
 

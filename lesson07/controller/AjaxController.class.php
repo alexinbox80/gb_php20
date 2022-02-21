@@ -7,17 +7,9 @@
  * @internal
  *
  */
+
 class AjaxController extends Controller
 {
-
-    /**
-     * пример документирования переменной
-     * @param mixed[] $array Array массив значений.
-     * @param int|string $value некоторое значение.
-     * @return int возвращает номер элемента.
-     * @var string
-     */
-    //var $variable;
 
     /**
      * @var string
@@ -31,7 +23,6 @@ class AjaxController extends Controller
     function __construct()
     {
         parent::__construct();
-        //$this->title .= ' | Catalog';
     }
 
     /**
@@ -63,7 +54,6 @@ class AjaxController extends Controller
             $post = json_decode($post, true);
 
             $action = $post['todo'];
-            //$data = $post['cart'];
 
             switch ($action) {
                 case 'auth':

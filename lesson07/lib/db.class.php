@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class db
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class db
 {
     private static $_instance = null;

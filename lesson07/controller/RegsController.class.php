@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Class RegsController
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
+
 class RegsController extends Controller
 {
     public $view = 'regs';

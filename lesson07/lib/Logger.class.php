@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Logger
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class Logger 
 {
     public static function Write($message, $echo = false)

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Status
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class Status
 {
     const DELETED = 0; //

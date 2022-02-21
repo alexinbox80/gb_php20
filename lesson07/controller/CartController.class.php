@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class CartController
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class CartController extends Controller
 {
     public $view = 'cart';

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Controller
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class Controller
 {
     public $view = 'admin';

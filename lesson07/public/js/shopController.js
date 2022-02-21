@@ -14,6 +14,8 @@ import Auth from './model/Auth.js';
 import Regs from './model/Regs.js';
 import Order from './model/Order.js';
 import getUuid from "./utils/getUuid.js";
+//?????????
+import dataHandler from "./helpers/dataHandler.js";
 
 export default {
     _eventEmmiter: eventEmmiter,
@@ -37,19 +39,8 @@ export default {
 
         //this._cartModel.load();
         //this._showcaseModel.load();
-////
-
-        //this._loginBtnHandler();
 
     },
-    // _getCookie(cookieName) {
-    //     let cookie = {};
-    //     document.cookie.split(';').forEach(function (el) {
-    //         let [key, value] = el.split('=');
-    //         cookie[key.trim()] = value;
-    //     });
-    //     return cookie[cookieName];
-    // },
     _addToCart(id) {
 
         let saveCart = [];
@@ -98,19 +89,10 @@ export default {
 
     _removeFromCart(id) {
 
-        console.log('remove : ' + id);
-
-        //this._cartModel.remove(id);
-
         this._cartModel.decrease(id);
-
-        console.log('_removeFromCart : ' + JSON.stringify(this._eventEmmiter));
-
-        //save state in BD????
 
         //remove item cart from cart page
         this._renderPageCart();
-        //this._renderCart();
     },
 
     _renderCart() {
@@ -119,27 +101,22 @@ export default {
         const oldBtn = document.querySelector('.header__cart-count');
 
         if (oldBtn) {
-
             oldBtn.remove();
-
         }
 
         if (header) {
             new CardBtnView(this._cartModel.getCount()).render(header, 'afterbegin');
         }
-
     },
 
     _renderPageCart() {
         const cartList = document.querySelector('.cart__cards');
 
         if (cartList) {
-
             cartList.textContent = '';
 
             this._cartModel._goodList.forEach(
                 good => {
-                    //console.log(good);
                     const cart = new CartView(good);
                     cart.render(cartList, 'afterbegin');
                     cart.setAddHandler(this._removeFromCart.bind(this, good.good_id));
@@ -193,18 +170,11 @@ export default {
     },
 
     _routes() {
-
         let pathname = window.location.pathname + window.location.search.split('&')[0];
         const node = new Routes().getNode(pathname);
 
-        //console.log('pathname = ' + pathname);
-
-        //console.log('node url : ' + node.url + ' node name : ' + node.page);
-
         switch (node.page) {
             case 'index':
-                console.log("root page : " + pathname + ' node : ' + node.page);
-
                 this._loginBtnHandler(node.page);
 
                 this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
@@ -214,19 +184,26 @@ export default {
                 this._cartModel.load();
                 break;
             case 'cart':
-                console.log("about page : " + pathname + ' node : ' + node.page);
                 this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderPageCart.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
 
                 this._cartModel.load();
-                //console.log(JSON.stringify(this._cartModel.getAll()));
-                console.log(this._cartModel.getAll());
-                this._shippingHandler();
+
+                let amount = 0;
+                let price = 0;
+
+                dataHandler.getCart(dataHandler).then(data => {
+                    data.forEach(item => {
+                        amount += parseInt(item.quantity);
+                        price += parseFloat(item.price) * parseInt(item.quantity);
+                    });
+
+                    this._shippingHandler(amount, price);
+                });
 
                 break;
             case 'product':
-                console.log("home page : " + pathname + ' node : ' + node.page);
                 this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
@@ -236,7 +213,6 @@ export default {
                 this._cartModel.load();
                 break;
             case 'catalog':
-                console.log("home page : " + pathname + ' node : ' + node.page);
                 this._loginBtnHandler(node.page);
                 //this._eventEmmiter.addListener('loaded', this._renderShowcase.bind(this));
 
@@ -249,14 +225,12 @@ export default {
                 this._cartModel.load();
                 break;
             case 'reg':
-                console.log("home page : " + pathname + ' node : ' + node.page);
                 this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
                 this._cartModel.load();
                 this._regsModel.registrationForm();
                 break;
             case 'admin':
-                console.log("home page : " + pathname + ' node : ' + node.page);
                 this._loginBtnHandler(node.page);
                 this._eventEmmiter.addListener('loaded', this._renderCart.bind(this));
                 this._cartModel.load();
@@ -269,8 +243,8 @@ export default {
     _loginBtnHandler(page) {
         this._authModel.loginForm(page);
     },
-    _shippingHandler(cart) {
-        console.log(JSON.stringify(cart));
-        this._orderModel.makeOrder();
+
+    _shippingHandler(amount, price) {
+        this._orderModel.makeOrder(amount, price);
     }
 }

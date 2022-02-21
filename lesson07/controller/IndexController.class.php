@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class IndexController
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class IndexController extends Controller
 {
     public $view = 'index';

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Auth
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class Auth extends User
 {
     private $error = "";

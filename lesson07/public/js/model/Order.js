@@ -30,9 +30,8 @@ export default class Order {
         }
     }
 
-    _handleOrderClick() {
+    _handleOrderClick(amount, price) {
         return ((event) => {
-            console.log('Shiping Handler');
 
             const address = {
                 'shippingCity': Order._getFormCity(),
@@ -40,8 +39,8 @@ export default class Order {
                 'shippingZip': Order._getFormZip(),
                 'shippingPhone': Order._getFormPhone(),
                 'user_id': getUuid.getCookie('user_id'),
-                'amount': 5,
-                'price': 25.5
+                'amount': amount,
+                'price': price
             };
 
             const order = address;
@@ -54,17 +53,16 @@ export default class Order {
 
                 if (item.status === 'ok') {
                     this._formMesageRender('ordernote', item.message);
-                    //document.location.href = new Routes().getPath(currentPage).url;
                 }
             });
         })
     }
 
-    makeOrder() {
+    makeOrder(amount, price) {
         const button = document.getElementById('cart__shipping-proceed');
 
         if (button) {
-            button.addEventListener('click', this._handleOrderClick());
+            button.addEventListener('click', this._handleOrderClick(amount, price));
         }
     }
 }

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Order
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class Order extends Model {
     protected static $table = 'orders';
 

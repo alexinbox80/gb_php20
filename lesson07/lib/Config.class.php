@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Config
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class Config
 {
     private static $configCache = [];

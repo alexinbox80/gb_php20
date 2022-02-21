@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class UUID
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class UUID
 {
     public static function v3($namespace, $name)

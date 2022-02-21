@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class App
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 class App
 {
     public static function Init()

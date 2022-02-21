@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class User
+ *
+ * @author My Name <my.name@example.com>
+ * @internal
+ *
+ */
+
 abstract class User
 {
     protected static $data;
