@@ -8,6 +8,7 @@
  *
  */
 
+namespace App\Controller;
 
 class RegsController extends Controller
 {

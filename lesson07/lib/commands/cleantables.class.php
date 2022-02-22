@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 class cleantables extends Command
 {
     public static $description = 'Clean all tables';

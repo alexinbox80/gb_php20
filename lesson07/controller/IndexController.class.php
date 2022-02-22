@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Controller;
+
 class IndexController extends Controller
 {
     public $view = 'index';
@@ -27,7 +29,7 @@ class IndexController extends Controller
 
         $user_uuid = $_SESSION['user_id'];
 
-        $role = Auth::getGroupFromUUID($user_uuid);
+        $role = \App\Model\Auth::getGroupFromUUID($user_uuid);
 
         $answer = [
             'content' => $content,
@@ -46,9 +48,9 @@ class IndexController extends Controller
 
     public function logout()
     {
-        User::sessionStart();
-        if (Auth::isAuthorized()) {
-            Auth::logout();
+        \App\Model\User::sessionStart();
+        if (\App\Model\Auth::isAuthorized()) {
+            \App\Model\Auth::logout();
         }
 
         header('Location: /');

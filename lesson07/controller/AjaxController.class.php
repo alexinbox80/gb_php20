@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Controller;
+
 class AjaxController extends Controller
 {
 
@@ -59,7 +61,7 @@ class AjaxController extends Controller
                 case 'auth':
                     $data = $post['form'];
                     if (isset($data)) {
-                        $controllerName = ucfirst(isset($data['page']) ? strip_tags($data['page']) : 'index') . 'Controller';//IndexController
+                        $controllerName = '\\App\\Controller\\' . ucfirst(isset($data['page']) ? strip_tags($data['page']) : 'index') . 'Controller';//IndexController
                         $methodName = 'index';
                         $controller = new $controllerName();
 
@@ -105,7 +107,7 @@ class AjaxController extends Controller
                     }
 
                     if ($flag) {
-                        if (!Auth::regs($data)) {
+                        if (!\App\Model\Auth::regs($data)) {
                             $result = [
                                 'status' => 'error',
                                 'message' => 'User already exist'
@@ -124,26 +126,26 @@ class AjaxController extends Controller
                     }
                     break;
                 case 'getCart':
-                    Auth::sessionStart();
+                    \App\Model\Auth::sessionStart();
 
-                    if (Auth::isAuthorized()) {
+                    if (\App\Model\Auth::isAuthorized()) {
                         $userId = $_SESSION['user_id'];
                     } else {
                         $userId = $_COOKIE['user_id'];
                     }
-                    $result = Cart::getCart($userId);
+                    $result = \App\Model\Cart::getCart($userId);
 
                     break;
                 case 'addToCart':
                     $data = $post['cart'];
-                    $result = Cart::updateCart($data);
+                    $result = \App\Model\Cart::updateCart($data);
                     break;
                 case 'delFromCart':
                     $data = $post['cart'];
-                    $result = Cart::deleteCartItem($data);
+                    $result = \App\Model\Cart::deleteCartItem($data);
                     break;
                 case 'setOrder':
-                    Auth::sessionStart();
+                    \App\Model\Auth::sessionStart();
                     $data = $post['form'];
 
                     $flag = true;
@@ -170,8 +172,8 @@ class AjaxController extends Controller
                     }
 
                     if ($flag) {
-                        if (Auth::isAuthorized()) {
-                            $result = Order::setOrder($data);
+                        if (\App\Model\Auth::isAuthorized()) {
+                            $result = \App\Model\Order::setOrder($data);
                         }
                     } else {
                         $result = [
@@ -188,9 +190,9 @@ class AjaxController extends Controller
                     $lcnt = $_GET['lcnt'] ? strip_tags($_GET['lcnt']) : "";
 
                     if (($lbgn >= 0) || ($lbgn > 0)) {
-                        $catalog = Good::getGoodsPage($categoryId, $lbgn, $lcnt);
+                        $catalog = \App\Model\Good::getGoodsPage($categoryId, $lbgn, $lcnt);
                     } else {
-                        $catalog = Good::getGoods($categoryId);
+                        $catalog = \App\Model\Good::getGoods($categoryId);
                     }
 
                     $result = $catalog;

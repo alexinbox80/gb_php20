@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 abstract class Model
 {
 
@@ -59,12 +61,12 @@ abstract class Model
 
     public final static function generate()
     {
-        if (self::tableExists()) throw new Exception('Table already exists');
+        if (self::tableExists()) throw new \Exception('Table already exists');
         static::setProperties();
         $query = 'CREATE TABLE ' . static::$table . ' (';
         foreach (static::$properties as $property => $params) {
             if (!isset($params['type'])) {
-                throw new Exception('Property ' . $property . 'has no type');
+                throw new \Exception('Property ' . $property . 'has no type');
             }
             $query .= ' `' . $property . '`';
 
@@ -84,7 +86,7 @@ abstract class Model
 
         }
         $query .= ' PRIMARY KEY (`id`))';
-        db::getInstance()->Query($query);
+        \App\Lib\db::getInstance()->Query($query);
         return true;
     }
 
@@ -121,16 +123,16 @@ abstract class Model
 
     protected final static function tableExists()
     {
-        return count(db::getInstance()->select('SHOW TABLES LIKE "' . static::$table . '"')) > 0;
+        return count(\App\Lib\db::getInstance()->select('SHOW TABLES LIKE "' . static::$table . '"')) > 0;
     }
 
     protected final function checkProperty($name)
     {
         if (!isset(static::$properties[$name])) {
-            throw new Exception('Undefined property ' . $name);
+            throw new \Exception('Undefined property ' . $name);
         }
         if (!isset(static::$properties[$name]['type'])) {
-            throw new Exception('Undefined type for property ' . $name);
+            throw new \Exception('Undefined type for property ' . $name);
         }
     }
 }

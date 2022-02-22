@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Lib;
+
 class Logger 
 {
     public static function Write($message, $echo = false)

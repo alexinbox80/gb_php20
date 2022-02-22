@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 abstract class User
 {
     protected static $data;
@@ -27,9 +29,13 @@ abstract class User
     {
         if (!empty($_COOKIE['sid'])) {
             // check session id in cookies
-            session_id($_COOKIE['sid']);
+            @session_id($_COOKIE['sid']);
         }
-        session_start();
+
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
     }
 
     public static function getGroupFromUUID($uuid)
@@ -40,10 +46,14 @@ abstract class User
                 INNER JOIN roles ON user_role.role_id = roles.role_id
                 WHERE users.user_id = :uuid LIMIT 1";
 
-        $role = db::getInstance()->Select(
+        $role = \App\Lib\db::getInstance()->Select(
             $sql,
             ['uuid' => $uuid]
-        )[0]['role'];
+        );
+
+        if ($role) {
+            $role = $role[0]['role'];
+        }
 
         return $role;
     }
@@ -56,7 +66,7 @@ abstract class User
                 SET user_id = :user_id
                 WHERE user_id = :user_id_old";
 
-        $update = db::getInstance()->Query(
+        $update = \App\Lib\db::getInstance()->Query(
             $sql,
             [
                 'user_id' => $uuid,

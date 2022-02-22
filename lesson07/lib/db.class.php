@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Lib;
+
 class db
 {
     private static $_instance = null;
@@ -51,10 +53,10 @@ class db
     {
         // Формируем строку соединения с сервером
         $connectString = 'mysql:host=' . $host . ';port= ' . $port . ';dbname=' . $base . ';charset=UTF8;';
-        $this->db = new PDO($connectString, $user, $password,
+        $this->db = new \PDO($connectString, $user, $password,
             [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // возвращать ассоциативные массивы
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION // возвращать Exception в случае ошибки
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC, // возвращать ассоциативные массивы
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION // возвращать Exception в случае ошибки
             ]
         );
     }
@@ -64,7 +66,7 @@ class db
         $res = '';
 
         if ($debug) {
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
         }
 
         $result = $this->db->prepare($query);

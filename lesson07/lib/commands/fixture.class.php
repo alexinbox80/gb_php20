@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 class fixture extends Command
 {
     public static $description = 'Here we will add some fixtures';

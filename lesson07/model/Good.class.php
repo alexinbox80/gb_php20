@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 class Good extends Model
 {
     protected static $table = 'goods';
@@ -65,26 +67,26 @@ class Good extends Model
             [
                 'name' => ':category_id',
                 'data' => $categoryId,
-                'type' => PDO::PARAM_STR
+                'type' => \PDO::PARAM_STR
             ],
             [
                 'name' => ':status',
                 'data' => Status::ACTIVE,
-                'type' => PDO::PARAM_INT
+                'type' => \PDO::PARAM_INT
             ],
             [
                 'name' => ':begin',
                 'data' => (int)$begin,
-                'type' => PDO::PARAM_INT
+                'type' => \PDO::PARAM_INT
             ],
             [
                 'name' => ':offset',
                 'data' => (int)$offset,
-                'type' => PDO::PARAM_INT
+                'type' => \PDO::PARAM_INT
             ]
         ];
 
-        $result = db::getInstance()->QueryBindParam($sql, $params);
+        $result = \App\Lib\db::getInstance()->QueryBindParam($sql, $params);
 
         return $result;
     }
@@ -93,21 +95,21 @@ class Good extends Model
     {
         $sql = "SELECT * FROM goods WHERE category_id = :category_id AND status = :status";
 
-        return db::getInstance()->Select(
+        return \App\Lib\db::getInstance()->Select(
             $sql,
             ['status' => Status::ACTIVE, 'category_id' => $categoryId]);
     }
 
     public function getGoodInfo()
     {
-        return db::getInstance()->Select(
+        return \App\Lib\db::getInstance()->Select(
             'SELECT * FROM goods WHERE good_id = :good_id',
             ['good_id' => $this->good_id]);
     }
 
     public static function getGoodPrice($good_id)
     {
-        $result = db::getInstance()->Select(
+        $result = \App\Lib\db::getInstance()->Select(
             'SELECT price FROM goods WHERE good_id = :good_id',
             ['good_good' => $good_id]);
 

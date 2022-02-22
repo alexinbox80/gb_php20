@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 class migrate extends Command
 {
     public static $description = 'Migration';

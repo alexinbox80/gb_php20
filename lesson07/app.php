@@ -10,13 +10,13 @@ try {
 
     if (!isset($_COOKIE['user_id'])) {
 
-        $user_id = UUID::v4();
+        $user_id = App\Lib\UUID::v4();
         $cookie_name = 'user_id';
-        Auth::setSiteCookie(1, $user_id, $cookie_name);
+        App\Model\Auth::setSiteCookie(1, $user_id, $cookie_name);
 
     }
 
-    App::init();
+    App\Lib\App::init();
 
 } catch (PDOException $e) {
     echo "DB is not available<br>";

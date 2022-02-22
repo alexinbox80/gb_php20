@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 class Status
 {
     const DELETED = 0; //

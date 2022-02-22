@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Configuration;
+
 $config['db_user'] = 'eshopv20';
 $config['db_password'] = 'eshop';
 $config['db_base'] = 'eshopv20';

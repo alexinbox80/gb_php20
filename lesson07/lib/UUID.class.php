@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Lib;
+
 class UUID
 {
     public static function v3($namespace, $name)

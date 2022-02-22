@@ -17,6 +17,10 @@ function gbStandardAutoload($className)
 
     $found = false;
     foreach ($dirs as $dir) {
+
+        $arr = explode('\\', $className);
+        $className = end($arr);
+
         $fileName = __DIR__ . '/' . $dir . '/' . $className . '.class.php';
 
         if (is_file($fileName)) {
@@ -27,7 +31,7 @@ function gbStandardAutoload($className)
     }
 
     if (!$found) {
-        throw new Exception('Unable to load ' . $className);
+        throw new \Exception('Unable to load ' . $className);
     }
 
     return true;

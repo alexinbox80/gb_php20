@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Controller;
+
 class Controller
 {
     public $view = 'admin';
@@ -15,7 +17,7 @@ class Controller
 
     function __construct()
     {
-        $this->title = Config::get('sitename');
+        $this->title = \App\Lib\Config::get('sitename');
     }
 
     protected function adminCheckRights()
@@ -24,7 +26,7 @@ class Controller
 
         $user_uuid = $_SESSION['user_id'];
 
-        $role = strtolower(Auth::getGroupFromUUID($user_uuid));
+        $role = strtolower(\App\Model\Auth::getGroupFromUUID($user_uuid));
 
         if ($role == 'administrator') {
             $answer = [
@@ -47,13 +49,13 @@ class Controller
 
     protected function adminCheckAuth($data)
     {
-        User::sessionStart();
-        if (Auth::isAuthorized()) {
+        \App\Model\User::sessionStart();
+        if (\App\Model\Auth::isAuthorized()) {
 
             $answer = $this->adminCheckRights();
 
         } else {
-            Auth::login($data);
+            \App\Model\Auth::login($data);
 
             $answer = $this->adminCheckRights();
 
@@ -66,7 +68,7 @@ class Controller
     {
         $user_uuid = $_SESSION['user_id'];
 
-        $role = strtolower(Auth::getGroupFromUUID($user_uuid));
+        $role = strtolower(\App\Model\Auth::getGroupFromUUID($user_uuid));
 
         if ($result === '') {
             $answer = [
@@ -86,14 +88,14 @@ class Controller
 
     protected function checkAuth($data)
     {
-        User::sessionStart();
-        if (Auth::isAuthorized()) {
+        \App\Model\User::sessionStart();
+        if (\App\Model\Auth::isAuthorized()) {
 
             $answer = $this->getRole('');
 
         } else {
 
-            $result = Auth::login($data);
+            $result = \App\Model\Auth::login($data);
             $answer = $this->getRole($result);
 
         }

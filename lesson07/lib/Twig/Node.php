@@ -39,7 +39,7 @@ class Twig_Node implements Countable, IteratorAggregate
     {
         foreach ($nodes as $name => $node) {
             if (!$node instanceof Twig_Node) {
-                throw new InvalidArgumentException(sprintf('Using "%s" for the value of node "%s" of "%s" is not supported. You must pass a Twig_Node instance.', is_object($node) ? get_class($node) : null === $node ? 'null' : gettype($node), $name, get_class($this)), E_USER_DEPRECATED);
+                throw new InvalidArgumentException(sprintf('Using "%s" for the value of node "%s" of "%s" is not supported. You must pass a Twig_Node instance.', (is_object($node) ? get_class($node) : null === $node) ? 'null' : gettype($node), $name, get_class($this)), E_USER_DEPRECATED);
             }
         }
         $this->nodes = $nodes;

@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Controller;
+
 class AdminController extends Controller
 {
     protected $controls = [
@@ -68,7 +70,7 @@ class AdminController extends Controller
                 }
 
                 $query .= ' (' . implode(',', $keys) . ') VALUES ( ' . implode(',', $values) . ')';
-                db::getInstance()->Query($query);
+                \App\Lib\db::getInstance()->Query($query);
                 break;
             case 'save':
                 $query = 'UPDATE ' . $data['id'] . ' SET ';
@@ -77,18 +79,19 @@ class AdminController extends Controller
                 }
                 $query = substr($query, 0, -1) . ' WHERE id = :id';
 
-                db::getInstance()->Query($query, ['id' => $actionId['id']]);
+                \App\Lib\db::getInstance()->Query($query, ['id' => $actionId['id']]);
                 break;
             case 'delete':
-                db::getInstance()->Query('UPDATE ' . $data['id'] . ' SET status=:status WHERE id = :id', ['id' => $actionId['id'], 'status' => Status::DELETED]);
+                \App\Lib\db::getInstance()->Query('UPDATE ' . $data['id'] . ' SET status=:status WHERE id = :id', ['id' => $actionId['id'], 'status' => Status::DELETED]);
                 break;
         }
-        $fields = db::getInstance()->Select('desc ' . $data['id']);
-        $_items = db::getInstance()->Select('select * from ' . $data['id']);
+        $fields = \App\Lib\db::getInstance()->Select('desc ' . $data['id']);
+        $_items = \App\Lib\db::getInstance()->Select('select * from ' . $data['id']);
         $items = [];
 
         foreach ($_items as $item) {
-            $tmp = new $this->controls[$data['id']]($item);
+            $class = '\\App\\Model\\' . $this->controls[$data['id']];
+            $tmp = new $class($item);
             $items[] = (array)$tmp;
         }
 
@@ -96,7 +99,7 @@ class AdminController extends Controller
 
         foreach ($fields as $key => $field) {
 
-            $property = Category::getProperties()[$field['Field']];
+            $property = \App\Model\Category::getProperties()[$field['Field']];
 
             if ( !isset($property['show']) || $property['show'] ) {
                 $headerField[] = $field;
@@ -115,6 +118,10 @@ class AdminController extends Controller
 
     protected function getActionId($data)
     {
+
+        $id = 0;
+        $action = '';
+
         foreach ($_POST as $key => $value) {
             if (strpos($key, '__save_') === 0) {
                 $id = explode('__save_', $key)[1];

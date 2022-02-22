@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 class generatemodel extends Command
 {
     public static $description = 'Generate table for model';
@@ -7,7 +9,7 @@ class generatemodel extends Command
     public function exec($arguments)
     {
         if (!isset($arguments[0])) {
-            throw new Exception('Please, type model name');
+            throw new \Exception('Please, type model name');
         }
         Logger::write('Generating model', true);
         return $arguments[0]::generate();

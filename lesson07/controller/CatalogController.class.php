@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Controller;
+
 class CatalogController extends Controller
 {
     public $view = 'catalog';

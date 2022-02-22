@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 class Auth extends User
 {
     private $error = "";
@@ -134,7 +136,7 @@ class Auth extends User
                                 INNER JOIN roles ON user_role.role_id = roles.role_id
                                 WHERE login = :login AND passwd = :passwd LIMIT 1";
 
-                        $authUser = db::getInstance()->Select(
+                        $authUser = \App\Lib\db::getInstance()->Select(
                             $sql,
                             ['login' => $login, 'passwd' => $passwdMd5]);
 
@@ -154,7 +156,7 @@ class Auth extends User
                             $sql = "UPDATE users
                                     SET lastActive = NOW()
                                     WHERE login = :login AND passwd = :passwd";
-                            $res = db::getInstance()->Query($sql,
+                            $res = \App\Lib\db::getInstance()->Query($sql,
                                 ['login' => $login, 'passwd' => $passwdMd5]);
                             $this->saveSession($remember);
                         }
@@ -187,7 +189,7 @@ class Auth extends User
                 INNER JOIN roles ON user_role.role_id = roles.role_id
                 WHERE login = :login OR email = :email LIMIT 1";
 
-        $authUser = db::getInstance()->Select(
+        $authUser = \App\Lib\db::getInstance()->Select(
             $sql,
             ['login' => $user['login'], 'email' => $user['email']]);
 
@@ -200,14 +202,14 @@ class Auth extends User
                 $passwdMd5 = self::makePasswdMd5($user['login'], md5($user['passwd']));
 
                 $sql = "SELECT * FROM roles WHERE role = 'user'";
-                $role_id = db::getInstance()->Select($sql, [])[0]['role_id'];
+                $role_id = \App\Lib\db::getInstance()->Select($sql, [])[0]['role_id'];
 
                 if (Auth::isAuthorized()) {
                     $user_id = $_SESSION['user_id'];
 
                 } else {
                     // generate user_id ???
-                    $user_id = UUID::v4();
+                    $user_id = \App\Lib\UUID::v4();
                     $user_id_old = $_COOKIE['user_id'];
 
                     // user_id BD update
@@ -218,13 +220,13 @@ class Auth extends User
                     Auth::setSiteCookie(1, $user_id, $cookie_name);
                 }
 
-                if (db::getInstance()->beginTransaction()) {
+                if (\App\Lib\db::getInstance()->beginTransaction()) {
 
                     $sql = "INSERT INTO  users (user_id, lastName, firstName, address,
                                             email, phone, gender, login, passwd, status, dateCreate, lastActive)
                             VALUES (:user_id, :lastName, :firstName, NULL, :email, NULL, :gender,
                                     :login, :passwd, :status, NOW(), NULL)";
-                    $res = db::getInstance()->Query(
+                    $res = \App\Lib\db::getInstance()->Query(
                         $sql,
                         [
                             'user_id' => $user_id,
@@ -239,19 +241,19 @@ class Auth extends User
 
                     $sql = "INSERT INTO  user_role (user_id, role_id)
                             VALUES (:user_id, :role_id)";
-                    $res = db::getInstance()->Query(
+                    $res = \App\Lib\db::getInstance()->Query(
                         $sql,
                         [
                             'user_id' => $user_id,
                             'role_id' => $role_id
                         ]);
 
-                    db::getInstance()->commit();
+                    \App\Lib\db::getInstance()->commit();
 
                 }
-            } catch (PDOException $e) {
-                if (db::getInstance()->inTransaction()) {
-                    db::getInstance()->rollBack();
+            } catch (\PDOException $e) {
+                if (\App\Lib\db::getInstance()->inTransaction()) {
+                    \App\Lib\db::getInstance()->rollBack();
                     die($e->getMessage());
                 }
             }

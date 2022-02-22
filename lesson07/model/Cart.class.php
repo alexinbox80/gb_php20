@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 class Cart extends Model
 {
     protected static $table = 'carts';
@@ -60,7 +62,7 @@ class Cart extends Model
         $sql = "SELECT order_id FROM " . self::$table .
             " WHERE user_id = :user_id AND good_id = :good_id AND status = :status";
 
-        $row = db::getInstance()->Select(
+        $row = \App\Lib\db::getInstance()->Select(
             $sql,
             [
                 'status' => Status::ACTIVE,
@@ -80,21 +82,21 @@ class Cart extends Model
             [
                 'name' => ':order_id',
                 'data' => $orderId,
-                'type' => PDO::PARAM_STR
+                'type' => \PDO::PARAM_STR
             ],
             [
                 'name' => ':user_id',
                 'data' => $data['user_id'],
-                'type' => PDO::PARAM_STR
+                'type' => \PDO::PARAM_STR
             ],
             [
                 'name' => ':good_id',
                 'data' => $data['good_id'],
-                'type' => PDO::PARAM_STR
+                'type' => \PDO::PARAM_STR
             ]
         ];
 
-        $result = db::getInstance()->QueryBindParam(
+        $result = \App\Lib\db::getInstance()->QueryBindParam(
             $sql,
             $params);
 
@@ -112,7 +114,7 @@ class Cart extends Model
                           carts.user_id = :user_id AND
                           carts.good_id = :good_id";
 
-            $result = db::getInstance()->Select(
+            $result = \App\Lib\db::getInstance()->Select(
                 $sql,
                 [
                     'status' => Status::ACTIVE,
@@ -133,26 +135,26 @@ class Cart extends Model
                     [
                         'name' => ':quantity',
                         'data' => $item['quantity'],
-                        'type' => PDO::PARAM_INT
+                        'type' => \PDO::PARAM_INT
                     ],
                     [
                         'name' => ':status',
                         'data' => Status::ACTIVE,
-                        'type' => PDO::PARAM_INT
+                        'type' => \PDO::PARAM_INT
                     ],
                     [
                         'name' => ':user_id',
                         'data' => $item['user_id'],
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ],
                     [
                         'name' => ':good_id',
                         'data' => $item['good_id'],
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ]
                 ];
 
-                $result = db::getInstance()->QueryBindParam(
+                $result = \App\Lib\db::getInstance()->QueryBindParam(
                     $sql,
                     $params);
 
@@ -162,7 +164,7 @@ class Cart extends Model
                 $sql = "SELECT user_id, cart_id, order_id, good_id FROM " . self::$table .
                     " WHERE user_id = :user_id AND status = :status";
 
-                $result = db::getInstance()->Select(
+                $result = \App\Lib\db::getInstance()->Select(
                     $sql,
                     [
                         'status' => Status::ACTIVE,
@@ -170,8 +172,8 @@ class Cart extends Model
                     ]);
 
                 if (empty($result[0]['cart_id']) && empty($result[0]['order_id'])) {
-                    $cartId = UUID::v4();
-                    $orderId = UUID::v4();
+                    $cartId = \App\Lib\UUID::v4();
+                    $orderId = \App\Lib\UUID::v4();
                 } else {
                     $cartId = $result[0]['cart_id'];
                     $orderId = $result[0]['order_id'];
@@ -186,36 +188,36 @@ class Cart extends Model
                     [
                         'name' => ':cart_id',
                         'data' => $cartId,
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ],
                     [
                         'name' => ':order_id',
                         'data' => $orderId,
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ],
                     [
                         'name' => ':user_id',
                         'data' => $item['user_id'],
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ],
                     [
                         'name' => ':good_id',
                         'data' => $item['good_id'],
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ],
                     [
                         'name' => ':quantity',
                         'data' => $item['quantity'],
-                        'type' => PDO::PARAM_INT
+                        'type' => \PDO::PARAM_INT
                     ],
                     [
                         'name' => ':status',
                         'data' => Status::ACTIVE,
-                        'type' => PDO::PARAM_INT
+                        'type' => \PDO::PARAM_INT
                     ]
                 ];
 
-                $result = db::getInstance()->QueryBindParam(
+                $result = \App\Lib\db::getInstance()->QueryBindParam(
                     $sql,
                     $params);
 
@@ -234,7 +236,7 @@ class Cart extends Model
                 INNER JOIN goods ON carts.good_id = goods.good_id
                 WHERE carts.status = :status AND goods.status = :status AND user_id = :user_id";
 
-        return db::getInstance()->Select(
+        return \App\Lib\db::getInstance()->Select(
             $sql,
             [
                 'status' => Status::ACTIVE,

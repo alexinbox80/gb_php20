@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 class Category extends Model
 {
     protected static $table = 'categories';
@@ -80,7 +82,7 @@ class Category extends Model
     public static function getCategories($parentId = 0)
     {
         if ($parentId == -1) {
-            $result = db::getInstance()->Select(
+            $result = \App\Lib\db::getInstance()->Select(
                 'SELECT category_id, name, url, parent_id FROM categories WHERE status=:status',
                 ['status' => Status::ACTIVE]);
 
@@ -89,7 +91,7 @@ class Category extends Model
 
         } elseif ($parentId == 0) {
 
-            $result = db::getInstance()->Select(
+            $result = \App\Lib\db::getInstance()->Select(
                 'SELECT category_id, name FROM categories WHERE status=:status AND parent_id = :parent_id',
                 ['status' => Status::ACTIVE, 'parent_id' => $parentId]);
 

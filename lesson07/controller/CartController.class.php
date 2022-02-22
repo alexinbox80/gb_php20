@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Controller;
+
 class CartController extends Controller
 {
     public $view = 'cart';
@@ -22,12 +24,12 @@ class CartController extends Controller
     //метод, который отправляет в представление информацию в виде переменной content_data
     function index($data)
     {
-        User::sessionStart();
-        if (Auth::isAuthorized()) {
+        \App\Model\User::sessionStart();
+        if (\App\Model\Auth::isAuthorized()) {
 
             $user_uuid = $_SESSION['user_id'];
 
-            $role = Auth::getGroupFromUUID($user_uuid);
+            $role = \App\Model\Auth::getGroupFromUUID($user_uuid);
 
             $answer = [
                 'info' => 'User is registered in the system!',
@@ -36,11 +38,11 @@ class CartController extends Controller
             ];
 
         } else {
-            Auth::login($data);
+            \App\Model\Auth::login($data);
 
             $user_uuid = $_SESSION['user_id'];
 
-            $role = Auth::getGroupFromUUID($user_uuid);
+            $role = \App\Model\Auth::getGroupFromUUID($user_uuid);
 
             $answer = [
                 'info' => 'You are not logged in!',

@@ -8,6 +8,8 @@
  *
  */
 
+namespace App\Model;
+
 class Order extends Model {
     protected static $table = 'orders';
 
@@ -49,7 +51,7 @@ class Order extends Model {
     public static function setOrder(array $data)
     {
         $sql = "SELECT good_id, order_id FROM carts WHERE user_id = :user_id AND status = :status ORDER BY user_id";
-        $result = db::getInstance()->Select(
+        $result = \App\Lib\db::getInstance()->Select(
             $sql,
             [
                 'status' => Status::ACTIVE,
@@ -60,11 +62,11 @@ class Order extends Model {
         $orderId = $result[0]['order_id'];
 
         try {
-            if (db::getInstance()->beginTransaction()) {
+            if (\App\Lib\db::getInstance()->beginTransaction()) {
 
                 $sql = "SELECT * FROM orders WHERE order_id = :order_id";
 
-                $exist = db::getInstance()->Select(
+                $exist = \App\Lib\db::getInstance()->Select(
                     $sql,
                     [
                         'order_id' => $orderId
@@ -83,31 +85,31 @@ class Order extends Model {
                         [
                             'name' => ':amount',
                             'data' => $data['amount'],
-                            'type' => PDO::PARAM_INT
+                            'type' => \PDO::PARAM_INT
                         ],
                         [
                             'name' => ':price',
                             'data' => $data['price'],
-                            'type' => PDO::PARAM_INT
+                            'type' => \PDO::PARAM_INT
                         ],
                         [
                             'name' => ':status',
                             'data' => Status::ACTIVE,
-                            'type' => PDO::PARAM_INT
+                            'type' => \PDO::PARAM_INT
                         ],
                         [
                             'name' => ':user_id',
                             'data' => $data['user_id'],
-                            'type' => PDO::PARAM_STR
+                            'type' => \PDO::PARAM_STR
                         ],
                         [
                             'name' => ':order_id',
                             'data' => $orderId,
-                            'type' => PDO::PARAM_STR
+                            'type' => \PDO::PARAM_STR
                         ]
                     ];
 
-                    $result = db::getInstance()->QueryBindParam(
+                    $result = \App\Lib\db::getInstance()->QueryBindParam(
                         $sql,
                         $params);
 
@@ -120,31 +122,31 @@ class Order extends Model {
                         [
                             'name' => ':order_id',
                             'data' => $orderId,
-                            'type' => PDO::PARAM_STR
+                            'type' => \PDO::PARAM_STR
                         ],
                         [
                             'name' => ':user_id',
                             'data' => $data['user_id'],
-                            'type' => PDO::PARAM_STR
+                            'type' => \PDO::PARAM_STR
                         ],
                         [
                             'name' => ':amount',
                             'data' => $data['amount'],
-                            'type' => PDO::PARAM_INT
+                            'type' => \PDO::PARAM_INT
                         ],
                         [
                             'name' => ':price',
                             'data' => $data['price'],
-                            'type' => PDO::PARAM_INT
+                            'type' => \PDO::PARAM_INT
                         ],
                         [
                             'name' => ':status',
                             'data' => Status::ACTIVE,
-                            'type' => PDO::PARAM_INT
+                            'type' => \PDO::PARAM_INT
                         ]
                     ];
 
-                    $result = db::getInstance()->QueryBindParam(
+                    $result = \App\Lib\db::getInstance()->QueryBindParam(
                         $sql,
                         $params);
                 }
@@ -161,26 +163,26 @@ class Order extends Model {
                     [
                         'name' => ':address',
                         'data' => $address,
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ],
                     [
                         'name' => ':phone',
                         'data' => $data['shippingPhone'],
-                        'type' => PDO::PARAM_INT
+                        'type' => \PDO::PARAM_INT
                     ],
                     [
                         'name' => ':status',
                         'data' => Status::ACTIVE,
-                        'type' => PDO::PARAM_INT
+                        'type' => \PDO::PARAM_INT
                     ],
                     [
                         'name' => ':user_id',
                         'data' => $data['user_id'],
-                        'type' => PDO::PARAM_STR
+                        'type' => \PDO::PARAM_STR
                     ]
                 ];
 
-                $result = db::getInstance()->QueryBindParam(
+                $result = \App\Lib\db::getInstance()->QueryBindParam(
                     $sql,
                     $params);
 
@@ -190,12 +192,12 @@ class Order extends Model {
                     'message' => 'Order succesfully created!'
                 ];
 
-                db::getInstance()->commit();
+                \App\Lib\db::getInstance()->commit();
             }
 
-        } catch (PDOException $e) {
-            if (db::getInstance()->inTransaction()) {
-                db::getInstance()->rollBack();
+        } catch (\PDOException $e) {
+            if (\App\Lib\db::getInstance()->inTransaction()) {
+                \App\Lib\db::getInstance()->rollBack();
                 die($e->getMessage());
             }
         }

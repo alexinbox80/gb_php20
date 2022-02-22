@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 abstract class Command implements ICommand
 {
     public static $description = 'Here is a basic description of command';
@@ -10,7 +12,7 @@ abstract class Command implements ICommand
         Logger::Write('Executing "' . $commandName . '"', true);
         try {
             $return = $this->exec($arguments);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Logger::Write('Unable to execute ' . $commandName . ': ' . $e->getMessage(), true);
             $return = false;
         }
