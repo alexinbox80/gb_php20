@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html.twig' %}
+</head>
+<body>
+<div class="wrapper">
+    <div class="top">
+        {% include 'header.html.twig' %}
+        {% if content_data.status == "ok" %}
+            {% include 'cart/cart.html.twig' %}
+        {% endif %}
+        {% if content_data.status == "error" %}
+            <div class="content__warning center">
+                <span>
+                      {{ content_data.info }}
+                </span>
+            </div>
+        {% endif %}
+    </div>
+    {% include 'footer.html.twig' %}
+</div>
+{% include 'script.html.twig' %}
+</body>
+</html>
